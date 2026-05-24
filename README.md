@@ -281,10 +281,18 @@ cd Testing-Agent-Environment
 ### 2. Install dependencies
 
 ```bash
-pip install requests pyyaml
+pip install requests pyyaml jsonschema
 ```
 
-### 3. Set up Claude Code memory
+### 3. Verify canonical test entities exist
+
+```bash
+python seed.py
+```
+
+Connects to the shared backend, confirms the canonical bankId and affiliateId used by all runners are present, and writes `shared/session_ids.json`. If you are running against a **fresh** backend instance, use `python seed.py --mint` instead — it mints the entities and prints the IDs to set as env vars.
+
+### 4. Set up Claude Code memory
 
 ```powershell
 .\setup_memory.ps1
@@ -292,7 +300,7 @@ pip install requests pyyaml
 
 > **Other LLMs:** paste `CLAUDE.md` as your system prompt.
 
-### 4. Run a single service
+### 5. Run a single service
 
 ```bash
 python bank/postman_hybrid_bank_runner.py
@@ -300,7 +308,7 @@ python bank/postman_hybrid_bank_runner.py
 
 Evidence logs appear in `bank/evidence/run_<timestamp>/` automatically.
 
-### 5. Run the full chain
+### 6. Run the full chain
 
 ```bash
 python chain/run_sequential_chain.py

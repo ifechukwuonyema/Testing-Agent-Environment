@@ -38,3 +38,9 @@ copy_output.txt
 github_push.py
 copy_memory.py
 copy_memory_to_repo.bat
+
+# Harnesses folder — stale working copies; canonical runners are in service folders
+harnesses/*.py
+harnesses/*.py.bak*
+harnesses/schemathesis_runs/
+harnesses/.venv*/
