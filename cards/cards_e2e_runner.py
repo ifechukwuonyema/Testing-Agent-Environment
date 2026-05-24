@@ -38,6 +38,8 @@ _SHARED    = _REPO_ROOT / "shared"
 sys.path.insert(0, str(_SHARED))
 sys.path.insert(0, str(_SVC_DIR))
 from query_mutator import smart_set_query, smart_set_query_pair, extract_first_id_recursive  # noqa: E402
+from load_env import load_env, require  # noqa: E402
+load_env()  # load .env before any os.getenv calls
 
 # --- paths -----------------------------------------------------------------
 # paths resolved relative to this file — works after clone on any OS
@@ -112,35 +114,19 @@ from cryptography.hazmat.primitives import hashes as _hashes, serialization as _
 from cryptography.hazmat.backends import default_backend as _default_backend
 import urllib.parse as _urlparse
 
-IAM_URL             = os.getenv("CARDS_IAM_URL",     "https://hasham.platform.dev.chamsswitch.com/gateway/token")
-CARDS_CLIENT_ID     = os.getenv("CARDS_CLIENT_ID",   "platform-kardit-card-api")
-CARDS_CLIENT_SECRET = os.getenv("CARDS_CLIENT_SECRET","723aa789be33d3195416aa86e04dabff4d936dea4af0c0ea83788b8db2cadc07")
-BANK_CLIENT_ID      = os.getenv("BANK_CLIENT_ID",    "platform-kardit-bank-api")
-BANK_CLIENT_SECRET  = os.getenv("BANK_CLIENT_SECRET","ca72de6da4ab7574f95f5484f3363fd2f2a6eaec42160ddcae096fe6275d2667")
+IAM_URL         = os.getenv("CARDS_IAM_URL",    "https://hasham.platform.dev.chamsswitch.com/gateway/token")
+CARDS_CLIENT_ID = os.getenv("CARDS_CLIENT_ID",  "platform-kardit-card-api")
+BANK_CLIENT_ID  = os.getenv("BANK_CLIENT_ID",   "platform-kardit-bank-api")
 
-SIGNING_KEY_PEM = os.getenv("CARDS_SIGNING_KEY_PEM", """-----BEGIN PRIVATE KEY-----
-MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQguLTJ5EFCK3ayPpFj
-C4vhlDXs0SFJELvhT754HsbHNGihRANCAAQCKqyhvvbCVHhPGHyuqip0fwemnQWs
-IhkimdE3yKI8TNNQKqk7bNRSGWwXzKCMb7n2x7yZlCmRj9rU+VGylr//
------END PRIVATE KEY-----""")
+# Secrets — no defaults; must be set in .env or environment before running
+require("CARDS_CLIENT_SECRET", "BANK_CLIENT_SECRET", "CARDS_SIGNING_KEY_PEM")
+CARDS_CLIENT_SECRET = os.environ["CARDS_CLIENT_SECRET"]
+BANK_CLIENT_SECRET  = os.environ["BANK_CLIENT_SECRET"]
+SIGNING_KEY_PEM     = os.environ["CARDS_SIGNING_KEY_PEM"]
 
-EXPIRED_TOKEN = os.getenv(
-    "CARDS_EXPIRED_TOKEN",
-    "eyJhbGciOiJFUzI1NiIsImtpZCI6IjU5YmY4MjlhMDk5M2VkYWIxYjZmNWVjYjFmZDdmNDJiN2JhMmJhYzVkMzAxMGE3ZGVjNTVhZmY1ZDczOWY3ZjUifQ"
-    ".eyJzdWIiOiJzZXJ2aWNlOnBsYXRmb3JtLWthcmRpdC1jYXJkLWFwaSIsInRlbmFudElkIjoiMDAwMDAwMDAtMDAwMC0wMDAwLTAwMDAtMDAwMDAwMDAwMDAxIiwi"
-    "cGVybWlzc2lvbnMiOlsia2FyZGl0OmNhcmRzOmFjdGl2YXRlIiwia2FyZGl0OmNhcmRzOmJhbGFuY2U6cmVhZCIsImthcmRpdDpjYXJkczpiYW5rczphZmZpbGlh"
-    "dGU6ZnJlZXplIiwia2FyZGl0OmNhcmRzOmJhbmtzOmFmZmlsaWF0ZTp0ZXJtaW5hdGUiLCJrYXJkaXQ6Y2FyZHM6YmFua3M6YWZmaWxpYXRlOnVuZnJlZXplIiwi"
-    "a2FyZGl0OmNhcmRzOmZ1bGZpbGxtZW50OnJlYWQiLCJrYXJkaXQ6Y2FyZHM6ZnVsZmlsbG1lbnQ6cmVmcmVzaCIsImthcmRpdDpjYXJkczpmdWxmaWxsbWVudDpy"
-    "ZWluaXRpYXRlIiwia2FyZGl0OmNhcmRzOmZ1bmRpbmc6cmVhZCIsImthcmRpdDpjYXJkczppc3N1YW5jZTpjcmVhdGUiLCJrYXJkaXQ6Y2FyZHM6aXNzdWFuY2U6"
-    "ZWxpZ2liaWxpdHkiLCJrYXJkaXQ6Y2FyZHM6bGlmZWN5Y2xlOmZyZWV6ZSIsImthcmRpdDpjYXJkczpsaWZlY3ljbGU6dGVybWluYXRlIiwia2FyZGl0OmNhcmRz"
-    "OmxpZmVjeWNsZTp1bmZyZWV6ZSIsImthcmRpdDpjYXJkczpsaW1pdDpjcmVhdGUiLCJrYXJkaXQ6Y2FyZHM6bG9hZDphcHByb3ZlIiwia2FyZGl0OmNhcmRzOmxv"
-    "YWQ6Y3JlYXRlIiwia2FyZGl0OmNhcmRzOmxvYWQ6cmVhZCIsImthcmRpdDpjYXJkczptZXRyaWNzOnJlYWQiLCJrYXJkaXQ6Y2FyZHM6b3BzOmxpbWl0OmNvbXBs"
-    "ZXRlIiwia2FyZGl0OmNhcmRzOnBpbjpyZXNldCIsImthcmRpdDpjYXJkczpxdWVyeSIsImthcmRpdDpjYXJkczpyZWFkIiwia2FyZGl0OmNhcmRzOnVubG9hZDpj"
-    "cmVhdGUiXSwic2VydmljZUFjY291bnQiOnRydWUsInNlc3Npb25JZCI6IjQxOGY1NmRiLTk3MzktNGQ2Yy04OGNlLWFiNTAwNjBiNzc2YiIsImlkZW50aXR5U291"
-    "cmNlIjoiRElSRUNUIiwianRpIjoiMDI2MWRjNzctZjk2Zi00ZWRmLWIzODEtMzk2NGQzZGRkZjdmIiwiaWF0IjoxNzc5NDQyNDE0LCJleHAiOjE3Nzk0NDMzMTQs"
-    "ImF1ZCI6WyJwbGF0Zm9ybS1rYXJkaXQtY2FyZC1hcGkiXX0"
-    ".yfMhZhFd9l56XFZgAirvE4SAR4012v5tvtt6JzJwRkKgxYvvQJEMCTVDxF6RqmRKdfuKWbU0fhfeXsvhVyzUvg"
-)
+# Expired token for auth-rejection TCs — set in .env if needed; defaults to a
+# clearly-invalid sentinel that exercises the "expired token" rejection path.
+EXPIRED_TOKEN = os.getenv("CARDS_EXPIRED_TOKEN", "expired.token.sentinel")
 
 E2E_CUSTOMER_ID = os.getenv("CARDS_CUSTOMER_ID", "62a855d9-cc62-4233-88fe-856d901b0a04")
 E2E_PRODUCT_ID  = os.getenv("CARDS_PRODUCT_ID",  "d475e7e2-0685-4bb6-9ef0-95fec4fcb495")
