@@ -1,6 +1,40 @@
+# Python
 __pycache__/
 *.pyc
 *.pyo
+*.pyd
+.venv*/
+
+# Environment
 .env
+
+# Evidence run outputs — generated at runtime, not committed
+# The evidence/ folders are committed (via .gitkeep); run subdirs are local only
+bank/evidence/run_*/
+affiliate/evidence/run_*/
+customer/evidence/run_*/
+cards/evidence/run_*/
+transactions/evidence/run_*/
+batch/evidence/run_*/
+notifications/evidence/run_*/
+admin/evidence/run_*/
+
+# YAML run reports — generated at runtime; commit manually to share
+bank/reports/*.yaml
+affiliate/reports/*.yaml
+customer/reports/*.yaml
+cards/reports/*.yaml
+transactions/reports/*.yaml
+batch/reports/*.yaml
+notifications/reports/*.yaml
+admin/reports/*.yaml
+chain/reports/*.yaml
+
+# Logs
 *.log
 copy_output.txt
+
+# Setup/utility scripts
+github_push.py
+copy_memory.py
+copy_memory_to_repo.bat
