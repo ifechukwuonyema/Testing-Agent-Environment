@@ -204,13 +204,7 @@ if SCOPE_ENDPOINT:
     _scope_tag = "_" + re.sub(r"[^a-zA-Z0-9]+", "_", SCOPE_ENDPOINT).strip("_")
 
 # Restrict run to specific api_ids. Empty set = run all.
-SCOPE_API_IDS: set[str] = {
-    "API-BNK-PART-01",   # GET  /banks/{bankId}/affiliate-partnership-requests/{requestId}
-    "API-BNK-CTRL-01",   # POST /banks/{bankId}/affiliates/{affiliateId}/suspend
-    "API-BNK-CTRL-02",   # POST /banks/{bankId}/affiliates/{affiliateId}/block
-    "API-BNK-PART-02",   # POST /banks/partnerships/{requestId}/approve
-    "API-BNK-PART-03",   # POST /banks/partnerships/{requestId}/reject
-}
+SCOPE_API_IDS: set[str] = set()
 
 # REPLAY_FAILED_REPORT: path to a previous bank report YAML.
 # When set, only (api_id, scenario) pairs that FAILed in that report are run.
