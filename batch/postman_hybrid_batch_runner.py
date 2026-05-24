@@ -54,6 +54,9 @@ RUN_TS = dt.datetime.now().strftime("%Y%m%d-%H%M%S")
 
 # --- known backend-provisioned seeds --------------
 AFFILIATE_ID_SEED      = "AFF-9F6EDBBE20DD4C6B97D0B720676506E1"
+BANK_ID_SEED           = os.getenv("CANONICAL_BANK_ID",      "000045f9-d01b-479c-a84d-0fe82454d55a")
+PRODUCT_ID_SEED        = os.getenv("CARDS_PRODUCT_ID",       "d475e7e2-0685-4bb6-9ef0-95fec4fcb495")
+TENANT_ID_SEED         = os.getenv("CANONICAL_TENANT_ID",    "00000000-0000-0000-0000-000000000000")
 PROCESSING_BATCH_ID    = "952480b6-61d2-4299-a6ca-430dce7a316c"
 COMPLETED_BATCH_ID     = "ef57c562-4a98-4c46-b8ec-13e36a1a3ebe"
 FAILED_BATCH_ID        = "fcfd5758-0829-4d45-abb6-6328e90568d2"
@@ -359,14 +362,22 @@ def pre_flight_mint_batch(pm_idx: dict, session_ids: dict) -> dict:
         return setup
     base = build_base_request(pm_entry)
     body = rotate_request_context(base["body"])
-    # Inject seeded affiliateId/tenantId into requestContext if present (Postman base has placeholders)
+    # Inject real values — Postman base body has "string" placeholders throughout
     if isinstance(body, dict):
         rc = body.get("requestContext")
         if isinstance(rc, dict):
-            if session_ids.get("affiliateId"):
-                rc["affiliateId"] = session_ids["affiliateId"]
-            if session_ids.get("tenantId"):
-                rc["tenantId"] = session_ids["tenantId"]
+            rc["actorUserId"] = "tester"
+            rc["userType"]    = "Affiliate"
+            rc["affiliateId"] = session_ids.get("affiliateId") or AFFILIATE_ID_SEED
+            rc["tenantId"]    = session_ids.get("tenantId")    or TENANT_ID_SEED
+        # Backend enforces bankId + productId even though swagger marks them nullable
+        body["bankId"]    = session_ids.get("bankId")  or BANK_ID_SEED
+        body["productId"] = PRODUCT_ID_SEED
+        # Replace "string" fileBase64 placeholder with a real single-row CSV
+        body, _ = _set_file_rows(body, 1)
+        if isinstance(body.get("file"), dict):
+            body["file"]["contentType"] = "text/csv"
+            body["file"]["fileName"]    = "batch.csv"
     path_template = get_postman_path_template(pm_entry)
     url = rebuild_url(base["method"], path_template, base["path_vars"], base["query"])
     setup["url"] = url
@@ -1775,8 +1786,23 @@ def _mint_batch_for_tc(pm_idx: dict, session_ids: dict, csv_b64: str | None = No
         body = copy.deepcopy(build_base_request(upload_pm)["body"])
         if isinstance(body, dict):
             body = rotate_request_context(body)
+            rc = body.get("requestContext")
+            if isinstance(rc, dict):
+                rc["actorUserId"] = "tester"
+                rc["userType"]    = "Affiliate"
+                rc["affiliateId"] = session_ids.get("affiliateId") or AFFILIATE_ID_SEED
+                rc["tenantId"]    = session_ids.get("tenantId")    or TENANT_ID_SEED
+            body["bankId"]    = session_ids.get("bankId") or BANK_ID_SEED
+            body["productId"] = PRODUCT_ID_SEED
             if csv_b64 and isinstance(body.get("file"), dict):
                 body["file"]["fileBase64"] = csv_b64
+                body["file"]["contentType"] = "text/csv"
+                body["file"]["fileName"]    = "batch.csv"
+            else:
+                body, _ = _set_file_rows(body, 1)
+                if isinstance(body.get("file"), dict):
+                    body["file"]["contentType"] = "text/csv"
+                    body["file"]["fileName"]    = "batch.csv"
         resp = requests.post(
             f"{BASE_URL}/api/v1/Batches/card-creation/upload",
             json=body,
