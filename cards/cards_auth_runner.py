@@ -76,9 +76,12 @@ EXPIRED_TOKEN = os.getenv(
     ".yfMhZhFd9l56XFZgAirvE4SAR4012v5tvtt6JzJwRkKgxYvvQJEMCTVDxF6RqmRKdfuKWbU0fhfeXsvhVyzUvg"
 )
 
+_SVC_DIR         = Path(__file__).resolve().parent
+_REPO_ROOT       = _SVC_DIR.parent
+_SHARED          = _REPO_ROOT / "shared"
 SESSION_IDS_PATH = os.getenv(
     "KARDIT_SESSION_IDS",
-    r"C:\Users\Onyema Ifechukwu\Downloads\kardit_session_ids.json"
+    str(_SHARED / "session_ids.json"),
 )
 
 TENANT_ID     = "00000000-0000-0000-0000-000000000001"

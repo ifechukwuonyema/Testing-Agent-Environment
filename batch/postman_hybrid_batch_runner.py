@@ -33,20 +33,23 @@ from typing import Any
 import requests
 import yaml
 
-sys.path.insert(0, str(Path(__file__).resolve().parent))
+_SVC_DIR   = Path(__file__).resolve().parent
+_REPO_ROOT = _SVC_DIR.parent
+_SHARED    = _REPO_ROOT / "shared"
+sys.path.insert(0, str(_SHARED))
+sys.path.insert(0, str(_SVC_DIR))
 from query_mutator import smart_set_query, smart_set_query_pair  # noqa: E402
 
 # --- paths -----------------------------------------------------------------
-DOWNLOADS = Path(r"C:\Users\Onyema Ifechukwu\Downloads")
-POSTMAN_PATH = DOWNLOADS / "Kardit.Api.postman.collection.json"
-BATCH_DIR = DOWNLOADS / "kardit_batch_api_test_agent_v3_1" / "kardit_batch_api_test_agent_v3_1"
-TEST_PACK_PATH = BATCH_DIR / "data" / "batch_microservice_functional_test_pack_v3_30_each.json"
-SWAGGER_PATH = DOWNLOADS / "MainSwagger.txt"
-LIFECYCLE_PATH = BATCH_DIR / "lifecycle_order.yaml"  # may not exist; harness falls back to pack order
-RUNNER_KIT = DOWNLOADS / "kardit_runner_kit"
-SESSION_IDS_PATH = DOWNLOADS / "kardit_session_ids.json"
+# paths resolved relative to this file — works after clone on any OS
+POSTMAN_PATH     = _SHARED / "postman_collection.json"
+TEST_PACK_PATH   = _SVC_DIR / "data" / "test_pack.json"
+SWAGGER_PATH     = _SHARED / "MainSwagger.txt"
+LIFECYCLE_PATH   = _SVC_DIR / "data" / "lifecycle_order.yaml"
+RUNNER_KIT       = _SHARED
+SESSION_IDS_PATH = _SHARED / "session_ids.json"
 
-BASE_URL = "http://167.172.49.177:8080"
+BASE_URL = os.getenv("KARDIT_BASE_URL", "http://167.172.49.177:8080")
 RUN_TS = dt.datetime.now().strftime("%Y%m%d-%H%M%S")
 
 # --- known backend-provisioned seeds --------------
@@ -126,8 +129,8 @@ SCOPE_ENDPOINT = os.environ.get("SCOPE_ENDPOINT")
 _scope_tag = ""
 if SCOPE_ENDPOINT:
     _scope_tag = "_" + re.sub(r"[^a-zA-Z0-9]+", "_", SCOPE_ENDPOINT).strip("_")
-EVIDENCE_DIR = DOWNLOADS / f"evidence_postman_batch_hybrid{_scope_tag}_{RUN_TS}"
-REPORT_PATH = DOWNLOADS / f"batch_postman_hybrid_report{_scope_tag}_{RUN_TS}.yaml"
+EVIDENCE_DIR     = _SVC_DIR / "evidence" / f"run_{RUN_TS}"
+REPORT_PATH      = _SVC_DIR / "reports" / f"batch_run_{RUN_TS}.yaml"
 
 # --- import kit's SchemaValidator + SessionStore --------------------------
 sys.path.insert(0, str(RUNNER_KIT))

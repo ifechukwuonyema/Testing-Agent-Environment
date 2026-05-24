@@ -36,19 +36,22 @@ from typing import Any
 import requests
 import yaml
 
-sys.path.insert(0, str(Path(__file__).resolve().parent))
+_SVC_DIR   = Path(__file__).resolve().parent
+_REPO_ROOT = _SVC_DIR.parent
+_SHARED    = _REPO_ROOT / "shared"
+sys.path.insert(0, str(_SHARED))
+sys.path.insert(0, str(_SVC_DIR))
 from query_mutator import smart_set_query, smart_set_query_pair, extract_first_id_recursive  # noqa: E402
 
 # --- paths -----------------------------------------------------------------
-DOWNLOADS = Path(r"C:\Users\Onyema Ifechukwu\Downloads")
-POSTMAN_PATH = DOWNLOADS / "Kardit.Api.postman.collection.json"
-AFFILIATE_DIR = DOWNLOADS / "kardit_affiliate_api_test_agent_v3_1" / "kardit_affiliate_api_test_agent_v3_1"
-TEST_PACK_PATH = AFFILIATE_DIR / "data" / "affiliate_microservice_functional_test_pack_v1_40_each_exact.json"
-SWAGGER_PATH = DOWNLOADS / "MainSwagger.txt"
-RUNNER_KIT = DOWNLOADS / "kardit_runner_kit"
+# paths resolved relative to this file — works after clone on any OS
+POSTMAN_PATH     = _SHARED / "postman_collection.json"
+TEST_PACK_PATH   = _SVC_DIR / "data" / "test_pack.json"
+SWAGGER_PATH     = _SHARED / "MainSwagger.txt"
+RUNNER_KIT       = _SHARED
 
-BASE_URL = "http://167.172.49.177:8080"
-SESSION_IDS_PATH = DOWNLOADS / "kardit_session_ids.json"
+BASE_URL = os.getenv("KARDIT_BASE_URL", "http://167.172.49.177:8080")
+SESSION_IDS_PATH = _SHARED / "session_ids.json"
 RUN_TS = dt.datetime.now().strftime("%Y%m%d-%H%M%S")
 
 # Optional scope filter: pack endpoint key (method + path) to run alone; None = run all
@@ -61,8 +64,8 @@ SCOPE_TC_IDS: set[str] | None = set(_SCOPE_TC_IDS_RAW.split(",")) if _SCOPE_TC_I
 _scope_tag = ""
 if SCOPE_ENDPOINT:
     _scope_tag = "_" + re.sub(r"[^a-zA-Z0-9]+", "_", SCOPE_ENDPOINT).strip("_")
-EVIDENCE_DIR = DOWNLOADS / f"evidence_postman_affiliate_v2{_scope_tag}_{RUN_TS}"
-REPORT_PATH = DOWNLOADS / f"affiliate_postman_standalone_v2_report{_scope_tag}_{RUN_TS}.yaml"
+EVIDENCE_DIR     = _SVC_DIR / "evidence" / f"run_{RUN_TS}"
+REPORT_PATH      = _SVC_DIR / "reports" / f"affiliate_run_{RUN_TS}.yaml"
 
 # --- import kit's SchemaValidator + SessionStore --------------------------
 sys.path.insert(0, str(RUNNER_KIT))

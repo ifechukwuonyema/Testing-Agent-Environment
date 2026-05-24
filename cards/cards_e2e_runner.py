@@ -32,27 +32,30 @@ from typing import Any
 import requests
 import yaml
 
-sys.path.insert(0, str(Path(__file__).resolve().parent))
+_SVC_DIR   = Path(__file__).resolve().parent
+_REPO_ROOT = _SVC_DIR.parent
+_SHARED    = _REPO_ROOT / "shared"
+sys.path.insert(0, str(_SHARED))
+sys.path.insert(0, str(_SVC_DIR))
 from query_mutator import smart_set_query, smart_set_query_pair, extract_first_id_recursive  # noqa: E402
 
 # --- paths -----------------------------------------------------------------
-DOWNLOADS = Path(r"C:\Users\Onyema Ifechukwu\Downloads")
-POSTMAN_PATH = DOWNLOADS / "Kardit.Api.postman.collection.json"
-CARDS_DIR = DOWNLOADS / "kardit_cards_api_test_agent_v3_1" / "kardit_cards_api_test_agent_v3_1"
-TEST_PACK_PATH = DOWNLOADS / "cards_microservice_functional_test_pack_v1_40_each.json"
-SWAGGER_PATH = DOWNLOADS / "MainSwagger.txt"
-LIFECYCLE_PATH = CARDS_DIR / "lifecycle_order.yaml"
-RUNNER_KIT = DOWNLOADS / "kardit_runner_kit"
-SESSION_IDS_PATH = DOWNLOADS / "kardit_session_ids.json"
+# paths resolved relative to this file — works after clone on any OS
+POSTMAN_PATH     = _SHARED / "postman_collection.json"
+TEST_PACK_PATH   = _SVC_DIR / "data" / "test_pack.json"
+SWAGGER_PATH     = _SHARED / "MainSwagger.txt"
+LIFECYCLE_PATH   = _SVC_DIR / "data" / "lifecycle_order.yaml"
+RUNNER_KIT       = _SHARED
+SESSION_IDS_PATH = _SHARED / "session_ids.json"
 # 2026-05-07: backend supplied contract-correct payload replays for failed Cards
 # TCs in `failed payload fixes.md`. Parsed to JSON (parse_failed_payload_fixes.py)
 # and loaded here. When a TC is in this map, the runner sends URL+body verbatim
 # (with requestId/idempotencyKey re-rotated per call) and skips the classifier
 # mutation pipeline, except auth-side mutations which still layer on top.
-FAILED_PAYLOAD_OVERRIDES_PATH = DOWNLOADS / "cards_failed_payload_overrides.json"
+FAILED_PAYLOAD_OVERRIDES_PATH = _SVC_DIR / "data" / "failed_payload_overrides.json"
 CANONICAL_TENANT_ID = "00000000-0000-0000-0000-000000000000"
 
-BASE_URL = "http://167.172.49.177:8082"
+BASE_URL = os.getenv("KARDIT_CARDS_URL", "http://167.172.49.177:8082")
 RUN_TS = dt.datetime.now().strftime("%Y%m%d-%H%M%S")
 
 SCOPE_ENDPOINT = os.environ.get("SCOPE_ENDPOINT")
@@ -97,8 +100,8 @@ if REPLAY_FAILED_REPORT:
         print(f"[REPLAY] Loaded {len(_replay_failed_set)} failed (api_id, scenario) pairs from {REPLAY_FAILED_REPORT}")
     _scope_tag = "_replay_failed"
 
-EVIDENCE_DIR = DOWNLOADS / f"evidence_cards_e2e{_scope_tag}_{RUN_TS}"
-REPORT_PATH = DOWNLOADS / f"cards_e2e_report{_scope_tag}_{RUN_TS}.yaml"
+EVIDENCE_DIR     = _SVC_DIR / "evidence" / f"run_{RUN_TS}"
+REPORT_PATH      = _SVC_DIR / "reports" / f"cards_run_{RUN_TS}.yaml"
 
 # ─── AUTH INFRASTRUCTURE — port 8082 Bearer + ECDSA signing ─────────────────
 import base64
@@ -1832,7 +1835,7 @@ def load_card_pools_from_active_txt(session_ids: dict, txt_path: Path | None = N
     """
     rec = {"step": "seed_card_pools_from_active_txt", "status": "PENDING",
            "started_at": dt.datetime.now().isoformat()}
-    p = Path(txt_path) if txt_path else (DOWNLOADS / "ACTIVE.txt")
+    p = Path(txt_path) if txt_path else (_SVC_DIR / "data" / "ACTIVE.txt")
     if not p.exists():
         rec.update({"status": "SKIPPED", "reason": f"file not found: {p}"})
         return rec

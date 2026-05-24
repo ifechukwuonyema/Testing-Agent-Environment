@@ -31,7 +31,11 @@ from typing import Any
 import requests
 import yaml
 
-sys.path.insert(0, str(Path(__file__).resolve().parent))
+_SVC_DIR   = Path(__file__).resolve().parent
+_REPO_ROOT = _SVC_DIR.parent
+_SHARED    = _REPO_ROOT / "shared"
+sys.path.insert(0, str(_SHARED))
+sys.path.insert(0, str(_SVC_DIR))
 from query_mutator import smart_set_query, smart_set_query_pair  # noqa: E402
 import mutation_engine  # noqa: E402
 
@@ -55,17 +59,16 @@ ENGINE_RUNNER_PRESERVED = {
 }
 
 # --- paths -----------------------------------------------------------------
-DOWNLOADS = Path(r"C:\Users\Onyema Ifechukwu\Downloads")
-POSTMAN_PATH = DOWNLOADS / "Kardit.Api.postman.collection.json"
-ADMIN_DIR = DOWNLOADS / "admin_services_api_test_agent_v1" / "admin_services_api_test_agent"
-TEST_PACK_PATH = ADMIN_DIR / "data" / "admin_services_functional_test_pack_v1_30_plus.json"
+# paths resolved relative to this file — works after clone on any OS
+POSTMAN_PATH     = _SHARED / "postman_collection.json"
+TEST_PACK_PATH   = _SVC_DIR / "data" / "test_pack.json"
 # 2026-05-08: MainSwagger.txt is the canonical source for all 8 services.
-SWAGGER_PATH = DOWNLOADS / "MainSwagger.txt"
-LIFECYCLE_PATH = ADMIN_DIR / "lifecycle_order.yaml"  # may not exist; harness falls back to pack order
-RUNNER_KIT = DOWNLOADS / "kardit_runner_kit"
-SESSION_IDS_PATH = DOWNLOADS / "kardit_session_ids.json"
+SWAGGER_PATH     = _SHARED / "MainSwagger.txt"
+LIFECYCLE_PATH   = _SVC_DIR / "data" / "lifecycle_order.yaml"
+RUNNER_KIT       = _SHARED
+SESSION_IDS_PATH = _SHARED / "session_ids.json"
 
-BASE_URL = "http://167.172.49.177:8080"
+BASE_URL = os.getenv("KARDIT_BASE_URL", "http://167.172.49.177:8080")
 RUN_TS = dt.datetime.now().strftime("%Y%m%d-%H%M%S")
 
 # --- case-pool sizing (added 2026-05-04) ----------------------------------
@@ -190,8 +193,8 @@ if REPLAY_FAILED_REPORT:
     _scope_tag = "_replay_failed"
     print(f"[REPLAY] Loaded {len(_replay_failed_set)} failed (api_id, scenario) pairs from {REPLAY_FAILED_REPORT}")
 
-EVIDENCE_DIR = DOWNLOADS / f"evidence_postman_admin_hybrid{_scope_tag}_{RUN_TS}"
-REPORT_PATH = DOWNLOADS / f"admin_postman_hybrid_report{_scope_tag}_{RUN_TS}.yaml"
+EVIDENCE_DIR     = _SVC_DIR / "evidence" / f"run_{RUN_TS}"
+REPORT_PATH      = _SVC_DIR / "reports" / f"admin_run_{RUN_TS}.yaml"
 
 # --- import kit's SchemaValidator + SessionStore --------------------------
 sys.path.insert(0, str(RUNNER_KIT))

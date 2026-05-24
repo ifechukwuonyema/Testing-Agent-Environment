@@ -29,20 +29,23 @@ from typing import Any
 import requests
 import yaml
 
-sys.path.insert(0, str(Path(__file__).resolve().parent))
+_SVC_DIR   = Path(__file__).resolve().parent
+_REPO_ROOT = _SVC_DIR.parent
+_SHARED    = _REPO_ROOT / "shared"
+sys.path.insert(0, str(_SHARED))
+sys.path.insert(0, str(_SVC_DIR))
 from query_mutator import smart_set_query, smart_set_query_pair, extract_first_id_recursive  # noqa: E402
 
 # --- paths -----------------------------------------------------------------
-DOWNLOADS = Path(r"C:\Users\Onyema Ifechukwu\Downloads")
-POSTMAN_PATH = DOWNLOADS / "Kardit.Api.postman.collection.json"
-BANK_DIR = DOWNLOADS / "kardit_bank_api_test_agent_v3_1" / "kardit_bank_api_test_agent_v3_1"
-TEST_PACK_PATH = DOWNLOADS / "bank_microservice_functional_test_pack_v1_40_each.json"
-SWAGGER_PATH = DOWNLOADS / "MainSwagger.txt"
-LIFECYCLE_PATH = BANK_DIR / "lifecycle_order.yaml"  # may not exist for Bank; harness falls back to pack order
-RUNNER_KIT = DOWNLOADS / "kardit_runner_kit"
-SESSION_IDS_PATH = DOWNLOADS / "kardit_session_ids.json"
+# paths resolved relative to this file — works after clone on any OS
+POSTMAN_PATH     = _SHARED / "postman_collection.json"
+TEST_PACK_PATH   = _SVC_DIR / "data" / "test_pack.json"
+SWAGGER_PATH     = _SHARED / "MainSwagger.txt"
+LIFECYCLE_PATH   = _SVC_DIR / "data" / "lifecycle_order.yaml"
+RUNNER_KIT       = _SHARED
+SESSION_IDS_PATH = _SHARED / "session_ids.json"
 
-BASE_URL = "http://167.172.49.177:8080"
+BASE_URL = os.getenv("KARDIT_BASE_URL", "http://167.172.49.177:8080")
 RUN_TS = dt.datetime.now().strftime("%Y%m%d-%H%M%S")
 
 # Backend-canonical IDs (Bankbackend.docx feedback, 2026-05-07).
@@ -67,7 +70,7 @@ CANONICAL_AFFILIATE_BY_ENDPOINT: dict = {}
 #   approve_reject_pool: [{bankCode, bankId, affiliateId, partnershipRequestId}]
 from collections import deque as _deque
 def _load_fixture_pools():
-    _fp = DOWNLOADS / "bank_fixtures_v2.json"
+    _fp = _SVC_DIR / "data" / "bank_fixtures_v2.json"
     if not _fp.exists():
         return _deque(), _deque(), _deque(), _deque(), _deque(), _deque(), _deque()
     try:
@@ -227,8 +230,8 @@ if REPLAY_FAILED_REPORT:
     _scope_tag = "_replay_failed"
     print(f"[REPLAY] Loaded {len(_replay_failed_set)} FAIL+BLOCKED (api_id, scenario) pairs from {REPLAY_FAILED_REPORT}")
 
-EVIDENCE_DIR = DOWNLOADS / f"evidence_postman_bank_hybrid{_scope_tag}_{RUN_TS}"
-REPORT_PATH = DOWNLOADS / f"bank_postman_hybrid_report{_scope_tag}_{RUN_TS}.yaml"
+EVIDENCE_DIR     = _SVC_DIR / "evidence" / f"run_{RUN_TS}"
+REPORT_PATH      = _SVC_DIR / "reports" / f"bank_run_{RUN_TS}.yaml"
 
 # --- import kit's SchemaValidator + SessionStore --------------------------
 sys.path.insert(0, str(RUNNER_KIT))

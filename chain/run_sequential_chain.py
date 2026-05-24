@@ -42,26 +42,30 @@ from pathlib import Path
 
 import yaml
 
-DOWNLOADS = Path(r"C:\Users\Onyema Ifechukwu\Downloads")
-HARNESSES_DIR = Path(__file__).resolve().parent
-SESSION_STORE = DOWNLOADS / "kardit_session_ids.json"
-VAULT = Path(r"C:\Users\Onyema Ifechukwu\.claude\projects\C--WINDOWS-system32\memory")
+_CHAIN_DIR  = Path(__file__).resolve().parent
+_REPO_ROOT  = _CHAIN_DIR.parent
+_SHARED     = _REPO_ROOT / "shared"
+SESSION_STORE = _SHARED / "session_ids.json"
+# VAULT: optional Obsidian vault for memory files; skip if not set or non-existent
+_vault_env = os.environ.get("KARDIT_VAULT")
+VAULT = Path(_vault_env) if _vault_env and Path(_vault_env).exists() else None
 CHAIN_TS = dt.datetime.now().strftime("%Y%m%d-%H%M%S")
 TODAY = dt.date.today().isoformat()
-CHAIN_REPORT = DOWNLOADS / f"chain_run_{CHAIN_TS}.yaml"
-CHAIN_LOG = DOWNLOADS / f"chain_run_{CHAIN_TS}.log"
+(_CHAIN_DIR / "reports").mkdir(parents=True, exist_ok=True)
+CHAIN_REPORT = _CHAIN_DIR / "reports" / f"chain_run_{CHAIN_TS}.yaml"
+CHAIN_LOG    = _CHAIN_DIR / "reports" / f"chain_run_{CHAIN_TS}.log"
 
-# (label, harness script, report-prefix, evidence-prefix)
-# Order: chain finishes with Admin so it has real cases to act on.
+# (label, svc_folder, harness script, report-prefix, evidence-prefix)
+# Runners live in <repo>/<svc_folder>/<script>; reports in <svc_folder>/reports/; evidence in <svc_folder>/evidence/
 CHAIN_SEQUENCE = [
-    ("Bank",          "postman_hybrid_bank_runner.py",          "bank_postman_hybrid_report_",          "evidence_postman_bank_hybrid_"),
-    ("Affiliate",     "postman_standalone_affiliate_v2.py",     "affiliate_postman_standalone_v2_report_", "evidence_postman_affiliate_v2_"),
-    ("Customer",      "postman_hybrid_customer_runner.py",      "customer_postman_hybrid_report_",      "evidence_postman_customer_hybrid_"),
-    ("Cards",         "postman_hybrid_cards_runner.py",         "cards_postman_hybrid_report_",         "evidence_postman_cards_hybrid_"),
-    ("Transactions",  "postman_hybrid_transactions_runner.py",  "transactions_postman_hybrid_report_",  "evidence_postman_transactions_hybrid_"),
-    ("Batch",         "postman_hybrid_batch_runner.py",         "batch_postman_hybrid_report_",         "evidence_postman_batch_hybrid_"),
-    ("Notifications", "postman_hybrid_notifications_runner.py", "notifications_postman_hybrid_report_", "evidence_postman_notifications_hybrid_"),
-    ("Admin",         "postman_hybrid_admin_runner.py",         "admin_postman_hybrid_report_",         "evidence_postman_admin_hybrid_"),
+    ("Bank",          "bank",          "postman_hybrid_bank_runner.py",          "bank_run_",          "run_"),
+    ("Affiliate",     "affiliate",     "postman_standalone_affiliate_v2.py",     "affiliate_run_",     "run_"),
+    ("Customer",      "customer",      "postman_hybrid_customer_runner.py",       "customer_run_",      "run_"),
+    ("Cards",         "cards",         "cards_e2e_runner.py",                     "cards_run_",         "run_"),
+    ("Transactions",  "transactions",  "postman_hybrid_transactions_runner.py",   "transactions_run_",  "run_"),
+    ("Batch",         "batch",         "postman_hybrid_batch_runner.py",          "batch_run_",         "run_"),
+    ("Notifications", "notifications", "postman_hybrid_notifications_runner.py",  "notifications_run_", "run_"),
+    ("Admin",         "admin",         "postman_hybrid_admin_runner.py",          "admin_run_",         "run_"),
 ]
 
 # Per-service IDs to harvest from successful response bodies.
@@ -101,18 +105,12 @@ def save_session(data: dict) -> None:
     SESSION_STORE.write_text(json.dumps(data, indent=2), encoding="utf-8")
 
 
-def find_newest(prefix: str, after_ts: float) -> Path | None:
-    """Find newest file/dir starting with prefix, modified after after_ts.
-
-    Codex re-audit LOW-7 (2026-05-04): excludes .tar.gz archives created by
-    retention. Without this exclusion, a freshly-archived previous run could
-    be returned for an evidence prefix and break downstream `iterdir()` /
-    `glob('*.json')` calls (an archive is a file, not a directory). Reports
-    are .yaml; evidence is always a directory before archival; a .tar.gz
-    matching either prefix is never the right answer.
-    """
+def find_newest(prefix: str, after_ts: float, search_dir: Path = _REPO_ROOT) -> Path | None:
+    """Find newest file/dir starting with prefix in search_dir, modified after after_ts."""
+    if not search_dir.exists():
+        return None
     candidates = []
-    for p in DOWNLOADS.iterdir():
+    for p in search_dir.iterdir():
         if not p.name.startswith(prefix):
             continue
         if p.name.endswith(".tar.gz"):
@@ -133,20 +131,17 @@ def find_newest(prefix: str, after_ts: float) -> Path | None:
 RETENTION_KEEP = int(os.environ.get("CHAIN_RETENTION_KEEP", "5"))
 
 
-def prune_old_runs(prefix: str, keep: int = RETENTION_KEEP) -> int:
-    """Keep the N most recent dirs/files matching prefix; archive older dirs as
-    .tar.gz, delete older non-yaml files. yaml reports are kept (small).
-
-    Returns the number of items pruned.
-    """
+def prune_old_runs(prefix: str, keep: int = RETENTION_KEEP, search_dir: Path = _REPO_ROOT) -> int:
+    """Keep the N most recent dirs/files matching prefix in search_dir; archive older ones."""
     if keep <= 0:
         return 0
     matches = []
     try:
-        for p in DOWNLOADS.iterdir():
+        if not search_dir.exists():
+            return 0
+        for p in search_dir.iterdir():
             if not p.name.startswith(prefix):
                 continue
-            # Skip already-compressed archives we created previously.
             if p.name.endswith(".tar.gz"):
                 continue
             try:
@@ -525,8 +520,7 @@ def parse_report(report_path: Path) -> dict:
 
 def write_service_memory(service: str, run_record: dict) -> Path | None:
     """Write a memory file in the Obsidian vault for this service's chain run."""
-    if not VAULT.is_dir():
-        log(f"  vault not found at {VAULT} - skipping memory write")
+    if VAULT is None or not VAULT.is_dir():
         return None
     metrics = run_record.get("metrics", {})
     total = metrics.get("total", 0) or 0
@@ -630,14 +624,14 @@ def write_service_memory(service: str, run_record: dict) -> Path | None:
     return path
 
 
-def run_one_service(service: str, script: str, report_prefix: str, evidence_prefix: str) -> dict:
+def run_one_service(service: str, svc_folder: str, script: str, report_prefix: str, evidence_prefix: str) -> dict:
     log(f"---- {service}: {script} ----")
     consumed = dict(load_session())
     log(f"  SessionStore at start: {consumed}")
 
     started = time.time()
     started_iso = dt.datetime.now().isoformat()
-    script_path = HARNESSES_DIR / script
+    script_path = _REPO_ROOT / svc_folder / script
     if not script_path.is_file():
         log(f"  ERROR: harness not found: {script_path}")
         return {
@@ -655,7 +649,7 @@ def run_one_service(service: str, script: str, report_prefix: str, evidence_pref
         env["KEEP_EVIDENCE_DIR"] = "1"
         proc = subprocess.run(
             [sys.executable, str(script_path)],
-            cwd=str(DOWNLOADS),
+            cwd=str(_REPO_ROOT),
             timeout=3600,
             env=env,
             check=False,
@@ -671,8 +665,8 @@ def run_one_service(service: str, script: str, report_prefix: str, evidence_pref
     ended = time.time()
     duration = ended - started
 
-    report_path = find_newest(report_prefix, after_ts=started)
-    evidence_dir = find_newest(evidence_prefix, after_ts=started)
+    report_path  = find_newest(report_prefix,  after_ts=started, search_dir=_REPO_ROOT / svc_folder / "reports")
+    evidence_dir = find_newest(evidence_prefix, after_ts=started, search_dir=_REPO_ROOT / svc_folder / "evidence")
     log(f"  report: {report_path.name if report_path else '(none)'}")
     log(f"  evidence: {evidence_dir.name if evidence_dir else '(none)'}")
 
@@ -712,8 +706,8 @@ def run_one_service(service: str, script: str, report_prefix: str, evidence_pref
 
     # Codex re-audit #11: bound disk usage by archiving older evidence dirs.
     # Keep the N most recent per prefix; report yamls are preserved (audit trail).
-    pruned_evidence = prune_old_runs(evidence_prefix)
-    pruned_reports = prune_old_runs(report_prefix)
+    pruned_evidence = prune_old_runs(evidence_prefix, search_dir=_REPO_ROOT / svc_folder / "evidence")
+    pruned_reports  = prune_old_runs(report_prefix,  search_dir=_REPO_ROOT / svc_folder / "reports")
     if pruned_evidence or pruned_reports:
         log(f"  retention: archived {pruned_evidence} evidence dirs, pruned {pruned_reports} report items")
 
@@ -741,13 +735,13 @@ def run_one_service(service: str, script: str, report_prefix: str, evidence_pref
 
 def main() -> int:
     log(f"=== Sequential chain run start: {CHAIN_TS} ===")
-    log(f"Vault: {VAULT}")
+    log(f"Vault: {VAULT or '(not configured — set KARDIT_VAULT env var to enable memory writes)'}")
     log(f"SessionStore: {SESSION_STORE}")
     log(f"Initial session: {load_session()}")
 
     chain_log: list[dict] = []
-    for label, script, report_prefix, evidence_prefix in CHAIN_SEQUENCE:
-        record = run_one_service(label, script, report_prefix, evidence_prefix)
+    for label, svc_folder, script, report_prefix, evidence_prefix in CHAIN_SEQUENCE:
+        record = run_one_service(label, svc_folder, script, report_prefix, evidence_prefix)
         chain_log.append(record)
 
     summary = {
