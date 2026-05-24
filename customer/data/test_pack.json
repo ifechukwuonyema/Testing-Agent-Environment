@@ -1,0 +1,2104 @@
+{
+  "microservice": "Customer",
+  "version": "v1_40_tests_per_endpoint",
+  "coverage_type": "full_functional_positive_negative_edge_case",
+  "design_note": "Each of the 3 Customer endpoints has exactly 40 functional test cases. Missing and invalid inputs are split into separate granular cases rather than lumped into generic validations.",
+  "total_endpoints": 3,
+  "minimum_test_cases_per_endpoint": 40,
+  "endpoints": [
+    {
+      "api_id": "API-CUS-01",
+      "name": "Create / Save Customer Draft",
+      "endpoint": "POST /api/v1/customers/drafts",
+      "test_case_count": 37,
+      "functional_requirements": [
+        "FR-CUS-API-01-01: The system shall allow authorized affiliate users to create or save customer information before card product selection.",
+        "FR-CUS-API-01-02: The system shall persist customer draft data with tenant and affiliate scope.",
+        "FR-CUS-API-01-03: The system shall validate required customer identity fields before saving a customer draft.",
+        "FR-CUS-API-01-04: The system shall validate customer contact fields before saving a customer draft.",
+        "FR-CUS-API-01-05: The system shall validate customer KYC fields before saving a customer draft.",
+        "FR-CUS-API-01-06: The system shall support customer draft status values including DRAFT and PENDING_CARD_ISSUANCE.",
+        "FR-CUS-API-01-07: The system shall prevent duplicate customer draft creation where the same identity reference already exists within tenant or affiliate scope.",
+        "FR-CUS-API-01-08: The system shall enforce IAM authorization and tenant scope before accepting customer draft creation.",
+        "FR-CUS-API-01-09: The system shall return customerDraftId and persisted draft status after successful save.",
+        "FR-CUS-API-01-10: The system shall record customer draft creation or update activity in AuditLog."
+      ],
+      "test_cases": [
+        {
+          "tc_id": "TC-API-CUS-01-001",
+          "scenario": "create_customer_draft_success",
+          "test_type": "Functional",
+          "test_description": "Verify authorized affiliate user can create a customer draft with valid customer information.",
+          "preconditions": "Authorized Affiliate user; tenant and affiliate context valid.",
+          "input_data": "Valid identity, contact, address, KYC fields; status=DRAFT.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "200; customerDraftId returned; draft status persisted.",
+          "fr_coverage": [
+            "FR-CUS-API-01-01",
+            "FR-CUS-API-01-02",
+            "FR-CUS-API-01-03",
+            "FR-CUS-API-01-04",
+            "FR-CUS-API-01-05",
+            "FR-CUS-API-01-06",
+            "FR-CUS-API-01-07",
+            "FR-CUS-API-01-08",
+            "FR-CUS-API-01-09",
+            "FR-CUS-API-01-10"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-CUS-01-002",
+          "scenario": "save_pending_card_issuance_success",
+          "test_type": "Functional",
+          "test_description": "Verify draft can be saved as PENDING_CARD_ISSUANCE when issuance flow has started.",
+          "preconditions": "Authorized Affiliate user; valid customer data.",
+          "input_data": "Valid customer payload; status=PENDING_CARD_ISSUANCE.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "200; draft saved with PENDING_CARD_ISSUANCE.",
+          "fr_coverage": [
+            "FR-CUS-API-01-01",
+            "FR-CUS-API-01-02",
+            "FR-CUS-API-01-06",
+            "FR-CUS-API-01-09"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-CUS-01-003",
+          "scenario": "missing_tenant_id_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify tenantId is required.",
+          "preconditions": "Authorized user.",
+          "input_data": "tenantId omitted.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "400/422 validation error; no draft persisted.",
+          "fr_coverage": [
+            "FR-CUS-API-01-02",
+            "FR-CUS-API-01-08"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-CUS-01-004",
+          "scenario": "blank_tenant_id_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify blank tenantId is rejected.",
+          "preconditions": "Authorized user.",
+          "input_data": "tenantId empty string.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "400/422 validation error.",
+          "fr_coverage": [
+            "FR-CUS-API-01-02",
+            "FR-CUS-API-01-08"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-CUS-01-005",
+          "scenario": "missing_affiliate_id_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify affiliateId is required.",
+          "preconditions": "Authorized Affiliate user.",
+          "input_data": "affiliateId omitted.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "400/422 validation error.",
+          "fr_coverage": [
+            "FR-CUS-API-01-02",
+            "FR-CUS-API-01-08"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-CUS-01-006",
+          "scenario": "blank_affiliate_id_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify blank affiliateId is rejected.",
+          "preconditions": "Authorized Affiliate user.",
+          "input_data": "affiliateId empty string.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "400/422 validation error.",
+          "fr_coverage": [
+            "FR-CUS-API-01-02",
+            "FR-CUS-API-01-08"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-CUS-01-007",
+          "scenario": "foreign_affiliate_scope_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify caller cannot create draft under another affiliate scope.",
+          "preconditions": "Affiliate A user; request contains Affiliate B context.",
+          "input_data": "affiliateId belongs to another affiliate.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "403 Forbidden; no draft persisted.",
+          "fr_coverage": [
+            "FR-CUS-API-01-02",
+            "FR-CUS-API-01-08"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-CUS-01-008",
+          "scenario": "missing_first_name_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify firstName is required independently.",
+          "preconditions": "Authorized Affiliate user.",
+          "input_data": "firstName omitted.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "400/422 validation error identifying firstName.",
+          "fr_coverage": [
+            "FR-CUS-API-01-03"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-CUS-01-009",
+          "scenario": "blank_first_name_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify blank firstName is rejected.",
+          "preconditions": "Authorized Affiliate user.",
+          "input_data": "firstName empty string.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "400/422 validation error.",
+          "fr_coverage": [
+            "FR-CUS-API-01-03"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-CUS-01-010",
+          "scenario": "first_name_max_length_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify firstName maximum length is enforced.",
+          "preconditions": "Authorized Affiliate user.",
+          "input_data": "firstName exceeds configured max length.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "400/422 validation error.",
+          "fr_coverage": [
+            "FR-CUS-API-01-03"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-CUS-01-011",
+          "scenario": "missing_last_name_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify lastName is required independently.",
+          "preconditions": "Authorized Affiliate user.",
+          "input_data": "lastName omitted.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "400/422 validation error identifying lastName.",
+          "fr_coverage": [
+            "FR-CUS-API-01-03"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-CUS-01-012",
+          "scenario": "blank_last_name_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify blank lastName is rejected.",
+          "preconditions": "Authorized Affiliate user.",
+          "input_data": "lastName empty string.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "400/422 validation error.",
+          "fr_coverage": [
+            "FR-CUS-API-01-03"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-CUS-01-013",
+          "scenario": "missing_dob_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify dateOfBirth is required.",
+          "preconditions": "Authorized Affiliate user.",
+          "input_data": "dateOfBirth omitted.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "400/422 validation error.",
+          "fr_coverage": [
+            "FR-CUS-API-01-03"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-CUS-01-014",
+          "scenario": "invalid_date_of_birth_format_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify invalid dateOfBirth format is rejected.",
+          "preconditions": "Authorized Affiliate user.",
+          "input_data": "dateOfBirth='31/31/2026'.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "400/422 validation error.",
+          "fr_coverage": [
+            "FR-CUS-API-01-03"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-CUS-01-015",
+          "scenario": "future_date_of_birth_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify future dateOfBirth is rejected.",
+          "preconditions": "Authorized Affiliate user.",
+          "input_data": "dateOfBirth greater than current date.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "400/422 validation error.",
+          "fr_coverage": [
+            "FR-CUS-API-01-03"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-CUS-01-016",
+          "scenario": "underage_customer_rejected_where_policy_requires",
+          "test_type": "Functional",
+          "test_description": "Verify underage customer is rejected where age policy applies.",
+          "preconditions": "Authorized Affiliate user.",
+          "input_data": "dateOfBirth below minimum age.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "400/422 business validation error.",
+          "fr_coverage": [
+            "FR-CUS-API-01-03",
+            "FR-CUS-API-01-05"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-CUS-01-017",
+          "scenario": "missing_phone_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify phone is required independently.",
+          "preconditions": "Authorized Affiliate user.",
+          "input_data": "phone omitted.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "400/422 validation error.",
+          "fr_coverage": [
+            "FR-CUS-API-01-04"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-CUS-01-018",
+          "scenario": "invalid_phone_format_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify invalid phone format is rejected.",
+          "preconditions": "Authorized Affiliate user.",
+          "input_data": "phone='abc123'.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "400/422 validation error.",
+          "fr_coverage": [
+            "FR-CUS-API-01-04"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-CUS-01-019",
+          "scenario": "missing_email_rejected_if_required",
+          "test_type": "Functional",
+          "test_description": "Verify email is required where required by customer profile policy.",
+          "preconditions": "Authorized Affiliate user.",
+          "input_data": "email omitted.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "400/422 if email is mandatory; otherwise saved according to policy.",
+          "fr_coverage": [
+            "FR-CUS-API-01-04"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-CUS-01-020",
+          "scenario": "invalid_email_format_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify invalid email format is rejected.",
+          "preconditions": "Authorized Affiliate user.",
+          "input_data": "email='bad-email'.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "400/422 validation error.",
+          "fr_coverage": [
+            "FR-CUS-API-01-04"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-CUS-01-021",
+          "scenario": "missing_line1_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify addressLine is required where address is mandatory.",
+          "preconditions": "Authorized Affiliate user.",
+          "input_data": "addressLine omitted.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "400/422 validation error where required.",
+          "fr_coverage": [
+            "FR-CUS-API-01-03",
+            "FR-CUS-API-01-04"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-CUS-01-022",
+          "scenario": "missing_country_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify country is required.",
+          "preconditions": "Authorized Affiliate user.",
+          "input_data": "country omitted.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "400/422 validation error.",
+          "fr_coverage": [
+            "FR-CUS-API-01-03",
+            "FR-CUS-API-01-04"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-CUS-01-023",
+          "scenario": "invalid_country_code_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify invalid country code is rejected.",
+          "preconditions": "Authorized Affiliate user.",
+          "input_data": "country='XX-invalid'.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "400/422 validation error.",
+          "fr_coverage": [
+            "FR-CUS-API-01-03",
+            "FR-CUS-API-01-04"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-CUS-01-024",
+          "scenario": "missing_id_type_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify idType is required.",
+          "preconditions": "Authorized Affiliate user.",
+          "input_data": "idType omitted.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "400/422 validation error.",
+          "fr_coverage": [
+            "FR-CUS-API-01-05"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-CUS-01-025",
+          "scenario": "unsupported_id_type_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify unsupported idType is rejected.",
+          "preconditions": "Authorized Affiliate user.",
+          "input_data": "idType='ALIEN_ID'.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "400/422 validation error.",
+          "fr_coverage": [
+            "FR-CUS-API-01-05"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-CUS-01-026",
+          "scenario": "missing_idNumberMasked_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify idNumber is required.",
+          "preconditions": "Authorized Affiliate user.",
+          "input_data": "idNumber omitted.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "400/422 validation error.",
+          "fr_coverage": [
+            "FR-CUS-API-01-05"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-CUS-01-027",
+          "scenario": "invalid_id_number_format_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify invalid idNumber format is rejected.",
+          "preconditions": "Authorized Affiliate user.",
+          "input_data": "idNumber contains unsupported characters.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "400/422 validation error.",
+          "fr_coverage": [
+            "FR-CUS-API-01-05"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-CUS-01-028",
+          "scenario": "missing_kyc_level_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify kycLevel is required where required for draft save.",
+          "preconditions": "Authorized Affiliate user.",
+          "input_data": "kycLevel omitted.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "400/422 validation error.",
+          "fr_coverage": [
+            "FR-CUS-API-01-05"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-CUS-01-029",
+          "scenario": "unsupported_kyc_level_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify unsupported kycLevel is rejected.",
+          "preconditions": "Authorized Affiliate user.",
+          "input_data": "kycLevel='LEVEL_99'.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "400/422 validation error.",
+          "fr_coverage": [
+            "FR-CUS-API-01-05"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-CUS-01-033",
+          "scenario": "duplicate_identity_same_scope_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify duplicate identity reference in same tenant/affiliate scope is rejected.",
+          "preconditions": "Customer/draft already exists with same idType/idNumber in same scope.",
+          "input_data": "Same idType and idNumber.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "409 Conflict or duplicate validation error.",
+          "fr_coverage": [
+            "FR-CUS-API-01-07"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-CUS-01-034",
+          "scenario": "same_identity_different_affiliate_policy",
+          "test_type": "Functional",
+          "test_description": "Verify same identity in a different affiliate scope follows platform policy.",
+          "preconditions": "Existing identity in Affiliate A; caller is Affiliate B.",
+          "input_data": "Same idType/idNumber under Affiliate B.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "Allowed or rejected according to tenant identity uniqueness policy.",
+          "fr_coverage": [
+            "FR-CUS-API-01-07",
+            "FR-CUS-API-01-08"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-CUS-01-035",
+          "scenario": "unauthenticated_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify unauthenticated draft creation is rejected.",
+          "preconditions": "No access token.",
+          "input_data": "Valid payload.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "401 Unauthorized.",
+          "fr_coverage": [
+            "FR-CUS-API-01-08"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-CUS-01-036",
+          "scenario": "invalid_token_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify expired/malformed token is rejected.",
+          "preconditions": "Invalid token.",
+          "input_data": "Valid payload.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "401 Unauthorized.",
+          "fr_coverage": [
+            "FR-CUS-API-01-08"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-CUS-01-037",
+          "scenario": "bank_user_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify Bank user cannot create affiliate customer draft unless policy allows.",
+          "preconditions": "Bank user authenticated.",
+          "input_data": "Valid draft payload.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "403 Forbidden.",
+          "fr_coverage": [
+            "FR-CUS-API-01-08"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-CUS-01-038",
+          "scenario": "service_provider_write_rejected_or_policy_checked",
+          "test_type": "Functional",
+          "test_description": "Verify Service Provider write policy is enforced.",
+          "preconditions": "Service Provider user.",
+          "input_data": "Valid draft payload.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "Allowed only if explicitly permitted; otherwise 403.",
+          "fr_coverage": [
+            "FR-CUS-API-01-08"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-CUS-01-039",
+          "scenario": "audit_log_created",
+          "test_type": "Functional",
+          "test_description": "Verify draft creation/update is recorded in AuditLog.",
+          "preconditions": "Audit enabled; valid request.",
+          "input_data": "Valid draft payload.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "AuditLog contains actor, tenant, affiliate, draftId, outcome.",
+          "fr_coverage": [
+            "FR-CUS-API-01-10"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-CUS-01-040",
+          "scenario": "response_contract_valid",
+          "test_type": "Functional",
+          "test_description": "Verify response contract contains required draft fields.",
+          "preconditions": "Authorized Affiliate user.",
+          "input_data": "Valid draft payload.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "Response includes customerDraftId, status, tenantId, affiliateId, timestamps.",
+          "fr_coverage": [
+            "FR-CUS-API-01-09"
+          ],
+          "priority": "High"
+        }
+      ]
+    },
+    {
+      "api_id": "API-CUS-02",
+      "name": "Search Customers",
+      "endpoint": "POST /api/v1/customers/search",
+      "test_case_count": 32,
+      "functional_requirements": [
+        "FR-CUS-API-02-01: The system shall allow authorized users to search customers within permitted tenant, affiliate, or bank scope.",
+        "FR-CUS-API-02-02: The system shall support search by customer name.",
+        "FR-CUS-API-02-03: The system shall support search by phone number.",
+        "FR-CUS-API-02-04: The system shall support search by email address.",
+        "FR-CUS-API-02-05: The system shall support search by identity type and identity number.",
+        "FR-CUS-API-02-06: The system shall support filtering by customer status.",
+        "FR-CUS-API-02-07: The system shall support filtering by KYC status and KYC level.",
+        "FR-CUS-API-02-08: The system shall support pagination for customer search results.",
+        "FR-CUS-API-02-09: The system shall return customer summary records in a normalized response wrapper.",
+        "FR-CUS-API-02-10: The system shall enforce tenant and affiliate scope isolation before returning customer results.",
+        "FR-CUS-API-02-11: The system shall reject invalid search filters or unsupported filter combinations.",
+        "FR-CUS-API-02-12: The system shall record customer search activity where audit policy requires it."
+      ],
+      "test_cases": [
+        {
+          "tc_id": "TC-API-CUS-02-001",
+          "scenario": "search_success_default",
+          "test_type": "Functional",
+          "test_description": "Verify authorized user can search customers within permitted scope.",
+          "preconditions": "Authorized caller; customers exist.",
+          "input_data": "Default/minimal search request.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "200 OK; page, pageSize, data returned.",
+          "fr_coverage": [
+            "FR-CUS-API-02-01",
+            "FR-CUS-API-02-02",
+            "FR-CUS-API-02-03",
+            "FR-CUS-API-02-04",
+            "FR-CUS-API-02-05",
+            "FR-CUS-API-02-06",
+            "FR-CUS-API-02-07",
+            "FR-CUS-API-02-08",
+            "FR-CUS-API-02-09",
+            "FR-CUS-API-02-10",
+            "FR-CUS-API-02-11",
+            "FR-CUS-API-02-12"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-CUS-02-002",
+          "scenario": "search_minimum_pagination_success",
+          "test_type": "Functional",
+          "test_description": "Verify search supports pageSize=1.",
+          "preconditions": "Authorized caller; customers exist.",
+          "input_data": "page=1,pageSize=1.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "200 OK with one or fewer customer summaries.",
+          "fr_coverage": [
+            "FR-CUS-API-02-08",
+            "FR-CUS-API-02-09"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-CUS-02-003",
+          "scenario": "search_by_name_success",
+          "test_type": "Functional",
+          "test_description": "Verify search by customer name works.",
+          "preconditions": "Authorized caller; matching/non-matching customers exist.",
+          "input_data": "name='Ada'.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "Only matching customer names returned.",
+          "fr_coverage": [
+            "FR-CUS-API-02-02",
+            "FR-CUS-API-02-09"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-CUS-02-004",
+          "scenario": "blank_name_rejected_or_ignored",
+          "test_type": "Functional",
+          "test_description": "Verify blank name filter behavior.",
+          "preconditions": "Authorized caller.",
+          "input_data": "name empty string.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "Rejected or ignored according to contract.",
+          "fr_coverage": [
+            "FR-CUS-API-02-02",
+            "FR-CUS-API-02-11"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-CUS-02-005",
+          "scenario": "name_special_chars_safe",
+          "test_type": "Functional",
+          "test_description": "Verify name search handles safe special characters.",
+          "preconditions": "Authorized caller.",
+          "input_data": "name contains apostrophe/hyphen.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "Safe deterministic response.",
+          "fr_coverage": [
+            "FR-CUS-API-02-02",
+            "FR-CUS-API-02-11"
+          ],
+          "priority": "Low"
+        },
+        {
+          "tc_id": "TC-API-CUS-02-006",
+          "scenario": "search_by_phone_success",
+          "test_type": "Functional",
+          "test_description": "Verify search by phone number works.",
+          "preconditions": "Authorized caller; matching phone exists.",
+          "input_data": "phone valid.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "Only matching phone customer summaries returned.",
+          "fr_coverage": [
+            "FR-CUS-API-02-03",
+            "FR-CUS-API-02-09"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-CUS-02-007",
+          "scenario": "invalid_phone_filter_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify invalid phone search filter is rejected.",
+          "preconditions": "Authorized caller.",
+          "input_data": "phone='abc123'.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "400/422 validation error.",
+          "fr_coverage": [
+            "FR-CUS-API-02-03",
+            "FR-CUS-API-02-11"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-CUS-02-008",
+          "scenario": "search_by_email_success",
+          "test_type": "Functional",
+          "test_description": "Verify search by email works.",
+          "preconditions": "Authorized caller; matching email exists.",
+          "input_data": "email valid.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "Only matching email customer summaries returned.",
+          "fr_coverage": [
+            "FR-CUS-API-02-04",
+            "FR-CUS-API-02-09"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-CUS-02-010",
+          "scenario": "search_by_id_type_and_id_number_success",
+          "test_type": "Functional",
+          "test_description": "Verify search by identity type and number works.",
+          "preconditions": "Authorized caller; matching identity exists.",
+          "input_data": "idType and idNumber valid.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "Only matching identity customer returned.",
+          "fr_coverage": [
+            "FR-CUS-API-02-05",
+            "FR-CUS-API-02-09"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-CUS-02-014",
+          "scenario": "invalid_id_number_filter_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify invalid idNumber filter is rejected.",
+          "preconditions": "Authorized caller.",
+          "input_data": "idNumber malformed.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "400/422 validation error.",
+          "fr_coverage": [
+            "FR-CUS-API-02-05",
+            "FR-CUS-API-02-11"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-CUS-02-015",
+          "scenario": "filter_by_active_status_success",
+          "test_type": "Functional",
+          "test_description": "Verify filtering by ACTIVE status works.",
+          "preconditions": "Authorized caller; customers with multiple statuses exist.",
+          "input_data": "status=ACTIVE.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "Only ACTIVE customers returned.",
+          "fr_coverage": [
+            "FR-CUS-API-02-06",
+            "FR-CUS-API-02-09"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-CUS-02-016",
+          "scenario": "filter_by_pending_card_issuance_status_success",
+          "test_type": "Functional",
+          "test_description": "Verify filtering by PENDING_CARD_ISSUANCE status works.",
+          "preconditions": "Authorized caller; matching customers/drafts exist.",
+          "input_data": "status=PENDING_CARD_ISSUANCE.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "Only matching records returned.",
+          "fr_coverage": [
+            "FR-CUS-API-02-06",
+            "FR-CUS-API-02-09"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-CUS-02-018",
+          "scenario": "filter_by_kyc_status_success",
+          "test_type": "Functional",
+          "test_description": "Verify filtering by KYC status works.",
+          "preconditions": "Authorized caller; customers with multiple KYC statuses exist.",
+          "input_data": "kycStatus=VERIFIED.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "Only matching KYC status returned.",
+          "fr_coverage": [
+            "FR-CUS-API-02-07",
+            "FR-CUS-API-02-09"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-CUS-02-020",
+          "scenario": "filter_by_kyc_level_success",
+          "test_type": "Functional",
+          "test_description": "Verify filtering by KYC level works.",
+          "preconditions": "Authorized caller; customers with multiple KYC levels exist.",
+          "input_data": "kycLevel=LEVEL_2.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "Only matching KYC level returned.",
+          "fr_coverage": [
+            "FR-CUS-API-02-07",
+            "FR-CUS-API-02-09"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-CUS-02-022",
+          "scenario": "multiple_filters_and_semantics",
+          "test_type": "Functional",
+          "test_description": "Verify multiple filters use AND semantics.",
+          "preconditions": "Authorized caller; overlapping dataset exists.",
+          "input_data": "name + status + kycLevel.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "Every returned record satisfies all filters.",
+          "fr_coverage": [
+            "FR-CUS-API-02-02",
+            "FR-CUS-API-02-06",
+            "FR-CUS-API-02-07",
+            "FR-CUS-API-02-11"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-CUS-02-024",
+          "scenario": "page_one_success",
+          "test_type": "Functional",
+          "test_description": "Verify first page pagination works.",
+          "preconditions": "Authorized caller; more than one page exists.",
+          "input_data": "page=1,pageSize=10.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "200 OK with page metadata.",
+          "fr_coverage": [
+            "FR-CUS-API-02-08",
+            "FR-CUS-API-02-09"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-CUS-02-025",
+          "scenario": "page_two_success",
+          "test_type": "Functional",
+          "test_description": "Verify second page pagination works.",
+          "preconditions": "Authorized caller; more than one page exists.",
+          "input_data": "page=2,pageSize=10.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "200 OK with next page.",
+          "fr_coverage": [
+            "FR-CUS-API-02-08",
+            "FR-CUS-API-02-09"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-CUS-02-026",
+          "scenario": "page_zero_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify page=0 is rejected.",
+          "preconditions": "Authorized caller.",
+          "input_data": "page=0.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "400/422 validation error.",
+          "fr_coverage": [
+            "FR-CUS-API-02-08",
+            "FR-CUS-API-02-11"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-CUS-02-027",
+          "scenario": "page_size_zero_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify pageSize=0 is rejected.",
+          "preconditions": "Authorized caller.",
+          "input_data": "pageSize=0.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "400/422 validation error.",
+          "fr_coverage": [
+            "FR-CUS-API-02-08",
+            "FR-CUS-API-02-11"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-CUS-02-028",
+          "scenario": "excessive_page_size_rejected_or_capped",
+          "test_type": "Functional",
+          "test_description": "Verify excessive pageSize is rejected or capped.",
+          "preconditions": "Authorized caller.",
+          "input_data": "pageSize=100000.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "Rejected or capped according to policy.",
+          "fr_coverage": [
+            "FR-CUS-API-02-08",
+            "FR-CUS-API-02-11"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-CUS-02-029",
+          "scenario": "empty_result_well_formed",
+          "test_type": "Functional",
+          "test_description": "Verify no matching customers returns well-formed empty response.",
+          "preconditions": "Authorized caller; no matching customers.",
+          "input_data": "Filters match no data.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "200 OK with empty data array and pagination metadata.",
+          "fr_coverage": [
+            "FR-CUS-API-02-08",
+            "FR-CUS-API-02-09"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-CUS-02-030",
+          "scenario": "response_summary_fields_present",
+          "test_type": "Functional",
+          "test_description": "Verify returned customer summary fields are present.",
+          "preconditions": "Authorized caller; customers exist.",
+          "input_data": "Valid search.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "Each item includes customerId, name, status, KYC summary, tenant/affiliate scope fields as allowed.",
+          "fr_coverage": [
+            "FR-CUS-API-02-09"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-CUS-02-031",
+          "scenario": "tenant_scope_isolation",
+          "test_type": "Functional",
+          "test_description": "Verify tenant scope isolation in search results.",
+          "preconditions": "Customers exist across tenants.",
+          "input_data": "Broad search.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "Only permitted tenant customers returned.",
+          "fr_coverage": [
+            "FR-CUS-API-02-01",
+            "FR-CUS-API-02-10"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-CUS-02-032",
+          "scenario": "affiliate_scope_isolation",
+          "test_type": "Functional",
+          "test_description": "Verify affiliate scope isolation in search results.",
+          "preconditions": "Customers exist across affiliates.",
+          "input_data": "Broad search.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "Only permitted affiliate-scope customers returned.",
+          "fr_coverage": [
+            "FR-CUS-API-02-01",
+            "FR-CUS-API-02-10"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-CUS-02-033",
+          "scenario": "bank_scope_search_policy",
+          "test_type": "Functional",
+          "test_description": "Verify bank-scoped customer search follows card/customer portfolio policy.",
+          "preconditions": "Bank user authenticated; customers exist inside/outside bank portfolio.",
+          "input_data": "Broad search.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "Only bank-permitted customers returned.",
+          "fr_coverage": [
+            "FR-CUS-API-02-01",
+            "FR-CUS-API-02-10"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-CUS-02-034",
+          "scenario": "service_provider_read_only_search",
+          "test_type": "Functional",
+          "test_description": "Verify Service Provider customer search works in oversight mode where permitted.",
+          "preconditions": "Service Provider user.",
+          "input_data": "Broad search.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "200 OK read-only authorized dataset.",
+          "fr_coverage": [
+            "FR-CUS-API-02-01",
+            "FR-CUS-API-02-10"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-CUS-02-035",
+          "scenario": "unauthenticated_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify unauthenticated search is rejected.",
+          "preconditions": "No token.",
+          "input_data": "Valid search.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "401 Unauthorized.",
+          "fr_coverage": [
+            "FR-CUS-API-02-10"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-CUS-02-036",
+          "scenario": "invalid_token_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify invalid token is rejected.",
+          "preconditions": "Invalid token.",
+          "input_data": "Valid search.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "401 Unauthorized.",
+          "fr_coverage": [
+            "FR-CUS-API-02-10"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-CUS-02-037",
+          "scenario": "foreign_scope_filter_rejected_or_filtered",
+          "test_type": "Functional",
+          "test_description": "Verify foreign scope filters do not leak data.",
+          "preconditions": "Caller lacks requested scope.",
+          "input_data": "foreign tenantId/affiliateId filter.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "403 or empty result without data leakage.",
+          "fr_coverage": [
+            "FR-CUS-API-02-10"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-CUS-02-038",
+          "scenario": "audit_log_created_where_required",
+          "test_type": "Functional",
+          "test_description": "Verify customer search is audited where required.",
+          "preconditions": "Audit enabled.",
+          "input_data": "Valid search.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "AuditLog entry created where policy requires.",
+          "fr_coverage": [
+            "FR-CUS-API-02-12"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-CUS-02-039",
+          "scenario": "malformed_json_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify malformed JSON is rejected.",
+          "preconditions": "Authorized caller.",
+          "input_data": "Malformed request body.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "400 Bad Request.",
+          "fr_coverage": [
+            "FR-CUS-API-02-11"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-CUS-02-040",
+          "scenario": "response_contract_valid",
+          "test_type": "Functional",
+          "test_description": "Verify search response wrapper contract is valid.",
+          "preconditions": "Authorized caller.",
+          "input_data": "Valid search.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "Response includes page, pageSize, data array and expected metadata.",
+          "fr_coverage": [
+            "FR-CUS-API-02-08",
+            "FR-CUS-API-02-09"
+          ],
+          "priority": "High"
+        }
+      ]
+    },
+    {
+      "api_id": "API-CUS-03",
+      "name": "Retrieve Customer Details",
+      "endpoint": "GET /api/v1/customers/{customerId}",
+      "test_case_count": 39,
+      "functional_requirements": [
+        "FR-CUS-API-03-01: The system shall allow authorized users to retrieve customer detail by customerId.",
+        "FR-CUS-API-03-02: The system shall enforce IAM authorization and tenant or affiliate scope before returning customer detail.",
+        "FR-CUS-API-03-03: The system shall return customer identity, contact, address, KYC, status, tenant, and affiliate information.",
+        "FR-CUS-API-03-04: The system shall return linked card or card issuance references where available.",
+        "FR-CUS-API-03-05: The system shall prevent users from retrieving customers outside their permitted scope.",
+        "FR-CUS-API-03-06: The system shall return 404 when the specified customerId does not exist.",
+        "FR-CUS-API-03-07: The system shall return customer detail in read-only form.",
+        "FR-CUS-API-03-08: The system shall mask or exclude sensitive fields according to platform policy.",
+        "FR-CUS-API-03-09: The system shall record customer detail access where audit policy requires it."
+      ],
+      "test_cases": [
+        {
+          "tc_id": "TC-API-CUS-03-001",
+          "scenario": "retrieve_customer_detail_success",
+          "test_type": "Functional",
+          "test_description": "Verify authorized caller can retrieve customer detail by customerId.",
+          "preconditions": "Authorized caller; customer exists in scope.",
+          "input_data": "Valid customerId.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "200 OK; customer detail returned.",
+          "fr_coverage": [
+            "FR-CUS-API-03-01",
+            "FR-CUS-API-03-02",
+            "FR-CUS-API-03-03",
+            "FR-CUS-API-03-04",
+            "FR-CUS-API-03-05",
+            "FR-CUS-API-03-06",
+            "FR-CUS-API-03-07",
+            "FR-CUS-API-03-08",
+            "FR-CUS-API-03-09"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-CUS-03-002",
+          "scenario": "active_customer_detail_success",
+          "test_type": "Functional",
+          "test_description": "Verify ACTIVE customer detail can be retrieved.",
+          "preconditions": "Authorized caller; ACTIVE customer exists.",
+          "input_data": "ACTIVE customerId.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "200 OK.",
+          "fr_coverage": [
+            "FR-CUS-API-03-01",
+            "FR-CUS-API-03-02",
+            "FR-CUS-API-03-03"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-CUS-03-003",
+          "scenario": "pending_card_issuance_customer_detail_success",
+          "test_type": "Functional",
+          "test_description": "Verify PENDING_CARD_ISSUANCE customer detail can be retrieved.",
+          "preconditions": "Authorized caller; pending customer exists.",
+          "input_data": "PENDING_CARD_ISSUANCE customerId.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "200 OK.",
+          "fr_coverage": [
+            "FR-CUS-API-03-01",
+            "FR-CUS-API-03-02",
+            "FR-CUS-API-03-03"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-CUS-03-004",
+          "scenario": "suspended_customer_detail_policy",
+          "test_type": "Functional",
+          "test_description": "Verify SUSPENDED customer detail visibility follows policy.",
+          "preconditions": "Authorized caller; suspended customer exists.",
+          "input_data": "SUSPENDED customerId.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "200 OK for authorized scope or restricted by policy.",
+          "fr_coverage": [
+            "FR-CUS-API-03-01",
+            "FR-CUS-API-03-02",
+            "FR-CUS-API-03-03"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-CUS-03-005",
+          "scenario": "inactive_customer_detail_policy",
+          "test_type": "Functional",
+          "test_description": "Verify INACTIVE customer detail visibility follows policy.",
+          "preconditions": "Authorized caller; inactive customer exists.",
+          "input_data": "INACTIVE customerId.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "200 OK or restricted according to policy.",
+          "fr_coverage": [
+            "FR-CUS-API-03-01",
+            "FR-CUS-API-03-02",
+            "FR-CUS-API-03-03"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-CUS-03-006",
+          "scenario": "unknown_customer_not_found",
+          "test_type": "Functional",
+          "test_description": "Verify unknown customerId returns 404.",
+          "preconditions": "Authorized caller.",
+          "input_data": "customerId=CUS-UNKNOWN.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "404 Not Found.",
+          "fr_coverage": [
+            "FR-CUS-API-03-06"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-CUS-03-007",
+          "scenario": "malformed_customer_id_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify malformed customerId is rejected.",
+          "preconditions": "Authorized caller.",
+          "input_data": "customerId='!!!'.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "400/422 validation error.",
+          "fr_coverage": [
+            "FR-CUS-API-03-01",
+            "FR-CUS-API-03-06"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-CUS-03-008",
+          "scenario": "unauthenticated_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify unauthenticated detail retrieval is rejected.",
+          "preconditions": "No token.",
+          "input_data": "Valid customerId.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "401 Unauthorized.",
+          "fr_coverage": [
+            "FR-CUS-API-03-02"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-CUS-03-009",
+          "scenario": "invalid_token_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify invalid token is rejected.",
+          "preconditions": "Invalid token.",
+          "input_data": "Valid customerId.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "401 Unauthorized.",
+          "fr_coverage": [
+            "FR-CUS-API-03-02"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-CUS-03-010",
+          "scenario": "affiliate_scope_success",
+          "test_type": "Functional",
+          "test_description": "Verify Affiliate user can retrieve in-scope customer.",
+          "preconditions": "Affiliate user; customer belongs to affiliate.",
+          "input_data": "Valid customerId.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "200 OK.",
+          "fr_coverage": [
+            "FR-CUS-API-03-02",
+            "FR-CUS-API-03-05"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-CUS-03-011",
+          "scenario": "foreign_affiliate_scope_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify Affiliate user cannot retrieve customer outside affiliate scope.",
+          "preconditions": "Affiliate A user; customer belongs to Affiliate B.",
+          "input_data": "foreign customerId.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "403 Forbidden or 404 masked.",
+          "fr_coverage": [
+            "FR-CUS-API-03-02",
+            "FR-CUS-API-03-05"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-CUS-03-012",
+          "scenario": "tenant_scope_isolation",
+          "test_type": "Functional",
+          "test_description": "Verify customer detail cannot cross tenant boundary.",
+          "preconditions": "Caller in Tenant A; customer in Tenant B.",
+          "input_data": "foreign tenant customerId.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "403/404 with no data leakage.",
+          "fr_coverage": [
+            "FR-CUS-API-03-02",
+            "FR-CUS-API-03-05"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-CUS-03-013",
+          "scenario": "bank_scope_policy",
+          "test_type": "Functional",
+          "test_description": "Verify bank user can only retrieve customer details within bank portfolio where permitted.",
+          "preconditions": "Bank user; customers exist inside/outside portfolio.",
+          "input_data": "customerId.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "200 for in-scope; 403/404 for out-of-scope.",
+          "fr_coverage": [
+            "FR-CUS-API-03-02",
+            "FR-CUS-API-03-05"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-CUS-03-014",
+          "scenario": "service_provider_read_only_success",
+          "test_type": "Functional",
+          "test_description": "Verify Service Provider can retrieve customer detail in oversight read-only mode where permitted.",
+          "preconditions": "Service Provider user.",
+          "input_data": "Valid customerId.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "200 OK read-only response.",
+          "fr_coverage": [
+            "FR-CUS-API-03-02",
+            "FR-CUS-API-03-07"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-CUS-03-015",
+          "scenario": "identity_fields_returned",
+          "test_type": "Functional",
+          "test_description": "Verify identity fields are returned.",
+          "preconditions": "Authorized caller; customer exists.",
+          "input_data": "Valid customerId.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "Response includes firstName, lastName, dateOfBirth or permitted identity summary.",
+          "fr_coverage": [
+            "FR-CUS-API-03-03"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-CUS-03-016",
+          "scenario": "contact_fields_returned",
+          "test_type": "Functional",
+          "test_description": "Verify contact fields are returned.",
+          "preconditions": "Authorized caller; customer exists.",
+          "input_data": "Valid customerId.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "Response includes phone and email according to masking policy.",
+          "fr_coverage": [
+            "FR-CUS-API-03-03"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-CUS-03-017",
+          "scenario": "address_fields_returned",
+          "test_type": "Functional",
+          "test_description": "Verify address fields are returned.",
+          "preconditions": "Authorized caller; customer exists.",
+          "input_data": "Valid customerId.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "Response includes address fields where available.",
+          "fr_coverage": [
+            "FR-CUS-API-03-03"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-CUS-03-018",
+          "scenario": "kyc_fields_returned",
+          "test_type": "Functional",
+          "test_description": "Verify KYC fields are returned.",
+          "preconditions": "Authorized caller; customer exists.",
+          "input_data": "Valid customerId.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "Response includes idType, masked idNumber, kycLevel, kycStatus as permitted.",
+          "fr_coverage": [
+            "FR-CUS-API-03-03"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-CUS-03-019",
+          "scenario": "status_returned",
+          "test_type": "Functional",
+          "test_description": "Verify customer status is returned.",
+          "preconditions": "Authorized caller; customer exists.",
+          "input_data": "Valid customerId.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "Response includes customer status.",
+          "fr_coverage": [
+            "FR-CUS-API-03-03"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-CUS-03-020",
+          "scenario": "tenant_affiliate_fields_returned",
+          "test_type": "Functional",
+          "test_description": "Verify tenant and affiliate information is returned where permitted.",
+          "preconditions": "Authorized caller; customer exists.",
+          "input_data": "Valid customerId.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "Response includes tenantId/affiliateId or permitted scope summary.",
+          "fr_coverage": [
+            "FR-CUS-API-03-03"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-CUS-03-021",
+          "scenario": "linked_card_references_returned",
+          "test_type": "Functional",
+          "test_description": "Verify linked card references are returned where available.",
+          "preconditions": "Customer has linked cards.",
+          "input_data": "Valid customerId.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "Response includes linked card/card issuance references.",
+          "fr_coverage": [
+            "FR-CUS-API-03-04"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-CUS-03-022",
+          "scenario": "no_linked_cards_handled",
+          "test_type": "Functional",
+          "test_description": "Verify customer with no linked cards is handled.",
+          "preconditions": "Customer exists without cards.",
+          "input_data": "Valid customerId.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "200 OK with empty card references.",
+          "fr_coverage": [
+            "FR-CUS-API-03-04"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-CUS-03-023",
+          "scenario": "customer_draft_reference_returned",
+          "test_type": "Functional",
+          "test_description": "Verify customer draft or issuance reference is returned where available.",
+          "preconditions": "Customer created/resumed from draft.",
+          "input_data": "Valid customerId.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "Response includes draft/issuance reference where available.",
+          "fr_coverage": [
+            "FR-CUS-API-03-04"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-CUS-03-024",
+          "scenario": "read_only_no_mutation",
+          "test_type": "Functional",
+          "test_description": "Verify detail retrieval does not mutate customer record.",
+          "preconditions": "Customer exists.",
+          "input_data": "Repeat retrieval.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "No customer state mutation from read operation.",
+          "fr_coverage": [
+            "FR-CUS-API-03-07"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-CUS-03-025",
+          "scenario": "sensitive_id_number_masked",
+          "test_type": "Functional",
+          "test_description": "Verify sensitive identity number is masked or excluded.",
+          "preconditions": "Customer has idNumber.",
+          "input_data": "Valid customerId.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "Full idNumber is not exposed unless policy permits; masked summary returned.",
+          "fr_coverage": [
+            "FR-CUS-API-03-08"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-CUS-03-026",
+          "scenario": "sensitive_contact_masking_policy",
+          "test_type": "Functional",
+          "test_description": "Verify sensitive contact fields follow masking policy.",
+          "preconditions": "Customer has contact info.",
+          "input_data": "Valid customerId.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "Phone/email are masked or returned according to caller permission.",
+          "fr_coverage": [
+            "FR-CUS-API-03-08"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-CUS-03-027",
+          "scenario": "no_raw_document_refs_exposed",
+          "test_type": "Functional",
+          "test_description": "Verify raw KYC document storage paths are not exposed.",
+          "preconditions": "Customer has KYC documents.",
+          "input_data": "Valid customerId.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "No raw storage URL/secret path exposed.",
+          "fr_coverage": [
+            "FR-CUS-API-03-08"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-CUS-03-028",
+          "scenario": "audit_log_created_where_required",
+          "test_type": "Functional",
+          "test_description": "Verify customer detail access is audited where required.",
+          "preconditions": "Audit enabled.",
+          "input_data": "Valid customerId.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "AuditLog entry created where policy requires.",
+          "fr_coverage": [
+            "FR-CUS-API-03-09"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-CUS-03-029",
+          "scenario": "denied_access_audited_where_required",
+          "test_type": "Functional",
+          "test_description": "Verify denied customer detail access is audited where required.",
+          "preconditions": "Audit enabled; unauthorized caller.",
+          "input_data": "foreign customerId.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "Denied access event recorded where policy requires.",
+          "fr_coverage": [
+            "FR-CUS-API-03-09"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-CUS-03-030",
+          "scenario": "response_contract_valid",
+          "test_type": "Functional",
+          "test_description": "Verify customer detail response contract is valid.",
+          "preconditions": "Authorized caller.",
+          "input_data": "Valid customerId.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "Response fields/types match endpoint contract.",
+          "fr_coverage": [
+            "FR-CUS-API-03-03",
+            "FR-CUS-API-03-07"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-CUS-03-031",
+          "scenario": "forbidden_no_data_leak",
+          "test_type": "Functional",
+          "test_description": "Verify forbidden customer detail response leaks no data.",
+          "preconditions": "Foreign customer exists.",
+          "input_data": "foreign customerId.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "403/404 without customer name/contact/identity leakage.",
+          "fr_coverage": [
+            "FR-CUS-API-03-02",
+            "FR-CUS-API-03-05",
+            "FR-CUS-API-03-08"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-CUS-03-032",
+          "scenario": "timestamp_format_valid",
+          "test_type": "Functional",
+          "test_description": "Verify timestamp fields are valid ISO format.",
+          "preconditions": "Customer has timestamps.",
+          "input_data": "Valid customerId.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "createdAt/updatedAt timestamps are valid ISO format.",
+          "fr_coverage": [
+            "FR-CUS-API-03-03"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-CUS-03-033",
+          "scenario": "case_sensitive_customer_id_handling",
+          "test_type": "Functional",
+          "test_description": "Verify customerId casing behavior is deterministic.",
+          "preconditions": "Customer exists.",
+          "input_data": "Case-altered customerId.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "Returned only if IDs are case-insensitive by policy; otherwise 404.",
+          "fr_coverage": [
+            "FR-CUS-API-03-01",
+            "FR-CUS-API-03-06"
+          ],
+          "priority": "Low"
+        },
+        {
+          "tc_id": "TC-API-CUS-03-034",
+          "scenario": "whitespace_customer_id_handling",
+          "test_type": "Functional",
+          "test_description": "Verify customerId whitespace handling.",
+          "preconditions": "Authorized caller.",
+          "input_data": "customerId with leading/trailing whitespace.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "Rejected or normalized consistently.",
+          "fr_coverage": [
+            "FR-CUS-API-03-01",
+            "FR-CUS-API-03-06"
+          ],
+          "priority": "Low"
+        },
+        {
+          "tc_id": "TC-API-CUS-03-035",
+          "scenario": "unexpected_query_params_handled",
+          "test_type": "Functional",
+          "test_description": "Verify unexpected query parameters are ignored or rejected safely.",
+          "preconditions": "Authorized caller.",
+          "input_data": "customerId?debug=true.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "Ignored or rejected according to API policy.",
+          "fr_coverage": [
+            "FR-CUS-API-03-07"
+          ],
+          "priority": "Low"
+        },
+        {
+          "tc_id": "TC-API-CUS-03-036",
+          "scenario": "accept_header_json_success",
+          "test_type": "Functional",
+          "test_description": "Verify JSON response with Accept application/json.",
+          "preconditions": "Authorized caller.",
+          "input_data": "Accept application/json.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "JSON response returned.",
+          "fr_coverage": [
+            "FR-CUS-API-03-07"
+          ],
+          "priority": "Low"
+        },
+        {
+          "tc_id": "TC-API-CUS-03-037",
+          "scenario": "accept_header_json_success_explicit",
+          "test_type": "Functional",
+          "test_description": "Verify explicit Accept: application/json header returns JSON response successfully.",
+          "preconditions": "Authorized caller.",
+          "input_data": "Accept: application/json.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "200 OK; JSON response returned.",
+          "fr_coverage": [
+            "FR-CUS-API-03-07"
+          ],
+          "priority": "Low"
+        },
+        {
+          "tc_id": "TC-API-CUS-03-038",
+          "scenario": "large_linked_card_list_handled",
+          "test_type": "Functional",
+          "test_description": "Verify customer with many linked cards is handled.",
+          "preconditions": "Customer has many linked cards.",
+          "input_data": "Valid customerId.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "Response remains contract-compliant and does not exceed limits.",
+          "fr_coverage": [
+            "FR-CUS-API-03-04",
+            "FR-CUS-API-03-07"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-CUS-03-040",
+          "scenario": "repeated_reads_consistent",
+          "test_type": "Functional",
+          "test_description": "Verify repeated detail reads return consistent data.",
+          "preconditions": "Customer exists.",
+          "input_data": "Repeated valid requests.",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, tenant/affiliate scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "expected_result": "Responses remain consistent apart from access audit effects.",
+          "fr_coverage": [
+            "FR-CUS-API-03-07"
+          ],
+          "priority": "Medium"
+        }
+      ]
+    }
+  ],
+  "total_test_cases": 108
+}

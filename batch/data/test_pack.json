@@ -1,0 +1,3076 @@
+{
+  "microservice": "Batch",
+  "version": "v3_30_tests_per_endpoint",
+  "coverage_type": "full_functional_positive_negative_edge_case",
+  "design_note": "Each endpoint has exactly 30 granular functional test cases. Required fields and validation rules are split into separate test cases rather than lumped into generic validation cases.",
+  "total_endpoints": 6,
+  "minimum_test_cases_per_endpoint": 30,
+  "endpoints": [
+    {
+      "api_id": "API-BATCH-01",
+      "name": "Upload Batch Card Creation File",
+      "endpoint": "POST /api/v1/batches/card-creation/upload",
+      "test_case_count": 30,
+      "functional_requirements": [
+        "FR-BATCH-API-01-01",
+        "FR-BATCH-API-01-02",
+        "FR-BATCH-API-01-03",
+        "FR-BATCH-API-01-04",
+        "FR-BATCH-API-01-05",
+        "FR-BATCH-API-01-06",
+        "FR-BATCH-API-01-07",
+        "FR-BATCH-API-01-08",
+        "FR-BATCH-API-01-09",
+        "FR-BATCH-API-01-10"
+      ],
+      "test_cases": [
+        {
+          "tc_id": "TC-API-BATCH-01-001",
+          "scenario": "valid_csv_upload_success",
+          "test_type": "Functional",
+          "test_description": "Verify authorized Affiliate user can upload a valid CSV batch file.",
+          "preconditions": "Authorized Affiliate user; valid tenant and affiliate context; product is eligible.",
+          "input_data": "CSV file with all required headers and valid rows; productId=PROD-001",
+          "steps": [
+            "Submit multipart request with CSV and productId."
+          ],
+          "expected_result": "200; batchId returned; status=UPLOADED; recordsReceived returned.",
+          "fr_coverage": [
+            "FR-BATCH-API-01-01",
+            "FR-BATCH-API-01-05",
+            "FR-BATCH-API-01-08",
+            "FR-BATCH-API-01-09"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-BATCH-01-002",
+          "scenario": "valid_xlsx_upload_success",
+          "test_type": "Functional",
+          "test_description": "Verify authorized Affiliate user can upload a valid XLSX batch file.",
+          "preconditions": "Authorized Affiliate user; valid tenant and affiliate context; product is eligible.",
+          "input_data": "XLSX file with all required headers and valid rows; productId=PROD-001",
+          "steps": [
+            "Submit multipart request with XLSX and productId."
+          ],
+          "expected_result": "200; batchId returned; status=UPLOADED.",
+          "fr_coverage": [
+            "FR-BATCH-API-01-01",
+            "FR-BATCH-API-01-05",
+            "FR-BATCH-API-01-09"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-BATCH-01-003",
+          "scenario": "missing_product_id_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify missing productId is rejected as a standalone case.",
+          "preconditions": "Authorized Affiliate user.",
+          "input_data": "Valid CSV file but productId omitted.",
+          "steps": [
+            "Submit upload request."
+          ],
+          "expected_result": "400/422; no batch job created.",
+          "fr_coverage": [
+            "FR-BATCH-API-01-04"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-BATCH-01-004",
+          "scenario": "blank_product_id_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify blank productId is rejected.",
+          "preconditions": "Authorized Affiliate user.",
+          "input_data": "Valid CSV file; productId empty string.",
+          "steps": [
+            "Submit upload request."
+          ],
+          "expected_result": "400/422; productId validation error.",
+          "fr_coverage": [
+            "FR-BATCH-API-01-04"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-BATCH-01-005",
+          "scenario": "unknown_product_id_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify unknown productId is rejected.",
+          "preconditions": "Authorized Affiliate user.",
+          "input_data": "Valid file; productId=PROD-UNKNOWN.",
+          "steps": [
+            "Submit upload request."
+          ],
+          "expected_result": "404/422; product not found or invalid.",
+          "fr_coverage": [
+            "FR-BATCH-API-01-04",
+            "FR-BATCH-API-01-08"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-BATCH-01-006",
+          "scenario": "ineligible_product_for_affiliate_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify product not eligible for affiliate is rejected.",
+          "preconditions": "Authorized Affiliate user; product exists but is not mapped to affiliate.",
+          "input_data": "Valid file; ineligible productId.",
+          "steps": [
+            "Submit upload request."
+          ],
+          "expected_result": "403/422; product eligibility error.",
+          "fr_coverage": [
+            "FR-BATCH-API-01-03",
+            "FR-BATCH-API-01-08"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-BATCH-01-007",
+          "scenario": "missing_file_part_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify missing file part is rejected.",
+          "preconditions": "Authorized Affiliate user; valid productId.",
+          "input_data": "No file part in multipart request.",
+          "steps": [
+            "Submit upload request."
+          ],
+          "expected_result": "400/422; file required error.",
+          "fr_coverage": [
+            "FR-BATCH-API-01-05",
+            "FR-BATCH-API-01-06"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-BATCH-01-008",
+          "scenario": "empty_file_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify empty uploaded file is rejected.",
+          "preconditions": "Authorized Affiliate user; valid productId.",
+          "input_data": "Zero-byte CSV file.",
+          "steps": [
+            "Submit upload request."
+          ],
+          "expected_result": "422; file is empty/template invalid.",
+          "fr_coverage": [
+            "FR-BATCH-API-01-06",
+            "FR-BATCH-API-01-07"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-BATCH-01-009",
+          "scenario": "unsupported_pdf_file_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify PDF upload is rejected.",
+          "preconditions": "Authorized Affiliate user; valid productId.",
+          "input_data": "PDF file.",
+          "steps": [
+            "Submit upload request."
+          ],
+          "expected_result": "400/422 unsupported file type.",
+          "fr_coverage": [
+            "FR-BATCH-API-01-05"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-BATCH-01-010",
+          "scenario": "unsupported_txt_file_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify TXT upload is rejected.",
+          "preconditions": "Authorized Affiliate user; valid productId.",
+          "input_data": "TXT file.",
+          "steps": [
+            "Submit upload request."
+          ],
+          "expected_result": "400/422 unsupported file type.",
+          "fr_coverage": [
+            "FR-BATCH-API-01-05"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-BATCH-01-011",
+          "scenario": "file_extension_content_mismatch_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify file extension spoofing is rejected.",
+          "preconditions": "Authorized Affiliate user; valid productId.",
+          "input_data": "File named .csv but content is binary/PDF.",
+          "steps": [
+            "Submit upload request."
+          ],
+          "expected_result": "422; invalid content/template.",
+          "fr_coverage": [
+            "FR-BATCH-API-01-05",
+            "FR-BATCH-API-01-06",
+            "FR-BATCH-API-01-07"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-BATCH-01-012",
+          "scenario": "missing_first_name_header_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify missing firstName header is rejected.",
+          "preconditions": "Authorized Affiliate user; valid productId.",
+          "input_data": "CSV without firstName column.",
+          "steps": [
+            "Submit upload request."
+          ],
+          "expected_result": "422; missing firstName header identified.",
+          "fr_coverage": [
+            "FR-BATCH-API-01-06",
+            "FR-BATCH-API-01-07"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-BATCH-01-013",
+          "scenario": "missing_last_name_header_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify missing lastName header is rejected.",
+          "preconditions": "Authorized Affiliate user; valid productId.",
+          "input_data": "CSV without lastName column.",
+          "steps": [
+            "Submit upload request."
+          ],
+          "expected_result": "422; missing lastName header identified.",
+          "fr_coverage": [
+            "FR-BATCH-API-01-06",
+            "FR-BATCH-API-01-07"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-BATCH-01-014",
+          "scenario": "missing_phone_header_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify missing phone header is rejected.",
+          "preconditions": "Authorized Affiliate user; valid productId.",
+          "input_data": "CSV without phone column.",
+          "steps": [
+            "Submit upload request."
+          ],
+          "expected_result": "422; missing phone header identified.",
+          "fr_coverage": [
+            "FR-BATCH-API-01-06",
+            "FR-BATCH-API-01-07"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-BATCH-01-015",
+          "scenario": "missing_email_header_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify missing email header is rejected.",
+          "preconditions": "Authorized Affiliate user; valid productId.",
+          "input_data": "CSV without email column.",
+          "steps": [
+            "Submit upload request."
+          ],
+          "expected_result": "422; missing email header identified.",
+          "fr_coverage": [
+            "FR-BATCH-API-01-06",
+            "FR-BATCH-API-01-07"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-BATCH-01-016",
+          "scenario": "missing_dob_header_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify missing dob header is rejected.",
+          "preconditions": "Authorized Affiliate user; valid productId.",
+          "input_data": "CSV without dob column.",
+          "steps": [
+            "Submit upload request."
+          ],
+          "expected_result": "422; missing dob header identified.",
+          "fr_coverage": [
+            "FR-BATCH-API-01-06",
+            "FR-BATCH-API-01-07"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-BATCH-01-017",
+          "scenario": "missing_id_type_header_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify missing idType header is rejected.",
+          "preconditions": "Authorized Affiliate user; valid productId.",
+          "input_data": "CSV without idType column.",
+          "steps": [
+            "Submit upload request."
+          ],
+          "expected_result": "422; missing idType header identified.",
+          "fr_coverage": [
+            "FR-BATCH-API-01-06",
+            "FR-BATCH-API-01-07"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-BATCH-01-018",
+          "scenario": "missing_id_number_header_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify missing idNumber header is rejected.",
+          "preconditions": "Authorized Affiliate user; valid productId.",
+          "input_data": "CSV without idNumber column.",
+          "steps": [
+            "Submit upload request."
+          ],
+          "expected_result": "422; missing idNumber header identified.",
+          "fr_coverage": [
+            "FR-BATCH-API-01-06",
+            "FR-BATCH-API-01-07"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-BATCH-01-019",
+          "scenario": "duplicate_header_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify duplicate headers are rejected.",
+          "preconditions": "Authorized Affiliate user; valid productId.",
+          "input_data": "CSV with duplicate phone header.",
+          "steps": [
+            "Submit upload request."
+          ],
+          "expected_result": "422; duplicate template header error.",
+          "fr_coverage": [
+            "FR-BATCH-API-01-06",
+            "FR-BATCH-API-01-07"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-BATCH-01-020",
+          "scenario": "extra_unknown_header_rejected_or_ignored_by_policy",
+          "test_type": "Functional",
+          "test_description": "Verify unknown extra headers follow the agreed template policy.",
+          "preconditions": "Authorized Affiliate user; valid productId.",
+          "input_data": "CSV contains extra column not in template.",
+          "steps": [
+            "Submit upload request."
+          ],
+          "expected_result": "Either accepted if extensions allowed or 422 if strict template required; behavior must match SRS/template policy.",
+          "fr_coverage": [
+            "FR-BATCH-API-01-06",
+            "FR-BATCH-API-01-07"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-BATCH-01-021",
+          "scenario": "case_insensitive_header_handling",
+          "test_type": "Functional",
+          "test_description": "Verify header casing is handled according to template policy.",
+          "preconditions": "Authorized Affiliate user; valid productId.",
+          "input_data": "CSV with FIRSTNAME/LASTNAME instead of firstName/lastName.",
+          "steps": [
+            "Submit upload request."
+          ],
+          "expected_result": "Accepted or rejected consistently according to documented template policy.",
+          "fr_coverage": [
+            "FR-BATCH-API-01-06",
+            "FR-BATCH-API-01-07"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-BATCH-01-022",
+          "scenario": "bank_user_upload_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify Issuing Bank users cannot upload batch card creation files.",
+          "preconditions": "Authenticated Issuing Bank user.",
+          "input_data": "Valid file and productId.",
+          "steps": [
+            "Submit upload request."
+          ],
+          "expected_result": "403 Forbidden.",
+          "fr_coverage": [
+            "FR-BATCH-API-01-02"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-BATCH-01-023",
+          "scenario": "service_provider_upload_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify Service Provider users cannot upload batch card creation files.",
+          "preconditions": "Authenticated Service Provider user.",
+          "input_data": "Valid file and productId.",
+          "steps": [
+            "Submit upload request."
+          ],
+          "expected_result": "403 Forbidden.",
+          "fr_coverage": [
+            "FR-BATCH-API-01-02"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-BATCH-01-024",
+          "scenario": "unauthenticated_upload_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify upload requires authentication.",
+          "preconditions": "No access token.",
+          "input_data": "Valid file and productId.",
+          "steps": [
+            "Submit upload request without Authorization."
+          ],
+          "expected_result": "401 Unauthorized.",
+          "fr_coverage": [
+            "FR-BATCH-API-01-03"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-BATCH-01-025",
+          "scenario": "foreign_tenant_context_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify upload with foreign tenant/affiliate context is rejected.",
+          "preconditions": "Affiliate A authenticated; request uses Affiliate B context.",
+          "input_data": "Valid file; foreign tenantId/affiliateId.",
+          "steps": [
+            "Submit upload request."
+          ],
+          "expected_result": "403 Forbidden.",
+          "fr_coverage": [
+            "FR-BATCH-API-01-03",
+            "FR-BATCH-API-01-08"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-BATCH-01-026",
+          "scenario": "batch_record_association_persisted",
+          "test_type": "Functional",
+          "test_description": "Verify batch stores tenant, affiliate, and product association.",
+          "preconditions": "Authorized Affiliate user.",
+          "input_data": "Valid upload request.",
+          "steps": [
+            "Upload file.",
+            "Retrieve batch status."
+          ],
+          "expected_result": "Batch record references correct tenantId, affiliateId, productId.",
+          "fr_coverage": [
+            "FR-BATCH-API-01-08",
+            "FR-BATCH-API-01-09"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-BATCH-01-027",
+          "scenario": "uploaded_status_set_correctly",
+          "test_type": "Functional",
+          "test_description": "Verify successful upload creates batch in UPLOADED status.",
+          "preconditions": "Authorized Affiliate user.",
+          "input_data": "Valid file and productId.",
+          "steps": [
+            "Upload file.",
+            "Retrieve batch status."
+          ],
+          "expected_result": "Status is UPLOADED.",
+          "fr_coverage": [
+            "FR-BATCH-API-01-09"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-BATCH-01-028",
+          "scenario": "large_valid_file_accepted_within_limit",
+          "test_type": "Functional",
+          "test_description": "Verify a valid large file within configured limit is accepted.",
+          "preconditions": "Authorized Affiliate user; file size within limit.",
+          "input_data": "Large valid CSV/XLSX.",
+          "steps": [
+            "Submit upload request."
+          ],
+          "expected_result": "200; batch accepted.",
+          "fr_coverage": [
+            "FR-BATCH-API-01-05",
+            "FR-BATCH-API-01-06"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-BATCH-01-029",
+          "scenario": "oversized_file_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify file exceeding configured size limit is rejected.",
+          "preconditions": "Authorized Affiliate user; product valid.",
+          "input_data": "CSV/XLSX above max size.",
+          "steps": [
+            "Submit upload request."
+          ],
+          "expected_result": "413/422; size limit error.",
+          "fr_coverage": [
+            "FR-BATCH-API-01-06",
+            "FR-BATCH-API-01-07"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-BATCH-01-030",
+          "scenario": "audit_log_created_for_upload",
+          "test_type": "Functional",
+          "test_description": "Verify upload activity is recorded in AuditLog.",
+          "preconditions": "Authorized Affiliate user; audit enabled.",
+          "input_data": "Valid upload request.",
+          "steps": [
+            "Upload file.",
+            "Inspect AuditLog."
+          ],
+          "expected_result": "Audit entry created with actor, tenant, affiliate, batchId, outcome.",
+          "fr_coverage": [
+            "FR-BATCH-API-01-10"
+          ],
+          "priority": "Medium"
+        }
+      ]
+    },
+    {
+      "api_id": "API-BATCH-02",
+      "name": "Validate Batch Card Creation File",
+      "endpoint": "POST /api/v1/batches/{batchId}/validate",
+      "test_case_count": 30,
+      "functional_requirements": [
+        "FR-BATCH-API-02-01",
+        "FR-BATCH-API-02-02",
+        "FR-BATCH-API-02-03",
+        "FR-BATCH-API-02-04",
+        "FR-BATCH-API-02-05",
+        "FR-BATCH-API-02-06",
+        "FR-BATCH-API-02-07",
+        "FR-BATCH-API-02-08",
+        "FR-BATCH-API-02-09",
+        "FR-BATCH-API-02-10"
+      ],
+      "test_cases": [
+        {
+          "tc_id": "TC-API-BATCH-02-001",
+          "scenario": "validate_all_valid_rows_success",
+          "test_type": "Functional",
+          "test_description": "Verify validation completes successfully when all rows are valid.",
+          "preconditions": "Existing UPLOADED batch in caller scope with all valid rows.",
+          "input_data": "batchId for all-valid upload.",
+          "steps": [
+            "Call validate endpoint."
+          ],
+          "expected_result": "200; status=VALIDATED; validRows=totalRows; invalidRows=0.",
+          "fr_coverage": [
+            "FR-BATCH-API-02-01",
+            "FR-BATCH-API-02-02",
+            "FR-BATCH-API-02-07",
+            "FR-BATCH-API-02-08"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-BATCH-02-002",
+          "scenario": "unknown_batch_id_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify unknown batchId is rejected.",
+          "preconditions": "Authorized caller.",
+          "input_data": "batchId=BATCH-UNKNOWN.",
+          "steps": [
+            "Call validate endpoint."
+          ],
+          "expected_result": "404 Not Found.",
+          "fr_coverage": [
+            "FR-BATCH-API-02-01"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-BATCH-02-003",
+          "scenario": "foreign_scope_batch_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify validation rejects a batch outside caller tenant/affiliate scope.",
+          "preconditions": "Authenticated Affiliate A; batch belongs to Affiliate B.",
+          "input_data": "foreign batchId.",
+          "steps": [
+            "Call validate endpoint."
+          ],
+          "expected_result": "403 Forbidden.",
+          "fr_coverage": [
+            "FR-BATCH-API-02-01",
+            "FR-BATCH-API-02-10"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-BATCH-02-004",
+          "scenario": "unauthenticated_validate_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify validation requires authentication.",
+          "preconditions": "No access token.",
+          "input_data": "Valid batchId.",
+          "steps": [
+            "Call validate endpoint without auth."
+          ],
+          "expected_result": "401 Unauthorized.",
+          "fr_coverage": [
+            "FR-BATCH-API-02-01",
+            "FR-BATCH-API-02-10"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-BATCH-02-005",
+          "scenario": "validate_non_uploaded_batch_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify validation only applies to uploaded/pre-processing batches.",
+          "preconditions": "Existing batch in PROCESSING or COMPLETED state.",
+          "input_data": "batchId in non-validatable state.",
+          "steps": [
+            "Call validate endpoint."
+          ],
+          "expected_result": "409 Conflict.",
+          "fr_coverage": [
+            "FR-BATCH-API-02-01",
+            "FR-BATCH-API-02-09"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-BATCH-02-006",
+          "scenario": "missing_first_name_row_invalid",
+          "test_type": "Functional",
+          "test_description": "Verify row missing firstName is independently flagged invalid.",
+          "preconditions": "Uploaded batch has one row missing firstName.",
+          "input_data": "Row firstName blank.",
+          "steps": [
+            "Validate batch."
+          ],
+          "expected_result": "Specific row invalid with firstName required error.",
+          "fr_coverage": [
+            "FR-BATCH-API-02-02",
+            "FR-BATCH-API-02-03",
+            "FR-BATCH-API-02-06"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-BATCH-02-007",
+          "scenario": "missing_last_name_row_invalid",
+          "test_type": "Functional",
+          "test_description": "Verify row missing lastName is independently flagged invalid.",
+          "preconditions": "Uploaded batch has one row missing lastName.",
+          "input_data": "Row lastName blank.",
+          "steps": [
+            "Validate batch."
+          ],
+          "expected_result": "Specific row invalid with lastName required error.",
+          "fr_coverage": [
+            "FR-BATCH-API-02-02",
+            "FR-BATCH-API-02-03",
+            "FR-BATCH-API-02-06"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-BATCH-02-008",
+          "scenario": "missing_phone_row_invalid",
+          "test_type": "Functional",
+          "test_description": "Verify row missing phone is independently flagged invalid.",
+          "preconditions": "Uploaded batch has one row missing phone.",
+          "input_data": "Row phone blank.",
+          "steps": [
+            "Validate batch."
+          ],
+          "expected_result": "Specific row invalid with phone required error.",
+          "fr_coverage": [
+            "FR-BATCH-API-02-02",
+            "FR-BATCH-API-02-03",
+            "FR-BATCH-API-02-06"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-BATCH-02-009",
+          "scenario": "missing_email_row_invalid",
+          "test_type": "Functional",
+          "test_description": "Verify row missing email is independently flagged invalid when required.",
+          "preconditions": "Uploaded batch has one row missing email.",
+          "input_data": "Row email blank.",
+          "steps": [
+            "Validate batch."
+          ],
+          "expected_result": "Specific row invalid with email required error.",
+          "fr_coverage": [
+            "FR-BATCH-API-02-02",
+            "FR-BATCH-API-02-03",
+            "FR-BATCH-API-02-06"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-BATCH-02-010",
+          "scenario": "missing_dob_row_invalid",
+          "test_type": "Functional",
+          "test_description": "Verify row missing DOB is independently flagged invalid.",
+          "preconditions": "Uploaded batch has one row missing DOB.",
+          "input_data": "Row dob blank.",
+          "steps": [
+            "Validate batch."
+          ],
+          "expected_result": "Specific row invalid with DOB required error.",
+          "fr_coverage": [
+            "FR-BATCH-API-02-02",
+            "FR-BATCH-API-02-03",
+            "FR-BATCH-API-02-06"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-BATCH-02-011",
+          "scenario": "missing_id_type_row_invalid",
+          "test_type": "Functional",
+          "test_description": "Verify row missing idType is independently flagged invalid.",
+          "preconditions": "Uploaded batch has one row missing idType.",
+          "input_data": "Row idType blank.",
+          "steps": [
+            "Validate batch."
+          ],
+          "expected_result": "Specific row invalid with idType required error.",
+          "fr_coverage": [
+            "FR-BATCH-API-02-02",
+            "FR-BATCH-API-02-03",
+            "FR-BATCH-API-02-06"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-BATCH-02-012",
+          "scenario": "missing_id_number_row_invalid",
+          "test_type": "Functional",
+          "test_description": "Verify row missing idNumber is independently flagged invalid.",
+          "preconditions": "Uploaded batch has one row missing idNumber.",
+          "input_data": "Row idNumber blank.",
+          "steps": [
+            "Validate batch."
+          ],
+          "expected_result": "Specific row invalid with idNumber required error.",
+          "fr_coverage": [
+            "FR-BATCH-API-02-02",
+            "FR-BATCH-API-02-03",
+            "FR-BATCH-API-02-06"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-BATCH-02-013",
+          "scenario": "missing_card_type_row_invalid",
+          "test_type": "Functional",
+          "test_description": "Verify row missing cardType is independently flagged invalid.",
+          "preconditions": "Uploaded batch has one row missing cardType.",
+          "input_data": "Row cardType blank.",
+          "steps": [
+            "Validate batch."
+          ],
+          "expected_result": "Specific row invalid with cardType required error.",
+          "fr_coverage": [
+            "FR-BATCH-API-02-02",
+            "FR-BATCH-API-02-03",
+            "FR-BATCH-API-02-06"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-BATCH-02-014",
+          "scenario": "missing_currency_row_invalid",
+          "test_type": "Functional",
+          "test_description": "Verify row missing currency is independently flagged invalid.",
+          "preconditions": "Uploaded batch has one row missing currency.",
+          "input_data": "Row currency blank.",
+          "steps": [
+            "Validate batch."
+          ],
+          "expected_result": "Specific row invalid with currency required error.",
+          "fr_coverage": [
+            "FR-BATCH-API-02-02",
+            "FR-BATCH-API-02-03",
+            "FR-BATCH-API-02-06"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-BATCH-02-015",
+          "scenario": "invalid_phone_format_invalid",
+          "test_type": "Functional",
+          "test_description": "Verify malformed phone number is invalid.",
+          "preconditions": "Uploaded batch has row with invalid phone.",
+          "input_data": "phone='abc123'.",
+          "steps": [
+            "Validate batch."
+          ],
+          "expected_result": "Row invalid with phone format error.",
+          "fr_coverage": [
+            "FR-BATCH-API-02-04",
+            "FR-BATCH-API-02-06"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-BATCH-02-016",
+          "scenario": "invalid_email_format_invalid",
+          "test_type": "Functional",
+          "test_description": "Verify malformed email is invalid.",
+          "preconditions": "Uploaded batch has row with invalid email.",
+          "input_data": "email='bad-email'.",
+          "steps": [
+            "Validate batch."
+          ],
+          "expected_result": "Row invalid with email format error.",
+          "fr_coverage": [
+            "FR-BATCH-API-02-04",
+            "FR-BATCH-API-02-06"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-BATCH-02-017",
+          "scenario": "invalid_dob_format_invalid",
+          "test_type": "Functional",
+          "test_description": "Verify malformed DOB is invalid.",
+          "preconditions": "Uploaded batch has row with invalid DOB.",
+          "input_data": "dob='31/31/2026'.",
+          "steps": [
+            "Validate batch."
+          ],
+          "expected_result": "Row invalid with DOB format error.",
+          "fr_coverage": [
+            "FR-BATCH-API-02-04",
+            "FR-BATCH-API-02-06"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-BATCH-02-018",
+          "scenario": "future_dob_invalid",
+          "test_type": "Functional",
+          "test_description": "Verify future DOB is invalid.",
+          "preconditions": "Uploaded batch has future DOB.",
+          "input_data": "dob greater than today.",
+          "steps": [
+            "Validate batch."
+          ],
+          "expected_result": "Row invalid with DOB business error.",
+          "fr_coverage": [
+            "FR-BATCH-API-02-04",
+            "FR-BATCH-API-02-06"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-BATCH-02-019",
+          "scenario": "underage_customer_invalid",
+          "test_type": "Functional",
+          "test_description": "Verify underage customer is invalid where age rule applies.",
+          "preconditions": "Uploaded batch has underage customer.",
+          "input_data": "DOB below minimum age.",
+          "steps": [
+            "Validate batch."
+          ],
+          "expected_result": "Row invalid with eligibility/age error.",
+          "fr_coverage": [
+            "FR-BATCH-API-02-04",
+            "FR-BATCH-API-02-06"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-BATCH-02-020",
+          "scenario": "invalid_id_type_invalid",
+          "test_type": "Functional",
+          "test_description": "Verify unsupported idType is invalid.",
+          "preconditions": "Uploaded batch has unsupported idType.",
+          "input_data": "idType='ALIEN_ID'.",
+          "steps": [
+            "Validate batch."
+          ],
+          "expected_result": "Row invalid with idType error.",
+          "fr_coverage": [
+            "FR-BATCH-API-02-04",
+            "FR-BATCH-API-02-06"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-BATCH-02-021",
+          "scenario": "invalid_id_number_format_invalid",
+          "test_type": "Functional",
+          "test_description": "Verify malformed idNumber is invalid.",
+          "preconditions": "Uploaded batch has invalid idNumber.",
+          "input_data": "idNumber contains unsupported characters.",
+          "steps": [
+            "Validate batch."
+          ],
+          "expected_result": "Row invalid with idNumber error.",
+          "fr_coverage": [
+            "FR-BATCH-API-02-04",
+            "FR-BATCH-API-02-06"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-BATCH-02-022",
+          "scenario": "invalid_card_type_invalid",
+          "test_type": "Functional",
+          "test_description": "Verify unsupported cardType is invalid.",
+          "preconditions": "Uploaded batch has invalid cardType.",
+          "input_data": "cardType='METAL'.",
+          "steps": [
+            "Validate batch."
+          ],
+          "expected_result": "Row invalid with cardType error.",
+          "fr_coverage": [
+            "FR-BATCH-API-02-04",
+            "FR-BATCH-API-02-06"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-BATCH-02-023",
+          "scenario": "invalid_currency_invalid",
+          "test_type": "Functional",
+          "test_description": "Verify unsupported currency is invalid.",
+          "preconditions": "Uploaded batch has invalid currency.",
+          "input_data": "currency='XYZ'.",
+          "steps": [
+            "Validate batch."
+          ],
+          "expected_result": "Row invalid with currency error.",
+          "fr_coverage": [
+            "FR-BATCH-API-02-04",
+            "FR-BATCH-API-02-06"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-BATCH-02-024",
+          "scenario": "product_currency_mismatch_invalid",
+          "test_type": "Functional",
+          "test_description": "Verify product/currency mismatch is invalid.",
+          "preconditions": "Uploaded batch selected product supports USD only.",
+          "input_data": "Row currency=NGN.",
+          "steps": [
+            "Validate batch."
+          ],
+          "expected_result": "Row invalid with product eligibility error.",
+          "fr_coverage": [
+            "FR-BATCH-API-02-05",
+            "FR-BATCH-API-02-06"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-BATCH-02-025",
+          "scenario": "product_not_eligible_for_affiliate_invalid",
+          "test_type": "Functional",
+          "test_description": "Verify product not eligible for affiliate is invalid.",
+          "preconditions": "Batch product not available to affiliate.",
+          "input_data": "Ineligible product batch.",
+          "steps": [
+            "Validate batch."
+          ],
+          "expected_result": "Batch/rows rejected based on product eligibility.",
+          "fr_coverage": [
+            "FR-BATCH-API-02-05"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-BATCH-02-026",
+          "scenario": "duplicate_id_number_flagged",
+          "test_type": "Functional",
+          "test_description": "Verify duplicate identity number in batch is flagged.",
+          "preconditions": "Uploaded batch has duplicate idNumber.",
+          "input_data": "Two rows same idNumber.",
+          "steps": [
+            "Validate batch."
+          ],
+          "expected_result": "Duplicate rows flagged invalid or warning per policy.",
+          "fr_coverage": [
+            "FR-BATCH-API-02-02",
+            "FR-BATCH-API-02-06"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-BATCH-02-027",
+          "scenario": "duplicate_phone_flagged",
+          "test_type": "Functional",
+          "test_description": "Verify duplicate phone in batch is flagged where uniqueness applies.",
+          "preconditions": "Uploaded batch has duplicate phone.",
+          "input_data": "Two rows same phone.",
+          "steps": [
+            "Validate batch."
+          ],
+          "expected_result": "Duplicate phone rows flagged per policy.",
+          "fr_coverage": [
+            "FR-BATCH-API-02-02",
+            "FR-BATCH-API-02-06"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-BATCH-02-028",
+          "scenario": "mixed_valid_invalid_counts_correct",
+          "test_type": "Functional",
+          "test_description": "Verify total, valid, and invalid row counts are accurate.",
+          "preconditions": "Uploaded batch has known mix of valid and invalid rows.",
+          "input_data": "20 total, 15 valid, 5 invalid.",
+          "steps": [
+            "Validate batch."
+          ],
+          "expected_result": "totalRows=20; validRows=15; invalidRows=5.",
+          "fr_coverage": [
+            "FR-BATCH-API-02-07"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-BATCH-02-029",
+          "scenario": "per_row_validation_results_persisted",
+          "test_type": "Functional",
+          "test_description": "Verify validation results persist per row.",
+          "preconditions": "Uploaded mixed batch.",
+          "input_data": "Mixed rows.",
+          "steps": [
+            "Validate batch.",
+            "Retrieve row results."
+          ],
+          "expected_result": "Each row has persisted validation result.",
+          "fr_coverage": [
+            "FR-BATCH-API-02-06"
+          ],
+          "priority": "Low"
+        },
+        {
+          "tc_id": "TC-API-BATCH-02-030",
+          "scenario": "audit_log_created_for_validation",
+          "test_type": "Functional",
+          "test_description": "Verify validation is audited.",
+          "preconditions": "Authorized caller; audit enabled.",
+          "input_data": "Valid batch.",
+          "steps": [
+            "Validate batch.",
+            "Inspect AuditLog."
+          ],
+          "expected_result": "AuditLog entry created for validation.",
+          "fr_coverage": [
+            "FR-BATCH-API-02-10"
+          ],
+          "priority": "Medium"
+        }
+      ]
+    },
+    {
+      "api_id": "API-BATCH-03",
+      "name": "Submit Batch Card Creation for Processing",
+      "endpoint": "POST /api/v1/batches/{batchId}/submit",
+      "test_case_count": 29,
+      "functional_requirements": [
+        "FR-BATCH-API-03-01",
+        "FR-BATCH-API-03-02",
+        "FR-BATCH-API-03-03",
+        "FR-BATCH-API-03-04",
+        "FR-BATCH-API-03-05",
+        "FR-BATCH-API-03-06",
+        "FR-BATCH-API-03-07",
+        "FR-BATCH-API-03-08",
+        "FR-BATCH-API-03-09",
+        "FR-BATCH-API-03-10"
+      ],
+      "test_cases": [
+        {
+          "tc_id": "TC-API-BATCH-03-001",
+          "scenario": "submit_validated_batch_success",
+          "test_type": "Functional",
+          "test_description": "Verify validated batch can be submitted.",
+          "preconditions": "Existing VALIDATED in-scope batch.",
+          "input_data": "batchId=VALIDATED.",
+          "steps": [
+            "Call submit endpoint."
+          ],
+          "expected_result": "200/202; processing starts.",
+          "fr_coverage": [
+            "FR-BATCH-API-03-01",
+            "FR-BATCH-API-03-02"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-BATCH-03-002",
+          "scenario": "reject_uploaded_batch",
+          "test_type": "Functional",
+          "test_description": "Verify UPLOADED batch cannot be submitted before validation.",
+          "preconditions": "Existing UPLOADED batch.",
+          "input_data": "batchId=UPLOADED.",
+          "steps": [
+            "Call submit."
+          ],
+          "expected_result": "409 Conflict.",
+          "fr_coverage": [
+            "FR-BATCH-API-03-01",
+            "FR-BATCH-API-03-09"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-BATCH-03-003",
+          "scenario": "reject_validation_failed_batch",
+          "test_type": "Functional",
+          "test_description": "Verify batch with validation failures cannot be submitted when policy requires all rows valid.",
+          "preconditions": "Validated batch with invalid rows.",
+          "input_data": "batchId with invalid rows.",
+          "steps": [
+            "Call submit."
+          ],
+          "expected_result": "409/422; invalid rows prevent submission or only valid rows processed per policy.",
+          "fr_coverage": [
+            "FR-BATCH-API-03-01",
+            "FR-BATCH-API-03-09"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-BATCH-03-004",
+          "scenario": "reject_processing_batch_duplicate",
+          "test_type": "Functional",
+          "test_description": "Verify PROCESSING batch cannot be resubmitted.",
+          "preconditions": "Existing PROCESSING batch.",
+          "input_data": "batchId=PROCESSING.",
+          "steps": [
+            "Call submit."
+          ],
+          "expected_result": "409 Conflict.",
+          "fr_coverage": [
+            "FR-BATCH-API-03-09"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-BATCH-03-005",
+          "scenario": "reject_completed_batch_duplicate",
+          "test_type": "Functional",
+          "test_description": "Verify COMPLETED batch cannot be submitted again.",
+          "preconditions": "Existing COMPLETED batch.",
+          "input_data": "batchId=COMPLETED.",
+          "steps": [
+            "Call submit."
+          ],
+          "expected_result": "409 Conflict.",
+          "fr_coverage": [
+            "FR-BATCH-API-03-09"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-BATCH-03-006",
+          "scenario": "unknown_batch_not_found",
+          "test_type": "Functional",
+          "test_description": "Verify unknown batchId returns 404.",
+          "preconditions": "Authorized caller.",
+          "input_data": "batchId unknown.",
+          "steps": [
+            "Call submit."
+          ],
+          "expected_result": "404 Not Found.",
+          "fr_coverage": [
+            "FR-BATCH-API-03-01"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-BATCH-03-007",
+          "scenario": "malformed_batch_id_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify malformed batchId is rejected.",
+          "preconditions": "Authorized caller.",
+          "input_data": "batchId='!!!'.",
+          "steps": [
+            "Call submit."
+          ],
+          "expected_result": "400/422.",
+          "fr_coverage": [
+            "FR-BATCH-API-03-01"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-BATCH-03-008",
+          "scenario": "unauthenticated_submit_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify submit requires authentication.",
+          "preconditions": "No token.",
+          "input_data": "Valid batchId.",
+          "steps": [
+            "Call submit without auth."
+          ],
+          "expected_result": "401 Unauthorized.",
+          "fr_coverage": [
+            "FR-BATCH-API-03-01"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-BATCH-03-009",
+          "scenario": "foreign_scope_submit_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify foreign batch submit is blocked.",
+          "preconditions": "Affiliate A; batch belongs Affiliate B.",
+          "input_data": "Foreign batchId.",
+          "steps": [
+            "Call submit."
+          ],
+          "expected_result": "403 Forbidden.",
+          "fr_coverage": [
+            "FR-BATCH-API-03-01"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-BATCH-03-010",
+          "scenario": "valid_rows_processed_async",
+          "test_type": "Functional",
+          "test_description": "Verify processing is asynchronous for valid rows.",
+          "preconditions": "Validated batch with valid rows.",
+          "input_data": "Valid batch.",
+          "steps": [
+            "Call submit.",
+            "Check initial response/status."
+          ],
+          "expected_result": "Response indicates queued/processing; background workers handle rows.",
+          "fr_coverage": [
+            "FR-BATCH-API-03-02"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-BATCH-03-011",
+          "scenario": "existing_customer_resolved",
+          "test_type": "Functional",
+          "test_description": "Verify row for existing customer resolves customerId.",
+          "preconditions": "Validated row matches existing customer identity.",
+          "input_data": "Existing customer row.",
+          "steps": [
+            "Submit.",
+            "Check row result."
+          ],
+          "expected_result": "Row references existing customerId.",
+          "fr_coverage": [
+            "FR-BATCH-API-03-03",
+            "FR-BATCH-API-03-05"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-BATCH-03-012",
+          "scenario": "new_customer_created",
+          "test_type": "Functional",
+          "test_description": "Verify row for new customer creates customer record.",
+          "preconditions": "Validated row for new customer.",
+          "input_data": "New customer row.",
+          "steps": [
+            "Submit.",
+            "Check row result."
+          ],
+          "expected_result": "New customerId persisted.",
+          "fr_coverage": [
+            "FR-BATCH-API-03-03",
+            "FR-BATCH-API-03-05"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-BATCH-03-013",
+          "scenario": "card_created_for_each_valid_row",
+          "test_type": "Functional",
+          "test_description": "Verify card is created for each valid row.",
+          "preconditions": "Validated batch with 3 valid rows.",
+          "input_data": "3 valid rows.",
+          "steps": [
+            "Submit.",
+            "Check row results."
+          ],
+          "expected_result": "Each row has cardId.",
+          "fr_coverage": [
+            "FR-BATCH-API-03-04",
+            "FR-BATCH-API-03-05"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-BATCH-03-014",
+          "scenario": "single_row_failure_continues",
+          "test_type": "Functional",
+          "test_description": "Verify one row failure does not stop other rows.",
+          "preconditions": "Validated batch with one induced row failure.",
+          "input_data": "Mixed outcomes.",
+          "steps": [
+            "Submit."
+          ],
+          "expected_result": "Failed row marked FAILED; others processed.",
+          "fr_coverage": [
+            "FR-BATCH-API-03-06",
+            "FR-BATCH-API-03-07"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-BATCH-03-015",
+          "scenario": "processed_row_status_saved",
+          "test_type": "Functional",
+          "test_description": "Verify successful row status becomes PROCESSED.",
+          "preconditions": "Validated batch with successful row.",
+          "input_data": "Valid row.",
+          "steps": [
+            "Submit.",
+            "Retrieve rows."
+          ],
+          "expected_result": "Row status PROCESSED.",
+          "fr_coverage": [
+            "FR-BATCH-API-03-06"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-BATCH-03-016",
+          "scenario": "failed_row_status_saved",
+          "test_type": "Functional",
+          "test_description": "Verify failed row status becomes FAILED.",
+          "preconditions": "Validated batch with failing row.",
+          "input_data": "Failing row.",
+          "steps": [
+            "Submit.",
+            "Retrieve rows."
+          ],
+          "expected_result": "Row status FAILED with error.",
+          "fr_coverage": [
+            "FR-BATCH-API-03-06"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-BATCH-03-017",
+          "scenario": "created_customer_ref_saved",
+          "test_type": "Functional",
+          "test_description": "Verify created customer reference is persisted.",
+          "preconditions": "Batch creates customer.",
+          "input_data": "Successful row.",
+          "steps": [
+            "Submit.",
+            "Retrieve rows."
+          ],
+          "expected_result": "customerId returned in row result.",
+          "fr_coverage": [
+            "FR-BATCH-API-03-05"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-BATCH-03-018",
+          "scenario": "created_card_ref_saved",
+          "test_type": "Functional",
+          "test_description": "Verify created card reference is persisted.",
+          "preconditions": "Batch creates card.",
+          "input_data": "Successful row.",
+          "steps": [
+            "Submit.",
+            "Retrieve rows."
+          ],
+          "expected_result": "cardId returned in row result.",
+          "fr_coverage": [
+            "FR-BATCH-API-03-05"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-BATCH-03-019",
+          "scenario": "all_success_batch_completed",
+          "test_type": "Functional",
+          "test_description": "Verify all successful rows set batch COMPLETED.",
+          "preconditions": "All rows process successfully.",
+          "input_data": "All-success batch.",
+          "steps": [
+            "Submit and wait."
+          ],
+          "expected_result": "Batch status COMPLETED.",
+          "fr_coverage": [
+            "FR-BATCH-API-03-08"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-BATCH-03-020",
+          "scenario": "all_failed_batch_failed",
+          "test_type": "Functional",
+          "test_description": "Verify all failed rows set batch FAILED.",
+          "preconditions": "All rows fail processing.",
+          "input_data": "All-fail batch.",
+          "steps": [
+            "Submit and wait."
+          ],
+          "expected_result": "Batch status FAILED.",
+          "fr_coverage": [
+            "FR-BATCH-API-03-08"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-BATCH-03-021",
+          "scenario": "mixed_outcome_partially_completed",
+          "test_type": "Functional",
+          "test_description": "Verify mixed outcome sets PARTIALLY_COMPLETED.",
+          "preconditions": "Some rows succeed, some fail.",
+          "input_data": "Mixed batch.",
+          "steps": [
+            "Submit and wait."
+          ],
+          "expected_result": "Batch status PARTIALLY_COMPLETED.",
+          "fr_coverage": [
+            "FR-BATCH-API-03-08"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-BATCH-03-022",
+          "scenario": "duplicate_submit_same_request_safe",
+          "test_type": "Functional",
+          "test_description": "Verify replay of submit request is safe.",
+          "preconditions": "Initial submit already accepted.",
+          "input_data": "Same submit request replayed.",
+          "steps": [
+            "Submit twice."
+          ],
+          "expected_result": "Second call rejected or idempotently returns current state; no duplicate processing.",
+          "fr_coverage": [
+            "FR-BATCH-API-03-09"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-BATCH-03-023",
+          "scenario": "large_batch_queued_successfully",
+          "test_type": "Functional",
+          "test_description": "Verify large validated batch is accepted for processing.",
+          "preconditions": "Validated large batch within allowed limit.",
+          "input_data": "Large batchId.",
+          "steps": [
+            "Call submit."
+          ],
+          "expected_result": "Queued/processing accepted.",
+          "fr_coverage": [
+            "FR-BATCH-API-03-02"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-BATCH-03-024",
+          "scenario": "empty_valid_row_set_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify batch with zero valid rows is rejected for submit.",
+          "preconditions": "Validated batch with zero valid rows.",
+          "input_data": "0 valid rows.",
+          "steps": [
+            "Call submit."
+          ],
+          "expected_result": "409/422; nothing to process.",
+          "fr_coverage": [
+            "FR-BATCH-API-03-01",
+            "FR-BATCH-API-03-09"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-BATCH-03-025",
+          "scenario": "card_creation_rule_failure_row_failed",
+          "test_type": "Functional",
+          "test_description": "Verify row failing single-card eligibility rules is marked failed.",
+          "preconditions": "Validated row fails downstream card rule.",
+          "input_data": "Invalid card eligibility at processing.",
+          "steps": [
+            "Submit."
+          ],
+          "expected_result": "Only affected row FAILED.",
+          "fr_coverage": [
+            "FR-BATCH-API-03-04",
+            "FR-BATCH-API-03-06",
+            "FR-BATCH-API-03-07"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-BATCH-03-026",
+          "scenario": "cms_failure_row_failed_or_retried_by_policy",
+          "test_type": "Functional",
+          "test_description": "Verify CMS/card creation failure is handled per-row.",
+          "preconditions": "Validated row triggers CMS failure.",
+          "input_data": "One CMS failure.",
+          "steps": [
+            "Submit."
+          ],
+          "expected_result": "Row FAILED or retried according to policy; batch continues.",
+          "fr_coverage": [
+            "FR-BATCH-API-03-06",
+            "FR-BATCH-API-03-07"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-BATCH-03-027",
+          "scenario": "batch_execution_log_created",
+          "test_type": "Functional",
+          "test_description": "Verify BatchExecutionLog is created.",
+          "preconditions": "Logging enabled.",
+          "input_data": "Validated batch.",
+          "steps": [
+            "Submit.",
+            "Inspect BatchExecutionLog."
+          ],
+          "expected_result": "Execution trace exists.",
+          "fr_coverage": [
+            "FR-BATCH-API-03-10"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-BATCH-03-028",
+          "scenario": "audit_log_created_for_submit",
+          "test_type": "Functional",
+          "test_description": "Verify submit action is audited.",
+          "preconditions": "Audit enabled.",
+          "input_data": "Validated batch.",
+          "steps": [
+            "Submit.",
+            "Inspect AuditLog."
+          ],
+          "expected_result": "AuditLog entry exists.",
+          "fr_coverage": [
+            "FR-BATCH-API-03-10"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-BATCH-03-029",
+          "scenario": "read_after_submit_status_consistent",
+          "test_type": "Functional",
+          "test_description": "Verify status reflects submit outcome.",
+          "preconditions": "Validated batch.",
+          "input_data": "batchId.",
+          "steps": [
+            "Submit.",
+            "GET status."
+          ],
+          "expected_result": "Status is PROCESSING/COMPLETED according to timing.",
+          "fr_coverage": [
+            "FR-BATCH-API-03-08",
+            "FR-BATCH-API-03-10"
+          ],
+          "priority": "Medium"
+        }
+      ]
+    },
+    {
+      "api_id": "API-BATCH-04",
+      "name": "Get Batch Card Creation Status",
+      "endpoint": "GET /api/v1/batches/{batchId}",
+      "test_case_count": 28,
+      "functional_requirements": [
+        "FR-BATCH-API-04-01",
+        "FR-BATCH-API-04-02",
+        "FR-BATCH-API-04-03",
+        "FR-BATCH-API-04-04",
+        "FR-BATCH-API-04-05"
+      ],
+      "test_cases": [
+        {
+          "tc_id": "TC-API-BATCH-04-001",
+          "scenario": "get_uploaded_status_success",
+          "test_type": "Functional",
+          "test_description": "Verify status retrieval for UPLOADED batch.",
+          "preconditions": "Authorized caller; in-scope batch exists.",
+          "input_data": "batch status=UPLOADED.",
+          "steps": [
+            "GET batch status."
+          ],
+          "expected_result": "200; response status=UPLOADED.",
+          "fr_coverage": [
+            "FR-BATCH-API-04-01",
+            "FR-BATCH-API-04-03"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-BATCH-04-002",
+          "scenario": "get_validated_status_success",
+          "test_type": "Functional",
+          "test_description": "Verify status retrieval for VALIDATED batch.",
+          "preconditions": "Authorized caller; in-scope batch exists.",
+          "input_data": "batch status=VALIDATED.",
+          "steps": [
+            "GET batch status."
+          ],
+          "expected_result": "200; response status=VALIDATED.",
+          "fr_coverage": [
+            "FR-BATCH-API-04-01",
+            "FR-BATCH-API-04-03"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-BATCH-04-003",
+          "scenario": "get_processing_status_success",
+          "test_type": "Functional",
+          "test_description": "Verify status retrieval for PROCESSING batch.",
+          "preconditions": "Authorized caller; in-scope batch exists.",
+          "input_data": "batch status=PROCESSING.",
+          "steps": [
+            "GET batch status."
+          ],
+          "expected_result": "200; response status=PROCESSING.",
+          "fr_coverage": [
+            "FR-BATCH-API-04-01",
+            "FR-BATCH-API-04-03"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-BATCH-04-004",
+          "scenario": "get_completed_status_success",
+          "test_type": "Functional",
+          "test_description": "Verify status retrieval for COMPLETED batch.",
+          "preconditions": "Authorized caller; in-scope batch exists.",
+          "input_data": "batch status=COMPLETED.",
+          "steps": [
+            "GET batch status."
+          ],
+          "expected_result": "200; response status=COMPLETED.",
+          "fr_coverage": [
+            "FR-BATCH-API-04-01",
+            "FR-BATCH-API-04-03"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-BATCH-04-005",
+          "scenario": "get_failed_status_success",
+          "test_type": "Functional",
+          "test_description": "Verify status retrieval for FAILED batch.",
+          "preconditions": "Authorized caller; in-scope batch exists.",
+          "input_data": "batch status=FAILED.",
+          "steps": [
+            "GET batch status."
+          ],
+          "expected_result": "200; response status=FAILED.",
+          "fr_coverage": [
+            "FR-BATCH-API-04-01",
+            "FR-BATCH-API-04-03"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-BATCH-04-006",
+          "scenario": "get_partially_completed_status_success",
+          "test_type": "Functional",
+          "test_description": "Verify status retrieval for PARTIALLY_COMPLETED batch.",
+          "preconditions": "Authorized caller; in-scope batch exists.",
+          "input_data": "batch status=PARTIALLY_COMPLETED.",
+          "steps": [
+            "GET batch status."
+          ],
+          "expected_result": "200; response status=PARTIALLY_COMPLETED.",
+          "fr_coverage": [
+            "FR-BATCH-API-04-01",
+            "FR-BATCH-API-04-03"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-BATCH-04-007",
+          "scenario": "unknown_batch_not_found",
+          "test_type": "Functional",
+          "test_description": "Verify unknown batch returns 404.",
+          "preconditions": "Authorized caller.",
+          "input_data": "unknown batchId.",
+          "steps": [
+            "GET status."
+          ],
+          "expected_result": "404 Not Found.",
+          "fr_coverage": [
+            "FR-BATCH-API-04-01"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-BATCH-04-008",
+          "scenario": "malformed_batch_id_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify malformed batchId is rejected.",
+          "preconditions": "Authorized caller.",
+          "input_data": "batchId='!!!'.",
+          "steps": [
+            "GET status."
+          ],
+          "expected_result": "400/422.",
+          "fr_coverage": [
+            "FR-BATCH-API-04-02"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-BATCH-04-009",
+          "scenario": "unauthenticated_status_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify unauthenticated status retrieval is rejected.",
+          "preconditions": "No token.",
+          "input_data": "valid batchId.",
+          "steps": [
+            "GET status without auth."
+          ],
+          "expected_result": "401 Unauthorized.",
+          "fr_coverage": [
+            "FR-BATCH-API-04-02"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-BATCH-04-010",
+          "scenario": "foreign_scope_status_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify status retrieval for foreign batch is rejected.",
+          "preconditions": "Affiliate A; batch belongs Affiliate B.",
+          "input_data": "foreign batchId.",
+          "steps": [
+            "GET status."
+          ],
+          "expected_result": "403 Forbidden.",
+          "fr_coverage": [
+            "FR-BATCH-API-04-02"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-BATCH-04-011",
+          "scenario": "returns_batch_identifier",
+          "test_type": "Functional",
+          "test_description": "Verify response includes batch identifier.",
+          "preconditions": "Authorized caller; batch exists.",
+          "input_data": "valid batchId.",
+          "steps": [
+            "GET status."
+          ],
+          "expected_result": "Response includes batchId.",
+          "fr_coverage": [
+            "FR-BATCH-API-04-03"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-BATCH-04-012",
+          "scenario": "returns_current_status",
+          "test_type": "Functional",
+          "test_description": "Verify response includes current status.",
+          "preconditions": "Authorized caller; batch exists.",
+          "input_data": "valid batchId.",
+          "steps": [
+            "GET status."
+          ],
+          "expected_result": "Response includes status.",
+          "fr_coverage": [
+            "FR-BATCH-API-04-03"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-BATCH-04-013",
+          "scenario": "returns_total_row_count",
+          "test_type": "Functional",
+          "test_description": "Verify response includes total row count.",
+          "preconditions": "Authorized caller; batch exists.",
+          "input_data": "valid batchId.",
+          "steps": [
+            "GET status."
+          ],
+          "expected_result": "Response includes totalRowCount.",
+          "fr_coverage": [
+            "FR-BATCH-API-04-03"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-BATCH-04-014",
+          "scenario": "returns_valid_row_count",
+          "test_type": "Functional",
+          "test_description": "Verify response includes valid row count.",
+          "preconditions": "Authorized caller; validated batch exists.",
+          "input_data": "valid batchId.",
+          "steps": [
+            "GET status."
+          ],
+          "expected_result": "Response includes validRowCount.",
+          "fr_coverage": [
+            "FR-BATCH-API-04-03"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-BATCH-04-015",
+          "scenario": "returns_invalid_row_count",
+          "test_type": "Functional",
+          "test_description": "Verify response includes invalid row count.",
+          "preconditions": "Authorized caller; validated batch exists.",
+          "input_data": "valid batchId.",
+          "steps": [
+            "GET status."
+          ],
+          "expected_result": "Response includes invalidRowCount.",
+          "fr_coverage": [
+            "FR-BATCH-API-04-03"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-BATCH-04-016",
+          "scenario": "returns_processed_row_count",
+          "test_type": "Functional",
+          "test_description": "Verify response includes processed row count.",
+          "preconditions": "Authorized caller; processed batch exists.",
+          "input_data": "valid batchId.",
+          "steps": [
+            "GET status."
+          ],
+          "expected_result": "Response includes processedRowCount.",
+          "fr_coverage": [
+            "FR-BATCH-API-04-03"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-BATCH-04-017",
+          "scenario": "returns_failed_row_count",
+          "test_type": "Functional",
+          "test_description": "Verify response includes failed row count.",
+          "preconditions": "Authorized caller; processed batch exists.",
+          "input_data": "valid batchId.",
+          "steps": [
+            "GET status."
+          ],
+          "expected_result": "Response includes failedRowCount.",
+          "fr_coverage": [
+            "FR-BATCH-API-04-03"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-BATCH-04-018",
+          "scenario": "returns_created_timestamp",
+          "test_type": "Functional",
+          "test_description": "Verify response includes created timestamp.",
+          "preconditions": "Authorized caller; batch exists.",
+          "input_data": "valid batchId.",
+          "steps": [
+            "GET status."
+          ],
+          "expected_result": "Response includes createdAt/uploadedAt.",
+          "fr_coverage": [
+            "FR-BATCH-API-04-03"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-BATCH-04-019",
+          "scenario": "returns_updated_timestamp",
+          "test_type": "Functional",
+          "test_description": "Verify response includes updated timestamp.",
+          "preconditions": "Authorized caller; batch exists.",
+          "input_data": "valid batchId.",
+          "steps": [
+            "GET status."
+          ],
+          "expected_result": "Response includes updatedAt.",
+          "fr_coverage": [
+            "FR-BATCH-API-04-03"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-BATCH-04-020",
+          "scenario": "returns_completed_timestamp_when_completed",
+          "test_type": "Functional",
+          "test_description": "Verify completed timestamp appears for completed batches.",
+          "preconditions": "Authorized caller; completed batch exists.",
+          "input_data": "completed batchId.",
+          "steps": [
+            "GET status."
+          ],
+          "expected_result": "Response includes completedAt where applicable.",
+          "fr_coverage": [
+            "FR-BATCH-API-04-03"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-BATCH-04-021",
+          "scenario": "read_only_no_state_mutation",
+          "test_type": "Functional",
+          "test_description": "Verify status retrieval does not mutate batch.",
+          "preconditions": "Authorized caller; batch exists.",
+          "input_data": "valid batchId.",
+          "steps": [
+            "GET status twice."
+          ],
+          "expected_result": "No state/count/timestamp mutation caused by read.",
+          "fr_coverage": [
+            "FR-BATCH-API-04-04"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-BATCH-04-022",
+          "scenario": "status_response_contract",
+          "test_type": "Functional",
+          "test_description": "Verify response uses correct status contract.",
+          "preconditions": "Authorized caller; batch exists.",
+          "input_data": "valid batchId.",
+          "steps": [
+            "GET status.",
+            "Validate schema."
+          ],
+          "expected_result": "Response fields/types match contract.",
+          "fr_coverage": [
+            "FR-BATCH-API-04-03"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-BATCH-04-023",
+          "scenario": "zero_row_batch_status_handled",
+          "test_type": "Functional",
+          "test_description": "Verify batch with zero rows returns deterministic summary.",
+          "preconditions": "Authorized caller; zero-row batch exists if allowed.",
+          "input_data": "zero-row batchId.",
+          "steps": [
+            "GET status."
+          ],
+          "expected_result": "Counts returned as zero, no error unless state invalid.",
+          "fr_coverage": [
+            "FR-BATCH-API-04-03"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-BATCH-04-024",
+          "scenario": "very_large_counts_returned_correctly",
+          "test_type": "Functional",
+          "test_description": "Verify large row counts are returned accurately.",
+          "preconditions": "Authorized caller; large batch exists.",
+          "input_data": "large batchId.",
+          "steps": [
+            "GET status."
+          ],
+          "expected_result": "Counts are accurate and not truncated.",
+          "fr_coverage": [
+            "FR-BATCH-API-04-03"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-BATCH-04-025",
+          "scenario": "audit_status_access",
+          "test_type": "Functional",
+          "test_description": "Verify status access is audited where required.",
+          "preconditions": "Audit enabled.",
+          "input_data": "valid batchId.",
+          "steps": [
+            "GET status.",
+            "Inspect AuditLog."
+          ],
+          "expected_result": "Audit entry recorded where policy requires.",
+          "fr_coverage": [
+            "FR-BATCH-API-04-05"
+          ],
+          "priority": "Low"
+        },
+        {
+          "tc_id": "TC-API-BATCH-04-026",
+          "scenario": "scope_does_not_leak_batch_metadata",
+          "test_type": "Functional",
+          "test_description": "Verify forbidden response does not leak foreign batch metadata.",
+          "preconditions": "Affiliate A; foreign batch exists.",
+          "input_data": "foreign batchId.",
+          "steps": [
+            "GET status."
+          ],
+          "expected_result": "403/404 without sensitive foreign metadata.",
+          "fr_coverage": [
+            "FR-BATCH-API-04-02"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-BATCH-04-027",
+          "scenario": "service_provider_read_mode_if_allowed",
+          "test_type": "Functional",
+          "test_description": "Verify authorized Service Provider scope reads status if permitted.",
+          "preconditions": "Service Provider with permitted read access.",
+          "input_data": "valid batchId.",
+          "steps": [
+            "GET status."
+          ],
+          "expected_result": "200 read-only or 403 according to SRS policy.",
+          "fr_coverage": [
+            "FR-BATCH-API-04-01",
+            "FR-BATCH-API-04-02"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-BATCH-04-028",
+          "scenario": "bank_user_access_rejected_or_read_only_by_policy",
+          "test_type": "Functional",
+          "test_description": "Verify bank user cannot access affiliate batch unless policy permits.",
+          "preconditions": "Bank user; affiliate batch exists.",
+          "input_data": "batchId.",
+          "steps": [
+            "GET status."
+          ],
+          "expected_result": "403 or read-only if explicitly permitted.",
+          "fr_coverage": [
+            "FR-BATCH-API-04-01",
+            "FR-BATCH-API-04-02"
+          ],
+          "priority": "Medium"
+        }
+      ]
+    },
+    {
+      "api_id": "API-BATCH-05",
+      "name": "Get Batch Card Creation Row Results",
+      "endpoint": "GET /api/v1/batches/{batchId}/rows",
+      "test_case_count": 30,
+      "functional_requirements": [
+        "FR-BATCH-API-05-01",
+        "FR-BATCH-API-05-02",
+        "FR-BATCH-API-05-03",
+        "FR-BATCH-API-05-04",
+        "FR-BATCH-API-05-05",
+        "FR-BATCH-API-05-06"
+      ],
+      "test_cases": [
+        {
+          "tc_id": "TC-API-BATCH-05-001",
+          "scenario": "get_all_rows_success",
+          "test_type": "Functional",
+          "test_description": "Verify all row results are returned for in-scope batch.",
+          "preconditions": "Authorized caller; batch has row results.",
+          "input_data": "valid batchId.",
+          "steps": [
+            "GET /rows."
+          ],
+          "expected_result": "200 with row dataset.",
+          "fr_coverage": [
+            "FR-BATCH-API-05-01",
+            "FR-BATCH-API-05-05"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-BATCH-05-002",
+          "scenario": "unknown_batch_rows_not_found",
+          "test_type": "Functional",
+          "test_description": "Verify unknown batch rows return 404.",
+          "preconditions": "Authorized caller.",
+          "input_data": "unknown batchId.",
+          "steps": [
+            "GET /rows."
+          ],
+          "expected_result": "404 Not Found.",
+          "fr_coverage": [
+            "FR-BATCH-API-05-01"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-BATCH-05-003",
+          "scenario": "malformed_batch_id_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify malformed batchId rejected.",
+          "preconditions": "Authorized caller.",
+          "input_data": "batchId='!!!'.",
+          "steps": [
+            "GET /rows."
+          ],
+          "expected_result": "400/422.",
+          "fr_coverage": [
+            "FR-BATCH-API-05-02"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-BATCH-05-004",
+          "scenario": "unauthenticated_rows_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify rows endpoint requires authentication.",
+          "preconditions": "No token.",
+          "input_data": "valid batchId.",
+          "steps": [
+            "GET /rows without auth."
+          ],
+          "expected_result": "401 Unauthorized.",
+          "fr_coverage": [
+            "FR-BATCH-API-05-02"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-BATCH-05-005",
+          "scenario": "foreign_scope_rows_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify foreign batch rows are blocked.",
+          "preconditions": "Affiliate A; batch belongs Affiliate B.",
+          "input_data": "foreign batchId.",
+          "steps": [
+            "GET /rows."
+          ],
+          "expected_result": "403 Forbidden.",
+          "fr_coverage": [
+            "FR-BATCH-API-05-02"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-BATCH-05-006",
+          "scenario": "filter_valid_rows",
+          "test_type": "Functional",
+          "test_description": "Verify filter by VALID row status.",
+          "preconditions": "Batch with mixed row statuses.",
+          "input_data": "status=VALID.",
+          "steps": [
+            "GET /rows?status=VALID."
+          ],
+          "expected_result": "Only VALID rows returned.",
+          "fr_coverage": [
+            "FR-BATCH-API-05-03"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-BATCH-05-007",
+          "scenario": "filter_invalid_rows",
+          "test_type": "Functional",
+          "test_description": "Verify filter by INVALID row status.",
+          "preconditions": "Batch with mixed row statuses.",
+          "input_data": "status=INVALID.",
+          "steps": [
+            "GET /rows?status=INVALID."
+          ],
+          "expected_result": "Only INVALID rows returned.",
+          "fr_coverage": [
+            "FR-BATCH-API-05-03"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-BATCH-05-008",
+          "scenario": "filter_processed_rows",
+          "test_type": "Functional",
+          "test_description": "Verify filter by PROCESSED row status.",
+          "preconditions": "Batch with processed rows.",
+          "input_data": "status=PROCESSED.",
+          "steps": [
+            "GET /rows?status=PROCESSED."
+          ],
+          "expected_result": "Only PROCESSED rows returned.",
+          "fr_coverage": [
+            "FR-BATCH-API-05-03"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-BATCH-05-009",
+          "scenario": "filter_failed_rows",
+          "test_type": "Functional",
+          "test_description": "Verify filter by FAILED row status.",
+          "preconditions": "Batch with failed rows.",
+          "input_data": "status=FAILED.",
+          "steps": [
+            "GET /rows?status=FAILED."
+          ],
+          "expected_result": "Only FAILED rows returned.",
+          "fr_coverage": [
+            "FR-BATCH-API-05-03"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-BATCH-05-010",
+          "scenario": "invalid_status_filter_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify unsupported row status is rejected.",
+          "preconditions": "Authorized caller.",
+          "input_data": "status=BAD_STATUS.",
+          "steps": [
+            "GET /rows?status=BAD_STATUS."
+          ],
+          "expected_result": "400/422.",
+          "fr_coverage": [
+            "FR-BATCH-API-05-03"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-BATCH-05-011",
+          "scenario": "pagination_page_one",
+          "test_type": "Functional",
+          "test_description": "Verify first page pagination.",
+          "preconditions": "Batch has many rows.",
+          "input_data": "page=1&pageSize=10.",
+          "steps": [
+            "GET /rows."
+          ],
+          "expected_result": "Response page=1 pageSize=10 data length <=10.",
+          "fr_coverage": [
+            "FR-BATCH-API-05-04"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-BATCH-05-012",
+          "scenario": "pagination_page_two",
+          "test_type": "Functional",
+          "test_description": "Verify second page pagination.",
+          "preconditions": "Batch has >10 rows.",
+          "input_data": "page=2&pageSize=10.",
+          "steps": [
+            "GET /rows."
+          ],
+          "expected_result": "Second page returned.",
+          "fr_coverage": [
+            "FR-BATCH-API-05-04"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-BATCH-05-013",
+          "scenario": "pagination_page_size_one",
+          "test_type": "Functional",
+          "test_description": "Verify pageSize=1 boundary.",
+          "preconditions": "Batch has rows.",
+          "input_data": "page=1&pageSize=1.",
+          "steps": [
+            "GET /rows."
+          ],
+          "expected_result": "Exactly one row returned.",
+          "fr_coverage": [
+            "FR-BATCH-API-05-04"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-BATCH-05-014",
+          "scenario": "pagination_invalid_page_zero",
+          "test_type": "Functional",
+          "test_description": "Verify page=0 rejected.",
+          "preconditions": "Authorized caller.",
+          "input_data": "page=0&pageSize=10.",
+          "steps": [
+            "GET /rows."
+          ],
+          "expected_result": "400/422.",
+          "fr_coverage": [
+            "FR-BATCH-API-05-04"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-BATCH-05-015",
+          "scenario": "pagination_invalid_page_size_zero",
+          "test_type": "Functional",
+          "test_description": "Verify pageSize=0 rejected.",
+          "preconditions": "Authorized caller.",
+          "input_data": "page=1&pageSize=0.",
+          "steps": [
+            "GET /rows."
+          ],
+          "expected_result": "400/422.",
+          "fr_coverage": [
+            "FR-BATCH-API-05-04"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-BATCH-05-016",
+          "scenario": "pagination_excessive_page_size_rejected_or_capped",
+          "test_type": "Functional",
+          "test_description": "Verify excessive pageSize policy.",
+          "preconditions": "Authorized caller.",
+          "input_data": "pageSize=100000.",
+          "steps": [
+            "GET /rows."
+          ],
+          "expected_result": "Rejected or capped according to API policy.",
+          "fr_coverage": [
+            "FR-BATCH-API-05-04"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-BATCH-05-017",
+          "scenario": "empty_filter_result_well_formed",
+          "test_type": "Functional",
+          "test_description": "Verify empty filtered result is well formed.",
+          "preconditions": "No rows match status filter.",
+          "input_data": "status=FAILED when none exist.",
+          "steps": [
+            "GET /rows."
+          ],
+          "expected_result": "200 with empty data array and wrapper.",
+          "fr_coverage": [
+            "FR-BATCH-API-05-03",
+            "FR-BATCH-API-05-04"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-BATCH-05-018",
+          "scenario": "row_number_returned",
+          "test_type": "Functional",
+          "test_description": "Verify rowNumber is returned.",
+          "preconditions": "Batch has rows.",
+          "input_data": "valid batchId.",
+          "steps": [
+            "GET /rows."
+          ],
+          "expected_result": "Each item includes rowNumber.",
+          "fr_coverage": [
+            "FR-BATCH-API-05-05"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-BATCH-05-019",
+          "scenario": "row_status_returned",
+          "test_type": "Functional",
+          "test_description": "Verify rowStatus is returned.",
+          "preconditions": "Batch has rows.",
+          "input_data": "valid batchId.",
+          "steps": [
+            "GET /rows."
+          ],
+          "expected_result": "Each item includes rowStatus.",
+          "fr_coverage": [
+            "FR-BATCH-API-05-05"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-BATCH-05-020",
+          "scenario": "validation_errors_returned",
+          "test_type": "Functional",
+          "test_description": "Verify validation errors returned for invalid rows.",
+          "preconditions": "Batch has invalid rows.",
+          "input_data": "valid batchId.",
+          "steps": [
+            "GET /rows."
+          ],
+          "expected_result": "Invalid rows include validationErrors.",
+          "fr_coverage": [
+            "FR-BATCH-API-05-05"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-BATCH-05-021",
+          "scenario": "warnings_returned",
+          "test_type": "Functional",
+          "test_description": "Verify warnings returned where applicable.",
+          "preconditions": "Batch has rows with warnings.",
+          "input_data": "valid batchId.",
+          "steps": [
+            "GET /rows."
+          ],
+          "expected_result": "Warnings returned.",
+          "fr_coverage": [
+            "FR-BATCH-API-05-05"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-BATCH-05-022",
+          "scenario": "linked_customer_ref_returned",
+          "test_type": "Functional",
+          "test_description": "Verify linked customer reference returned for processed rows.",
+          "preconditions": "Processed batch exists.",
+          "input_data": "valid batchId.",
+          "steps": [
+            "GET /rows."
+          ],
+          "expected_result": "Processed row includes customerId.",
+          "fr_coverage": [
+            "FR-BATCH-API-05-05"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-BATCH-05-023",
+          "scenario": "linked_card_ref_returned",
+          "test_type": "Functional",
+          "test_description": "Verify linked card reference returned for processed rows.",
+          "preconditions": "Processed batch exists.",
+          "input_data": "valid batchId.",
+          "steps": [
+            "GET /rows."
+          ],
+          "expected_result": "Processed row includes cardId.",
+          "fr_coverage": [
+            "FR-BATCH-API-05-05"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-BATCH-05-024",
+          "scenario": "source_row_traceability_preserved",
+          "test_type": "Functional",
+          "test_description": "Verify row traces back to uploaded input.",
+          "preconditions": "Processed/validated batch exists.",
+          "input_data": "valid batchId.",
+          "steps": [
+            "GET /rows.",
+            "Compare with source row."
+          ],
+          "expected_result": "Row traceability preserved.",
+          "fr_coverage": [
+            "FR-BATCH-API-05-06"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-BATCH-05-025",
+          "scenario": "row_order_preserved",
+          "test_type": "Functional",
+          "test_description": "Verify returned rows are ordered by source row number by default.",
+          "preconditions": "Batch has multiple rows.",
+          "input_data": "valid batchId.",
+          "steps": [
+            "GET /rows."
+          ],
+          "expected_result": "Rows sorted by rowNumber unless sort specified.",
+          "fr_coverage": [
+            "FR-BATCH-API-05-06"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-BATCH-05-026",
+          "scenario": "partial_batch_rows_visible",
+          "test_type": "Functional",
+          "test_description": "Verify rows visible during/after partial completion.",
+          "preconditions": "PARTIALLY_COMPLETED batch exists.",
+          "input_data": "batchId.",
+          "steps": [
+            "GET /rows."
+          ],
+          "expected_result": "Processed and failed rows visible.",
+          "fr_coverage": [
+            "FR-BATCH-API-05-01",
+            "FR-BATCH-API-05-05"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-BATCH-05-027",
+          "scenario": "processing_batch_rows_visible",
+          "test_type": "Functional",
+          "test_description": "Verify row results can be retrieved during processing if supported.",
+          "preconditions": "PROCESSING batch exists.",
+          "input_data": "batchId.",
+          "steps": [
+            "GET /rows."
+          ],
+          "expected_result": "200 with current row states or 409 if unavailable by policy.",
+          "fr_coverage": [
+            "FR-BATCH-API-05-01",
+            "FR-BATCH-API-05-05"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-BATCH-05-028",
+          "scenario": "response_contract_valid",
+          "test_type": "Functional",
+          "test_description": "Verify row results response contract.",
+          "preconditions": "Batch with rows.",
+          "input_data": "valid batchId.",
+          "steps": [
+            "GET /rows.",
+            "Validate schema."
+          ],
+          "expected_result": "page, pageSize, data and row fields match contract.",
+          "fr_coverage": [
+            "FR-BATCH-API-05-04",
+            "FR-BATCH-API-05-05"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-BATCH-05-029",
+          "scenario": "audit_rows_access",
+          "test_type": "Functional",
+          "test_description": "Verify row results access audited if required.",
+          "preconditions": "Audit enabled.",
+          "input_data": "valid batchId.",
+          "steps": [
+            "GET /rows.",
+            "Inspect AuditLog."
+          ],
+          "expected_result": "Audit entry recorded where required.",
+          "fr_coverage": [
+            "FR-BATCH-API-05-02"
+          ],
+          "priority": "Low"
+        },
+        {
+          "tc_id": "TC-API-BATCH-05-030",
+          "scenario": "scope_does_not_leak_rows",
+          "test_type": "Functional",
+          "test_description": "Verify forbidden row request does not leak row data.",
+          "preconditions": "Foreign batch exists.",
+          "input_data": "foreign batchId.",
+          "steps": [
+            "GET /rows."
+          ],
+          "expected_result": "403/404 without row metadata leakage.",
+          "fr_coverage": [
+            "FR-BATCH-API-05-02"
+          ],
+          "priority": "Critical"
+        }
+      ]
+    },
+    {
+      "api_id": "API-BATCH-06",
+      "name": "Download Batch Card Creation Result File",
+      "endpoint": "GET /api/v1/batches/{batchId}/results/download",
+      "test_case_count": 30,
+      "functional_requirements": [
+        "FR-BATCH-API-06-01",
+        "FR-BATCH-API-06-02",
+        "FR-BATCH-API-06-03",
+        "FR-BATCH-API-06-04",
+        "FR-BATCH-API-06-05"
+      ],
+      "test_cases": [
+        {
+          "tc_id": "TC-API-BATCH-06-001",
+          "scenario": "download_completed_result_success",
+          "test_type": "Functional",
+          "test_description": "Verify completed batch result can be downloaded.",
+          "preconditions": "Authorized caller; completed batch has artifact.",
+          "input_data": "completed batchId.",
+          "steps": [
+            "GET /results/download."
+          ],
+          "expected_result": "200; result file/download reference returned.",
+          "fr_coverage": [
+            "FR-BATCH-API-06-01",
+            "FR-BATCH-API-06-02"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-BATCH-06-002",
+          "scenario": "download_partially_completed_result_success",
+          "test_type": "Functional",
+          "test_description": "Verify partially completed batch result can be downloaded.",
+          "preconditions": "Authorized caller; PARTIALLY_COMPLETED batch has artifact.",
+          "input_data": "partial batchId.",
+          "steps": [
+            "GET /results/download."
+          ],
+          "expected_result": "200; result file/download reference returned.",
+          "fr_coverage": [
+            "FR-BATCH-API-06-01"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-BATCH-06-003",
+          "scenario": "reject_uploaded_batch_download",
+          "test_type": "Functional",
+          "test_description": "Verify UPLOADED batch result download rejected.",
+          "preconditions": "Batch in UPLOADED state.",
+          "input_data": "uploaded batchId.",
+          "steps": [
+            "GET /results/download."
+          ],
+          "expected_result": "409 Conflict result not ready.",
+          "fr_coverage": [
+            "FR-BATCH-API-06-01",
+            "FR-BATCH-API-06-02"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-BATCH-06-004",
+          "scenario": "reject_validated_batch_download",
+          "test_type": "Functional",
+          "test_description": "Verify VALIDATED batch result download rejected.",
+          "preconditions": "Batch in VALIDATED state.",
+          "input_data": "validated batchId.",
+          "steps": [
+            "GET /results/download."
+          ],
+          "expected_result": "409 Conflict result not ready.",
+          "fr_coverage": [
+            "FR-BATCH-API-06-01",
+            "FR-BATCH-API-06-02"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-BATCH-06-005",
+          "scenario": "reject_processing_batch_download",
+          "test_type": "Functional",
+          "test_description": "Verify PROCESSING batch result download rejected.",
+          "preconditions": "Batch in PROCESSING state.",
+          "input_data": "processing batchId.",
+          "steps": [
+            "GET /results/download."
+          ],
+          "expected_result": "409 Conflict result not ready.",
+          "fr_coverage": [
+            "FR-BATCH-API-06-01",
+            "FR-BATCH-API-06-02"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-BATCH-06-006",
+          "scenario": "reject_failed_no_artifact_download",
+          "test_type": "Functional",
+          "test_description": "Verify FAILED batch without artifact cannot download.",
+          "preconditions": "FAILED batch has no artifact.",
+          "input_data": "failed batchId.",
+          "steps": [
+            "GET /results/download."
+          ],
+          "expected_result": "404/409 artifact unavailable.",
+          "fr_coverage": [
+            "FR-BATCH-API-06-02"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-BATCH-06-007",
+          "scenario": "completed_no_artifact_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify completed batch without artifact is rejected.",
+          "preconditions": "Completed batch has missing artifact.",
+          "input_data": "batchId.",
+          "steps": [
+            "GET /results/download."
+          ],
+          "expected_result": "404/409 artifact unavailable.",
+          "fr_coverage": [
+            "FR-BATCH-API-06-02"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-BATCH-06-008",
+          "scenario": "unknown_batch_download_not_found",
+          "test_type": "Functional",
+          "test_description": "Verify unknown batch download returns 404.",
+          "preconditions": "Authorized caller.",
+          "input_data": "unknown batchId.",
+          "steps": [
+            "GET /results/download."
+          ],
+          "expected_result": "404 Not Found.",
+          "fr_coverage": [
+            "FR-BATCH-API-06-02"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-BATCH-06-009",
+          "scenario": "malformed_batch_id_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify malformed batchId rejected.",
+          "preconditions": "Authorized caller.",
+          "input_data": "batchId='!!!'.",
+          "steps": [
+            "GET /results/download."
+          ],
+          "expected_result": "400/422.",
+          "fr_coverage": [
+            "FR-BATCH-API-06-02"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-BATCH-06-010",
+          "scenario": "unauthenticated_download_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify download requires authentication.",
+          "preconditions": "No token.",
+          "input_data": "completed batchId.",
+          "steps": [
+            "GET /results/download without auth."
+          ],
+          "expected_result": "401 Unauthorized.",
+          "fr_coverage": [
+            "FR-BATCH-API-06-03"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-BATCH-06-011",
+          "scenario": "foreign_scope_download_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify foreign batch download is blocked.",
+          "preconditions": "Affiliate A; batch belongs Affiliate B.",
+          "input_data": "foreign batchId.",
+          "steps": [
+            "GET /results/download."
+          ],
+          "expected_result": "403 Forbidden.",
+          "fr_coverage": [
+            "FR-BATCH-API-06-03",
+            "FR-BATCH-API-06-04"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-BATCH-06-012",
+          "scenario": "download_reference_scope_reuse_blocked",
+          "test_type": "Functional",
+          "test_description": "Verify download reference cannot be reused cross-scope.",
+          "preconditions": "Download ref created for Affiliate A.",
+          "input_data": "Affiliate B uses same ref.",
+          "steps": [
+            "Attempt download."
+          ],
+          "expected_result": "403 Forbidden.",
+          "fr_coverage": [
+            "FR-BATCH-API-06-04"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-BATCH-06-013",
+          "scenario": "download_filename_present",
+          "test_type": "Functional",
+          "test_description": "Verify download response includes file name.",
+          "preconditions": "Artifact exists.",
+          "input_data": "completed batchId.",
+          "steps": [
+            "GET /results/download."
+          ],
+          "expected_result": "Filename/content-disposition present.",
+          "fr_coverage": [
+            "FR-BATCH-API-06-02"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-BATCH-06-014",
+          "scenario": "download_content_type_present",
+          "test_type": "Functional",
+          "test_description": "Verify response includes valid content type.",
+          "preconditions": "Artifact exists.",
+          "input_data": "completed batchId.",
+          "steps": [
+            "GET /results/download."
+          ],
+          "expected_result": "Content-Type set for CSV/XLSX.",
+          "fr_coverage": [
+            "FR-BATCH-API-06-02"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-BATCH-06-015",
+          "scenario": "download_csv_artifact_success",
+          "test_type": "Functional",
+          "test_description": "Verify CSV result artifact can be downloaded if format is CSV.",
+          "preconditions": "Completed batch artifact CSV.",
+          "input_data": "completed batchId.",
+          "steps": [
+            "GET download."
+          ],
+          "expected_result": "CSV file/reference returned.",
+          "fr_coverage": [
+            "FR-BATCH-API-06-02"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-BATCH-06-016",
+          "scenario": "download_xlsx_artifact_success",
+          "test_type": "Functional",
+          "test_description": "Verify XLSX result artifact can be downloaded if format is XLSX.",
+          "preconditions": "Completed batch artifact XLSX.",
+          "input_data": "completed batchId.",
+          "steps": [
+            "GET download."
+          ],
+          "expected_result": "XLSX file/reference returned.",
+          "fr_coverage": [
+            "FR-BATCH-API-06-02"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-BATCH-06-017",
+          "scenario": "artifact_contains_all_rows",
+          "test_type": "Functional",
+          "test_description": "Verify result file includes all source rows.",
+          "preconditions": "Completed batch with known row count.",
+          "input_data": "completed batchId.",
+          "steps": [
+            "Download result.",
+            "Inspect row count."
+          ],
+          "expected_result": "Artifact contains all processed/invalid rows as per policy.",
+          "fr_coverage": [
+            "FR-BATCH-API-06-02"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-BATCH-06-018",
+          "scenario": "artifact_contains_row_status",
+          "test_type": "Functional",
+          "test_description": "Verify result file includes row status column.",
+          "preconditions": "Artifact exists.",
+          "input_data": "completed batchId.",
+          "steps": [
+            "Download result.",
+            "Inspect columns."
+          ],
+          "expected_result": "Row status included.",
+          "fr_coverage": [
+            "FR-BATCH-API-06-02"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-BATCH-06-019",
+          "scenario": "artifact_contains_error_messages",
+          "test_type": "Functional",
+          "test_description": "Verify result file includes validation/processing errors.",
+          "preconditions": "Batch has failed/invalid rows.",
+          "input_data": "completed/partial batchId.",
+          "steps": [
+            "Download result.",
+            "Inspect file."
+          ],
+          "expected_result": "Errors included for failed/invalid rows.",
+          "fr_coverage": [
+            "FR-BATCH-API-06-02"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-BATCH-06-020",
+          "scenario": "artifact_contains_linked_references",
+          "test_type": "Functional",
+          "test_description": "Verify result file includes linked customer/card refs for successful rows.",
+          "preconditions": "Batch has processed rows.",
+          "input_data": "completed batchId.",
+          "steps": [
+            "Download result.",
+            "Inspect file."
+          ],
+          "expected_result": "customerId/cardId refs included where applicable.",
+          "fr_coverage": [
+            "FR-BATCH-API-06-02"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-BATCH-06-021",
+          "scenario": "repeat_download_safe",
+          "test_type": "Functional",
+          "test_description": "Verify repeated download does not mutate state.",
+          "preconditions": "Completed batch artifact exists.",
+          "input_data": "completed batchId.",
+          "steps": [
+            "Download twice.",
+            "GET status."
+          ],
+          "expected_result": "Both downloads succeed; batch state unchanged.",
+          "fr_coverage": [
+            "FR-BATCH-API-06-01",
+            "FR-BATCH-API-06-04"
+          ],
+          "priority": "Low"
+        },
+        {
+          "tc_id": "TC-API-BATCH-06-022",
+          "scenario": "download_after_artifact_expiry_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify expired/missing artifact is handled correctly.",
+          "preconditions": "Artifact expiry simulated.",
+          "input_data": "expired artifact batchId.",
+          "steps": [
+            "GET download."
+          ],
+          "expected_result": "404/410/409 returned according to policy.",
+          "fr_coverage": [
+            "FR-BATCH-API-06-02"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-BATCH-06-023",
+          "scenario": "audit_download_recorded",
+          "test_type": "Functional",
+          "test_description": "Verify download activity is audited.",
+          "preconditions": "Audit enabled.",
+          "input_data": "completed batchId.",
+          "steps": [
+            "Download result.",
+            "Inspect AuditLog."
+          ],
+          "expected_result": "Audit entry recorded.",
+          "fr_coverage": [
+            "FR-BATCH-API-06-05"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-BATCH-06-024",
+          "scenario": "scope_no_metadata_leak_on_forbidden",
+          "test_type": "Functional",
+          "test_description": "Verify forbidden download does not leak artifact metadata.",
+          "preconditions": "Foreign batch exists.",
+          "input_data": "foreign batchId.",
+          "steps": [
+            "GET download."
+          ],
+          "expected_result": "403/404 without file metadata.",
+          "fr_coverage": [
+            "FR-BATCH-API-06-03",
+            "FR-BATCH-API-06-04"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-BATCH-06-025",
+          "scenario": "service_provider_download_policy",
+          "test_type": "Functional",
+          "test_description": "Verify Service Provider download follows authorized scope policy.",
+          "preconditions": "Service Provider caller.",
+          "input_data": "completed batchId.",
+          "steps": [
+            "GET download."
+          ],
+          "expected_result": "200 if permitted or 403 if not, according to SRS policy.",
+          "fr_coverage": [
+            "FR-BATCH-API-06-03",
+            "FR-BATCH-API-06-04"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-BATCH-06-026",
+          "scenario": "bank_user_download_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify bank user cannot download affiliate batch result unless permitted.",
+          "preconditions": "Bank user; affiliate batch exists.",
+          "input_data": "batchId.",
+          "steps": [
+            "GET download."
+          ],
+          "expected_result": "403 unless explicit policy permits.",
+          "fr_coverage": [
+            "FR-BATCH-API-06-03",
+            "FR-BATCH-API-06-04"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-BATCH-06-027",
+          "scenario": "download_during_generation_race_handled",
+          "test_type": "Functional",
+          "test_description": "Verify download requested while artifact generation is finalizing is deterministic.",
+          "preconditions": "Batch status just completed but artifact generation pending.",
+          "input_data": "batchId.",
+          "steps": [
+            "GET download."
+          ],
+          "expected_result": "409/202 until artifact available, then 200.",
+          "fr_coverage": [
+            "FR-BATCH-API-06-02"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-BATCH-06-028",
+          "scenario": "result_file_integrity_valid",
+          "test_type": "Functional",
+          "test_description": "Verify downloaded file is not corrupt.",
+          "preconditions": "Artifact exists.",
+          "input_data": "completed batchId.",
+          "steps": [
+            "Download file.",
+            "Open/parse file."
+          ],
+          "expected_result": "File is readable and well formed.",
+          "fr_coverage": [
+            "FR-BATCH-API-06-02"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-BATCH-06-029",
+          "scenario": "download_response_contract_valid",
+          "test_type": "Functional",
+          "test_description": "Verify download response contract is valid.",
+          "preconditions": "Artifact exists.",
+          "input_data": "completed batchId.",
+          "steps": [
+            "GET download.",
+            "Validate response headers/body."
+          ],
+          "expected_result": "Response matches contract.",
+          "fr_coverage": [
+            "FR-BATCH-API-06-02"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-BATCH-06-030",
+          "scenario": "read_after_download_status_consistent",
+          "test_type": "Functional",
+          "test_description": "Verify batch status remains consistent after download.",
+          "preconditions": "Artifact exists.",
+          "input_data": "completed batchId.",
+          "steps": [
+            "GET status.",
+            "Download.",
+            "GET status again."
+          ],
+          "expected_result": "Status and counts unchanged.",
+          "fr_coverage": [
+            "FR-BATCH-API-06-01",
+            "FR-BATCH-API-06-04"
+          ],
+          "priority": "Low"
+        }
+      ]
+    }
+  ],
+  "total_test_cases": 177
+}

@@ -1,0 +1,6523 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Kardit.Api",
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/v1/admin/banks": {
+      "post": {
+        "tags": [
+          "AdminBankProvisioning"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_BankProvisioningRequestDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_BankProvisioningRequestDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_BankProvisioningRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/admin/onboarding/cases": {
+      "get": {
+        "tags": [
+          "AdminOnboardingCases"
+        ],
+        "parameters": [
+          {
+            "name": "Status",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/admin/onboarding/cases/{caseId}": {
+      "get": {
+        "tags": [
+          "AdminOnboardingCases"
+        ],
+        "parameters": [
+          {
+            "name": "caseId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "maxLength": 50,
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/admin/onboarding/cases/{caseId}/decision": {
+      "post": {
+        "tags": [
+          "AdminOnboardingCases"
+        ],
+        "parameters": [
+          {
+            "name": "caseId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "maxLength": 50,
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_DecisionRequestDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_DecisionRequestDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_DecisionRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/admin/onboarding/cases/{caseId}/provision": {
+      "post": {
+        "tags": [
+          "AdminOnboardingCases"
+        ],
+        "parameters": [
+          {
+            "name": "caseId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "maxLength": 50,
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Admin_ProvisionAffiliateRequestDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Admin_ProvisionAffiliateRequestDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Admin_ProvisionAffiliateRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/affiliates/onboarding/sessions": {
+      "post": {
+        "tags": [
+          "Affiliates"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_OnboarAffiliateDraftRequestDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_OnboarAffiliateDraftRequestDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_OnboarAffiliateDraftRequestDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/affiliates/onboarding/drafts/{draftId}/organization": {
+      "put": {
+        "tags": [
+          "Affiliates"
+        ],
+        "parameters": [
+          {
+            "name": "draftId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_UpdateAffiliateDraftRequestDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_UpdateAffiliateDraftRequestDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_UpdateAffiliateDraftRequestDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/affiliates/onboarding/drafts/{draftId}/documents": {
+      "post": {
+        "tags": [
+          "Affiliates"
+        ],
+        "parameters": [
+          {
+            "name": "draftId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_UploadAffiliateKYCDocumentsRequestDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_UploadAffiliateKYCDocumentsRequestDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_UploadAffiliateKYCDocumentsRequestDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/affiliates/onboarding/drafts/{draftId}/issuing-banks": {
+      "put": {
+        "tags": [
+          "Affiliates"
+        ],
+        "parameters": [
+          {
+            "name": "draftId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_UpdateAffiliateIssuingBankRequestDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_UpdateAffiliateIssuingBankRequestDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_UpdateAffiliateIssuingBankRequestDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/affiliates/onboarding/drafts/{draftId}/submit": {
+      "post": {
+        "tags": [
+          "Affiliates"
+        ],
+        "parameters": [
+          {
+            "name": "draftId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_CreateOnboardingCaseRequestDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_CreateOnboardingCaseRequestDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_CreateOnboardingCaseRequestDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/affiliates/onboarding/cases/{caseId}": {
+      "post": {
+        "tags": [
+          "Affiliates"
+        ],
+        "parameters": [
+          {
+            "name": "caseId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_OnboardingCaseStatusRequestDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_OnboardingCaseStatusRequestDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_OnboardingCaseStatusRequestDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/affiliates": {
+      "post": {
+        "tags": [
+          "Affiliates"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_AffiliateRequestDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_AffiliateRequestDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_AffiliateRequestDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/affiliates/{affiliateId}/bank-partnership-requests": {
+      "post": {
+        "tags": [
+          "Affiliates"
+        ],
+        "parameters": [
+          {
+            "name": "affiliateId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_BankPartnershipRequestDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_BankPartnershipRequestDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_BankPartnershipRequestDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/affiliates/partnership-requests/query": {
+      "post": {
+        "tags": [
+          "Affiliates"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_QueryPartnershipRequestsDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_QueryPartnershipRequestsDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_QueryPartnershipRequestsDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/affiliates/{affiliateId}/profile": {
+      "get": {
+        "tags": [
+          "Affiliates"
+        ],
+        "parameters": [
+          {
+            "name": "affiliateId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/affiliates/{affiliateId}/kyb-snapshot": {
+      "get": {
+        "tags": [
+          "Affiliates"
+        ],
+        "parameters": [
+          {
+            "name": "affiliateId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/affiliates/query": {
+      "post": {
+        "tags": [
+          "Affiliates"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_QueryAffiliatesRequestDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_QueryAffiliatesRequestDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_QueryAffiliatesRequestDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/affiliates/{affiliateId}/bank-partnerships": {
+      "get": {
+        "tags": [
+          "Affiliates"
+        ],
+        "parameters": [
+          {
+            "name": "affiliateId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/Batches": {
+      "get": {
+        "tags": [
+          "Batches"
+        ],
+        "parameters": [
+          {
+            "name": "BatchType",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Status",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "ProductId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "BankId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "SubmittedByRef",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "TenantId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "MakerUserId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "CheckerUserId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "SubmittedFrom",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "SubmittedTo",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "ApprovedFrom",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "ApprovedTo",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "ProcessedFrom",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "ProcessedTo",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "Page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "SortBy",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "SortDirection",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Batch_BatchListDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Batch_BatchListDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Batch_BatchListDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/Batches/card-creation/upload": {
+      "post": {
+        "tags": [
+          "Batches"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Batch_BatchFileUploadRequestDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Batch_BatchFileUploadRequestDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Batch_BatchFileUploadRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Kardit_Contracts_Dtos_BatchFileUploadResponseDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Kardit_Contracts_Dtos_BatchFileUploadResponseDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Kardit_Contracts_Dtos_BatchFileUploadResponseDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/Batches/{batchId}/validate": {
+      "post": {
+        "tags": [
+          "Batches"
+        ],
+        "parameters": [
+          {
+            "name": "batchId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_BatchFileValidationRequestDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_BatchFileValidationRequestDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_BatchFileValidationRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Kardit_Contracts_Dtos_BatchFileValidationResponseDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Kardit_Contracts_Dtos_BatchFileValidationResponseDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Kardit_Contracts_Dtos_BatchFileValidationResponseDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/Batches/{batchId}/submit": {
+      "post": {
+        "tags": [
+          "Batches"
+        ],
+        "parameters": [
+          {
+            "name": "batchId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_BatchSubmitRequestDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_BatchSubmitRequestDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_BatchSubmitRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Kardit_Contracts_Dtos_BatchSubmitResponseDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Kardit_Contracts_Dtos_BatchSubmitResponseDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Kardit_Contracts_Dtos_BatchSubmitResponseDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/Batches/{batchId}": {
+      "get": {
+        "tags": [
+          "Batches"
+        ],
+        "parameters": [
+          {
+            "name": "batchId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Kardit_Contracts_Dtos_BatchCardCreationStatusDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Kardit_Contracts_Dtos_BatchCardCreationStatusDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Kardit_Contracts_Dtos_BatchCardCreationStatusDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/Batches/{batchId}/rows": {
+      "get": {
+        "tags": [
+          "Batches"
+        ],
+        "parameters": [
+          {
+            "name": "batchId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Status",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Kardit_Contracts_Dtos_BatchCardCreationRowResultsDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Kardit_Contracts_Dtos_BatchCardCreationRowResultsDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Kardit_Contracts_Dtos_BatchCardCreationRowResultsDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/Batches/{batchId}/results/download": {
+      "get": {
+        "tags": [
+          "Batches"
+        ],
+        "parameters": [
+          {
+            "name": "batchId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "format",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "default": "csv"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Kardit_Contracts_Dtos_BatchCardCreationResultDownloadDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Kardit_Contracts_Dtos_BatchCardCreationResultDownloadDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Kardit_Contracts_Dtos_BatchCardCreationResultDownloadDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/Batches/results/download/{token}": {
+      "get": {
+        "tags": [
+          "Batches"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/Batches/{batchId}/start-job": {
+      "get": {
+        "tags": [
+          "Batches"
+        ],
+        "parameters": [
+          {
+            "name": "batchId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Batch_BatchCardCreationJobResponseDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Batch_BatchCardCreationJobResponseDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Batch_BatchCardCreationJobResponseDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/ops/cards/{cardId}/limit-requests/{limitRequestId}/complete": {
+      "post": {
+        "tags": [
+          "CardOps"
+        ],
+        "parameters": [
+          {
+            "name": "cardId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limitRequestId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Limits_CompleteLimitRequestRequestDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Limits_CompleteLimitRequestRequestDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Limits_CompleteLimitRequestRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Limits_CompleteLimitRequestResponseDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Limits_CompleteLimitRequestResponseDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Limits_CompleteLimitRequestResponseDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/cards/metrics/affiliate/{affiliateId}": {
+      "get": {
+        "tags": [
+          "Cards"
+        ],
+        "summary": "Get card metrics by affiliate ID.",
+        "parameters": [
+          {
+            "name": "affiliateId",
+            "in": "path",
+            "description": "Accepts GUID or prefixed ID (for example: AFF-123e4567 or 3fa85f64-5717-4562-b3fc-2c963f66afa6).",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/cards/metrics/bank/{bankId}": {
+      "get": {
+        "tags": [
+          "Cards"
+        ],
+        "summary": "Get card metrics by bank ID.",
+        "parameters": [
+          {
+            "name": "bankId",
+            "in": "path",
+            "description": "Accepts GUID or prefixed ID (for example: BNK-WEM-002 or 3fa85f64-5717-4562-b3fc-2c963f66afa6).",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/cards/banks/{bankId}/affiliates/{affiliateId}/freeze": {
+      "post": {
+        "tags": [
+          "Cards"
+        ],
+        "summary": "Freeze cards for an affiliate under a bank.",
+        "parameters": [
+          {
+            "name": "bankId",
+            "in": "path",
+            "description": "Accepts GUID or prefixed ID (for example: BNK-WEM-002 or 3fa85f64-5717-4562-b3fc-2c963f66afa6).",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "affiliateId",
+            "in": "path",
+            "description": "Accepts GUID or prefixed ID (for example: AFF-00981 or 3fa85f64-5717-4562-b3fc-2c963f66afa6).",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Freeze instruction payload.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_DevKit_Dtos_KarditCardApi_FreezeAffiliateCardsRequestDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_DevKit_Dtos_KarditCardApi_FreezeAffiliateCardsRequestDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_DevKit_Dtos_KarditCardApi_FreezeAffiliateCardsRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/cards/banks/{bankId}/affiliates/{affiliateId}/unfreeze": {
+      "post": {
+        "tags": [
+          "Cards"
+        ],
+        "summary": "Unfreeze cards for an affiliate under a bank.",
+        "parameters": [
+          {
+            "name": "bankId",
+            "in": "path",
+            "description": "Accepts GUID or prefixed ID (for example: BNK-WEM-002 or 3fa85f64-5717-4562-b3fc-2c963f66afa6).",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "affiliateId",
+            "in": "path",
+            "description": "Accepts GUID or prefixed ID (for example: AFF-00981 or 3fa85f64-5717-4562-b3fc-2c963f66afa6).",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Unfreeze instruction payload.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_DevKit_Dtos_KarditCardApi_UnfreezeAffiliateCardsRequestDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_DevKit_Dtos_KarditCardApi_UnfreezeAffiliateCardsRequestDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_DevKit_Dtos_KarditCardApi_UnfreezeAffiliateCardsRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/cards/banks/{bankId}/affiliates/{affiliateId}/terminate": {
+      "post": {
+        "tags": [
+          "Cards"
+        ],
+        "summary": "Terminate cards for an affiliate under a bank.",
+        "parameters": [
+          {
+            "name": "bankId",
+            "in": "path",
+            "description": "Accepts GUID or prefixed ID (for example: BNK-WEM-002 or 3fa85f64-5717-4562-b3fc-2c963f66afa6).",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "affiliateId",
+            "in": "path",
+            "description": "Accepts GUID or prefixed ID (for example: AFF-00981 or 3fa85f64-5717-4562-b3fc-2c963f66afa6).",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Terminate instruction payload.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_DevKit_Dtos_KarditCardApi_TerminateAffiliateCardsRequestDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_DevKit_Dtos_KarditCardApi_TerminateAffiliateCardsRequestDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_DevKit_Dtos_KarditCardApi_TerminateAffiliateCardsRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/cards/query": {
+      "post": {
+        "tags": [
+          "Cards"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Query_CardQueryRequestDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Query_CardQueryRequestDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Query_CardQueryRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Query_CardQueryResponseDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Query_CardQueryResponseDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Query_CardQueryResponseDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/cards": {
+      "get": {
+        "tags": [
+          "Cards"
+        ],
+        "parameters": [
+          {
+            "name": "status",
+            "in": "query",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "productType",
+            "in": "query",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/cards/issuance": {
+      "post": {
+        "tags": [
+          "Cards"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_DevKit_Dtos_Cards_Requests_CreateCardIssuanceRequestDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_DevKit_Dtos_Cards_Requests_CreateCardIssuanceRequestDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_DevKit_Dtos_Cards_Requests_CreateCardIssuanceRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Kardit_DevKit_Dtos_Cards_Responses_CardIssuanceResponseDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Kardit_DevKit_Dtos_Cards_Responses_CardIssuanceResponseDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Kardit_DevKit_Dtos_Cards_Responses_CardIssuanceResponseDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/cards/{cardId}": {
+      "get": {
+        "tags": [
+          "Cards"
+        ],
+        "parameters": [
+          {
+            "name": "cardId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Cards_GetCardResponseDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/cards/{cardId}/funding-details": {
+      "get": {
+        "tags": [
+          "Cards"
+        ],
+        "parameters": [
+          {
+            "name": "cardId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Cards_GetFundingDetailsResponseDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/cards/{cardId}/fulfillment/status": {
+      "get": {
+        "tags": [
+          "Cards"
+        ],
+        "parameters": [
+          {
+            "name": "cardId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Fulfillment_GetFulfillmentStatusResponseDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/cards/{cardId}/fulfillment/refresh": {
+      "post": {
+        "tags": [
+          "Cards"
+        ],
+        "parameters": [
+          {
+            "name": "cardId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Fulfillment_RefreshFulfillmentRequestDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Fulfillment_RefreshFulfillmentRequestDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Fulfillment_RefreshFulfillmentRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Fulfillment_RefreshFulfillmentResponseDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Fulfillment_RefreshFulfillmentResponseDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Fulfillment_RefreshFulfillmentResponseDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/cards/{cardId}/fulfillment/reinitiate": {
+      "post": {
+        "tags": [
+          "Cards"
+        ],
+        "parameters": [
+          {
+            "name": "cardId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Fulfillment_ReinitiateFulfillmentRequestDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Fulfillment_ReinitiateFulfillmentRequestDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Fulfillment_ReinitiateFulfillmentRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Fulfillment_ReinitiateFulfillmentResponseDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Fulfillment_ReinitiateFulfillmentResponseDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Fulfillment_ReinitiateFulfillmentResponseDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/cards/{cardId}/freeze": {
+      "post": {
+        "tags": [
+          "Cards"
+        ],
+        "parameters": [
+          {
+            "name": "cardId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Lifecycle_FreezeCardRequestDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Lifecycle_FreezeCardRequestDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Lifecycle_FreezeCardRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Lifecycle_FreezeCardResponseDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Lifecycle_FreezeCardResponseDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Lifecycle_FreezeCardResponseDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/cards/{cardId}/unfreeze": {
+      "post": {
+        "tags": [
+          "Cards"
+        ],
+        "parameters": [
+          {
+            "name": "cardId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Lifecycle_UnfreezeCardRequestDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Lifecycle_UnfreezeCardRequestDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Lifecycle_UnfreezeCardRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Lifecycle_UnfreezeCardResponseDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Lifecycle_UnfreezeCardResponseDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Lifecycle_UnfreezeCardResponseDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/cards/{cardId}/terminate": {
+      "post": {
+        "tags": [
+          "Cards"
+        ],
+        "parameters": [
+          {
+            "name": "cardId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Lifecycle_TerminateCardRequestDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Lifecycle_TerminateCardRequestDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Lifecycle_TerminateCardRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Lifecycle_TerminateCardResponseDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Lifecycle_TerminateCardResponseDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Lifecycle_TerminateCardResponseDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/cards/{cardId}/balance": {
+      "get": {
+        "tags": [
+          "Cards"
+        ],
+        "parameters": [
+          {
+            "name": "cardId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Balance_GetBalanceResponseDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Balance_GetBalanceResponseDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Balance_GetBalanceResponseDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/cards/{cardId}/limit-requests": {
+      "post": {
+        "tags": [
+          "Cards"
+        ],
+        "parameters": [
+          {
+            "name": "cardId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Limits_CreateLimitRequestRequestDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Limits_CreateLimitRequestRequestDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Limits_CreateLimitRequestRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Limits_CreateLimitRequestResponseDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Limits_CreateLimitRequestResponseDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Limits_CreateLimitRequestResponseDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/cards/{cardId}/pin-reset": {
+      "post": {
+        "tags": [
+          "Cards"
+        ],
+        "parameters": [
+          {
+            "name": "cardId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Lifecycle_PinResetRequestDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Lifecycle_PinResetRequestDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Lifecycle_PinResetRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Lifecycle_PinResetResponseDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Lifecycle_PinResetResponseDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Lifecycle_PinResetResponseDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/cards/{cardId}/loads": {
+      "post": {
+        "tags": [
+          "Cards"
+        ],
+        "parameters": [
+          {
+            "name": "cardId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Loads_LoadCardRequestDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Loads_LoadCardRequestDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Loads_LoadCardRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Loads_LoadCardResponseDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Loads_LoadCardResponseDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Loads_LoadCardResponseDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/cards/{cardId}/unloads": {
+      "post": {
+        "tags": [
+          "Cards"
+        ],
+        "parameters": [
+          {
+            "name": "cardId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Unloads_CreateUnloadRequestDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Unloads_CreateUnloadRequestDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Unloads_CreateUnloadRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Unloads_CreateUnloadResponseDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Unloads_CreateUnloadResponseDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Unloads_CreateUnloadResponseDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/cards/{cardId}/activate": {
+      "post": {
+        "tags": [
+          "Cards"
+        ],
+        "parameters": [
+          {
+            "name": "cardId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Activation_CardActivationRequestDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Activation_CardActivationRequestDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Activation_CardActivationRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Activation_CardActivationQueuedResponseDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Activation_CardActivationQueuedResponseDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Activation_CardActivationQueuedResponseDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/customers/search": {
+      "post": {
+        "tags": [
+          "Customer"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Domain_RequestVm_CustomerSearchRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Domain_RequestVm_CustomerSearchRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Domain_RequestVm_CustomerSearchRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/customers/{customerRefId}": {
+      "get": {
+        "tags": [
+          "Customer"
+        ],
+        "parameters": [
+          {
+            "name": "customerRefId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/customers/draft": {
+      "post": {
+        "tags": [
+          "Customer"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Domain_RequestVm_CreateDraftRequestVm"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Domain_RequestVm_CreateDraftRequestVm"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Domain_RequestVm_CreateDraftRequestVm"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v2/banks/{bankId}/dashboard": {
+      "get": {
+        "tags": [
+          "IssuingBank"
+        ],
+        "parameters": [
+          {
+            "name": "bankId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/banks/{bankId}/affiliates": {
+      "get": {
+        "tags": [
+          "IssuingBank"
+        ],
+        "parameters": [
+          {
+            "name": "bankId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 20
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/banks/{bankId}/affiliate-partnership-requests/{requestId}": {
+      "get": {
+        "tags": [
+          "IssuingBank"
+        ],
+        "parameters": [
+          {
+            "name": "bankId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "requestId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/banks/partnerships/{requestId}/approve": {
+      "post": {
+        "tags": [
+          "IssuingBank"
+        ],
+        "parameters": [
+          {
+            "name": "requestId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Bank_ApprovePartnershipRequestDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Bank_ApprovePartnershipRequestDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Bank_ApprovePartnershipRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/banks/partnerships/{requestId}/reject": {
+      "post": {
+        "tags": [
+          "IssuingBank"
+        ],
+        "parameters": [
+          {
+            "name": "requestId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Bank_RejectPartnershipRequestDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Bank_RejectPartnershipRequestDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Bank_RejectPartnershipRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/banks/{bankId}/cards": {
+      "post": {
+        "tags": [
+          "IssuingBank"
+        ],
+        "parameters": [
+          {
+            "name": "bankId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Bank_BankCardsRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Bank_BankCardsRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Bank_BankCardsRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/banks/{bankId}/audit-logs": {
+      "post": {
+        "tags": [
+          "IssuingBank"
+        ],
+        "parameters": [
+          {
+            "name": "bankId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Bank_BankAuditLogsRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Bank_BankAuditLogsRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Bank_BankAuditLogsRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/banks/{bankId}/reports": {
+      "post": {
+        "tags": [
+          "IssuingBank"
+        ],
+        "parameters": [
+          {
+            "name": "bankId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Bank_BankReportsRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Bank_BankReportsRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Bank_BankReportsRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/banks/query": {
+      "get": {
+        "tags": [
+          "IssuingBank"
+        ],
+        "parameters": [
+          {
+            "name": "status",
+            "in": "query",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Bank_BankStatus"
+              }
+            }
+          },
+          {
+            "name": "country",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "currency",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 20
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/banks/{bankId}/affiliates/{affiliateId}/suspend": {
+      "post": {
+        "tags": [
+          "IssuingBank"
+        ],
+        "parameters": [
+          {
+            "name": "bankId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "affiliateId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Bank_SuspendAffiliateRequestDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Bank_SuspendAffiliateRequestDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Bank_SuspendAffiliateRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/banks/{bankId}/affiliates/{affiliateId}/block": {
+      "post": {
+        "tags": [
+          "IssuingBank"
+        ],
+        "parameters": [
+          {
+            "name": "bankId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "affiliateId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Bank_BlockAffiliateRequestDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Bank_BlockAffiliateRequestDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Bank_BlockAffiliateRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/notifications": {
+      "get": {
+        "tags": [
+          "NotificationGateway"
+        ],
+        "parameters": [
+          {
+            "name": "status",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "tenantId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "userId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 25
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/notifications/{notificationId}": {
+      "get": {
+        "tags": [
+          "NotificationGateway"
+        ],
+        "parameters": [
+          {
+            "name": "tenantId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "userId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "notificationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "NotificationGateway"
+        ],
+        "parameters": [
+          {
+            "name": "tenantId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "userId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "notificationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_UpdateNotificationStatusRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_UpdateNotificationStatusRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_UpdateNotificationStatusRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/notifications/settings": {
+      "post": {
+        "tags": [
+          "NotificationGateway"
+        ],
+        "parameters": [
+          {
+            "name": "tenantId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "userId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_UpdateNotificationSettingsRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_UpdateNotificationSettingsRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_UpdateNotificationSettingsRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/notifications/create": {
+      "post": {
+        "tags": [
+          "NotificationGateway"
+        ],
+        "parameters": [
+          {
+            "name": "eventType",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/Kardit_DevKit_Enums_NotificationType"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_CreateNotificationRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_CreateNotificationRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Contracts_Dtos_CreateNotificationRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/transactions/cards/{cardId}": {
+      "get": {
+        "tags": [
+          "Transaction"
+        ],
+        "parameters": [
+          {
+            "name": "cardId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pageNumber",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "fromDate",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "toDate",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/transactions/cards/{cardId}/loads": {
+      "get": {
+        "tags": [
+          "Transaction"
+        ],
+        "parameters": [
+          {
+            "name": "cardId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pageNumber",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 20
+            }
+          },
+          {
+            "name": "fromDate",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "toDate",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/transactions/cards/{cardId}/unloads": {
+      "get": {
+        "tags": [
+          "Transaction"
+        ],
+        "parameters": [
+          {
+            "name": "cardId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pageNumber",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 20
+            }
+          },
+          {
+            "name": "fromDate",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "toDate",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/transactions/{transactionId}": {
+      "get": {
+        "tags": [
+          "Transaction"
+        ],
+        "parameters": [
+          {
+            "name": "transactionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/transactions/query": {
+      "post": {
+        "tags": [
+          "Transaction"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Domain_RequestVm_TransactionQueryVm"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Domain_RequestVm_TransactionQueryVm"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Domain_RequestVm_TransactionQueryVm"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/transactions/customers/{customerId}": {
+      "get": {
+        "tags": [
+          "Transaction"
+        ],
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/Kardit_Domain_Enums_TransactionStatusEnum"
+            }
+          },
+          {
+            "name": "fromDate",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "toDate",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "pageNumber",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 20
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/transactions/customers": {
+      "get": {
+        "tags": [
+          "Transaction"
+        ],
+        "parameters": [
+          {
+            "name": "status",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/Kardit_Domain_Enums_TransactionStatusEnum"
+            }
+          },
+          {
+            "name": "fromDate",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "toDate",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "pageNumber",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 20
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/transactions/export": {
+      "post": {
+        "tags": [
+          "Transaction"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Domain_RequestVm_ExportQueryVm"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Domain_RequestVm_ExportQueryVm"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Kardit_Domain_RequestVm_ExportQueryVm"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/transactions/export/{exportId}": {
+      "get": {
+        "tags": [
+          "Transaction"
+        ],
+        "parameters": [
+          {
+            "name": "exportId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/transactions/export/{exportId}/download": {
+      "get": {
+        "tags": [
+          "Transaction"
+        ],
+        "parameters": [
+          {
+            "name": "exportId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/transactions/volume/bank/{bankId}": {
+      "get": {
+        "tags": [
+          "Transaction"
+        ],
+        "parameters": [
+          {
+            "name": "bankId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/transactions/volume/affiliate/{affiliateId}": {
+      "get": {
+        "tags": [
+          "Transaction"
+        ],
+        "parameters": [
+          {
+            "name": "affiliateId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Kardit_Contracts_Dtos_Admin_AdminContactDto": {
+        "type": "object",
+        "properties": {
+          "fullName": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "phone": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_Admin_ProvisionAffiliateRequestDto": {
+        "type": "object",
+        "properties": {
+          "adminContact": {
+            "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Admin_AdminContactDto"
+          },
+          "deliveryChannels": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_Admincontact": {
+        "required": [
+          "email",
+          "fullName",
+          "phone"
+        ],
+        "type": "object",
+        "properties": {
+          "fullName": {
+            "maxLength": 50,
+            "minLength": 1,
+            "type": "string"
+          },
+          "email": {
+            "maxLength": 100,
+            "minLength": 1,
+            "type": "string",
+            "format": "email"
+          },
+          "phone": {
+            "minLength": 1,
+            "pattern": "^\\d{10,15}$",
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_AffiliateRequestDTO": {
+        "required": [
+          "adminContact",
+          "affiliateType",
+          "legalName",
+          "shortName"
+        ],
+        "type": "object",
+        "properties": {
+          "affiliateType": {
+            "$ref": "#/components/schemas/Kardit_Contracts_Dtos_AffiliateType"
+          },
+          "onboardingCaseId": {
+            "maxLength": 50,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "legalName": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string"
+          },
+          "shortName": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string"
+          },
+          "adminContact": {
+            "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Admincontact"
+          },
+          "selectedBankIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "nullable": true
+          },
+          "ownerBankId": {
+            "type": "string",
+            "nullable": true
+          },
+          "isSystemManaged": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_AffiliateType": {
+        "enum": [
+          "EXTERNAL",
+          "INTERNAL_BANK"
+        ],
+        "type": "string"
+      },
+      "Kardit_Contracts_Dtos_BankPartnershipRequestDTO": {
+        "required": [
+          "bankId"
+        ],
+        "type": "object",
+        "properties": {
+          "bankId": {
+            "maxLength": 50,
+            "minLength": 0,
+            "type": "string"
+          },
+          "note": {
+            "maxLength": 500,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_BankProvisioningRequestDto": {
+        "type": "object",
+        "properties": {
+          "legalName": {
+            "type": "string",
+            "nullable": true
+          },
+          "shortName": {
+            "type": "string",
+            "nullable": true
+          },
+          "bankCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "country": {
+            "type": "string",
+            "nullable": true
+          },
+          "primaryContact": {
+            "$ref": "#/components/schemas/Kardit_Contracts_Dtos_ContactDto"
+          },
+          "status": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_Bank_ApprovePartnershipRequestDto": {
+        "type": "object",
+        "properties": {
+          "reviewerNotes": {
+            "type": "string",
+            "nullable": true
+          },
+          "idempotencyKey": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_Bank_BankAuditLogsFilter": {
+        "type": "object",
+        "properties": {
+          "fromDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "toDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "actorUserId": {
+            "maxLength": 100,
+            "type": "string",
+            "nullable": true
+          },
+          "eventType": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_Bank_BankAuditLogsRequest": {
+        "required": [
+          "filters",
+          "pagination"
+        ],
+        "type": "object",
+        "properties": {
+          "filters": {
+            "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Bank_BankAuditLogsFilter"
+          },
+          "pagination": {
+            "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Bank_Pagination"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_Bank_BankCardsFilter": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "nullable": true
+          },
+          "affiliateId": {
+            "type": "string",
+            "nullable": true
+          },
+          "fromDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "toDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_Bank_BankCardsRequest": {
+        "type": "object",
+        "properties": {
+          "filters": {
+            "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Bank_BankCardsFilter"
+          },
+          "pagination": {
+            "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Bank_Pagination"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_Bank_BankReportsFilter": {
+        "type": "object",
+        "properties": {
+          "reportType": {
+            "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Bank_ReportType"
+          },
+          "fromDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "toDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_Bank_BankReportsRequest": {
+        "type": "object",
+        "properties": {
+          "filters": {
+            "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Bank_BankReportsFilter"
+          },
+          "pagination": {
+            "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Bank_Pagination"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_Bank_BankStatus": {
+        "enum": [
+          "ACTIVE",
+          "INACTIVE"
+        ],
+        "type": "string"
+      },
+      "Kardit_Contracts_Dtos_Bank_BlockAffiliateRequestDto": {
+        "type": "object",
+        "properties": {
+          "reason": {
+            "type": "string",
+            "nullable": true
+          },
+          "requestContext": {
+            "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Common_RequestContextDto"
+          },
+          "idempotencyKey": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_Bank_Pagination": {
+        "type": "object",
+        "properties": {
+          "page": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_Bank_RejectPartnershipRequestDto": {
+        "type": "object",
+        "properties": {
+          "rejectionReason": {
+            "type": "string",
+            "nullable": true
+          },
+          "reviewerNotes": {
+            "type": "string",
+            "nullable": true
+          },
+          "idempotencyKey": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_Bank_ReportType": {
+        "enum": [
+          "CARD_TRANSACTIONS",
+          "FUNDING_TRANSACTIONS",
+          "UNLOAD_TRANSACTIONS",
+          "CARD_ISSUANCE",
+          "CARD_STATUS",
+          "PENDING_MAKER_CHECKER",
+          "FAILED_CMS_REQUESTS",
+          "LIMIT_CHANGE_REQUESTS",
+          "PHYSICAL_FULFILLMENT",
+          "BATCH_OPERATIONS",
+          "CMS_INTEGRATION_TRACE",
+          "CUSTOMER_360",
+          "EXCEPTION_OPERATIONS"
+        ],
+        "type": "string"
+      },
+      "Kardit_Contracts_Dtos_Bank_SuspendAffiliateRequestDto": {
+        "type": "object",
+        "properties": {
+          "requestContext": {
+            "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Common_RequestContextDto"
+          },
+          "reason": {
+            "type": "string",
+            "nullable": true
+          },
+          "idempotencyKey": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_BatchCardCreationResultDownloadDto": {
+        "type": "object",
+        "properties": {
+          "batchId": {
+            "type": "string",
+            "nullable": true
+          },
+          "resultFile": {
+            "type": "string",
+            "nullable": true
+          },
+          "downloadUrl": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_BatchCardCreationRowResultsDto": {
+        "type": "object",
+        "properties": {
+          "page": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "total": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "batchId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Kardit_Contracts_Dtos_RowResultDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_BatchCardCreationStatusDto": {
+        "type": "object",
+        "properties": {
+          "batchId": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "string",
+            "nullable": true
+          },
+          "totalRows": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "validRows": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "invalidRows": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "processedRows": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "failedRows": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_BatchFileUploadResponseDto": {
+        "type": "object",
+        "properties": {
+          "batchId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "status": {
+            "type": "string",
+            "nullable": true
+          },
+          "recordsReceived": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_BatchFileValidationErrorDto": {
+        "type": "object",
+        "properties": {
+          "rowNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "status": {
+            "type": "string",
+            "nullable": true
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Kardit_Contracts_Dtos_ErrorDetailDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_BatchFileValidationRequestDto": {
+        "type": "object",
+        "properties": {
+          "requestContext": {
+            "$ref": "#/components/schemas/Kardit_Contracts_Dtos_RequestContext"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_BatchFileValidationResponseDto": {
+        "type": "object",
+        "properties": {
+          "batchId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "status": {
+            "type": "string",
+            "nullable": true
+          },
+          "totalRows": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "validRows": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "invalidRows": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Kardit_Contracts_Dtos_BatchFileValidationErrorDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_BatchSubmitRequestDto": {
+        "type": "object",
+        "properties": {
+          "requestContext": {
+            "$ref": "#/components/schemas/Kardit_Contracts_Dtos_RequestContext"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_BatchSubmitResponseDto": {
+        "type": "object",
+        "properties": {
+          "batchId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "status": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_Batch_BatchCardCreationJobResponseDto": {
+        "type": "object",
+        "properties": {
+          "batchId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "status": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_Batch_BatchFileUploadRequestDto": {
+        "type": "object",
+        "properties": {
+          "requestContext": {
+            "$ref": "#/components/schemas/Kardit_Contracts_Dtos_RequestContext"
+          },
+          "productId": {
+            "type": "string",
+            "nullable": true
+          },
+          "bankId": {
+            "type": "string",
+            "nullable": true
+          },
+          "file": {
+            "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Batch_FileDto"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_Batch_BatchListDto": {
+        "type": "object",
+        "properties": {
+          "page": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "total": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Batch_BatchSummaryDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_Batch_BatchSummaryDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "batchType": {
+            "type": "string",
+            "nullable": true
+          },
+          "submittedByRef": {
+            "type": "string",
+            "nullable": true
+          },
+          "productId": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "string",
+            "nullable": true
+          },
+          "totalRows": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "validRows": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "invalidRows": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "processedRows": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "failedRows": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalBatchAmount": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "totalProcessedAmount": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "makerUserId": {
+            "type": "string",
+            "nullable": true
+          },
+          "checkerUserId": {
+            "type": "string",
+            "nullable": true
+          },
+          "rejectionReason": {
+            "type": "string",
+            "nullable": true
+          },
+          "submittedForApprovalAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "approvedAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "rejectedAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "processingStartedAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "processingCompletedAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_Batch_FileDto": {
+        "type": "object",
+        "properties": {
+          "fileName": {
+            "type": "string",
+            "nullable": true
+          },
+          "contentType": {
+            "type": "string",
+            "nullable": true
+          },
+          "fileBase64": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_Cards_Activation_CardActivationQueuedResponseDto": {
+        "type": "object",
+        "properties": {
+          "operationId": {
+            "type": "string",
+            "nullable": true
+          },
+          "pollUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "estimatedCompletionSeconds": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "cardId": {
+            "type": "string",
+            "nullable": true
+          },
+          "requestedStatus": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_Cards_Activation_CardActivationRequestDto": {
+        "required": [
+          "reason",
+          "requestContext"
+        ],
+        "type": "object",
+        "properties": {
+          "requestContext": {
+            "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Common_RequestContextDto"
+          },
+          "reason": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_Cards_Balance_BalanceDetailsDto": {
+        "type": "object",
+        "properties": {
+          "ledgerBalance": {
+            "type": "number",
+            "format": "double"
+          },
+          "availableBalance": {
+            "type": "number",
+            "format": "double"
+          },
+          "currency": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_Cards_Balance_GetBalanceResponseDto": {
+        "type": "object",
+        "properties": {
+          "cardId": {
+            "type": "string",
+            "nullable": true
+          },
+          "balance": {
+            "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Balance_BalanceDetailsDto"
+          },
+          "source": {
+            "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Common_BalanceSource"
+          },
+          "retrievedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_Cards_Cards_CardFulfillmentPushDetailsDto": {
+        "type": "object",
+        "properties": {
+          "bureauPushStatus": {
+            "type": "string",
+            "nullable": true
+          },
+          "lastPushedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_Cards_Cards_GetCardResponseDto": {
+        "type": "object",
+        "properties": {
+          "cardId": {
+            "type": "string",
+            "nullable": true
+          },
+          "customerId": {
+            "type": "string",
+            "nullable": true
+          },
+          "bankId": {
+            "type": "string",
+            "nullable": true
+          },
+          "productType": {
+            "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Common_ProductType"
+          },
+          "status": {
+            "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Common_CardStatus"
+          },
+          "maskedPan": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "fulfillment": {
+            "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Cards_CardFulfillmentPushDetailsDto"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_Cards_Cards_GetFundingDetailsResponseDto": {
+        "type": "object",
+        "properties": {
+          "cardId": {
+            "type": "string",
+            "nullable": true
+          },
+          "customerId": {
+            "type": "string",
+            "nullable": true
+          },
+          "bankId": {
+            "type": "string",
+            "nullable": true
+          },
+          "virtualAccount": {
+            "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Common_VirtualAccountSummaryDto"
+          },
+          "fundingInstructions": {
+            "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Common_FundingInstructionsDto"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_Cards_Common_BalanceSource": {
+        "enum": [
+          "CMS"
+        ],
+        "type": "string"
+      },
+      "Kardit_Contracts_Dtos_Cards_Common_CardStatus": {
+        "enum": [
+          "ACTIVE",
+          "FROZEN",
+          "TERMINATED",
+          "PERSONALIZING",
+          "READY"
+        ],
+        "type": "string"
+      },
+      "Kardit_Contracts_Dtos_Cards_Common_CmsReferenceDto": {
+        "type": "object",
+        "properties": {
+          "cmsReference": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_Cards_Common_FundingInstructionsDto": {
+        "type": "object",
+        "properties": {
+          "currency": {
+            "type": "string",
+            "nullable": true
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "referenceRequired": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_Cards_Common_FundingReferenceDto": {
+        "type": "object",
+        "properties": {
+          "virtualAccountNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "bankId": {
+            "type": "string",
+            "nullable": true
+          },
+          "bankTransferReference": {
+            "type": "string",
+            "nullable": true
+          },
+          "proofType": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_Cards_Common_LimitRequestStatus": {
+        "enum": [
+          "LOGGED",
+          "COMPLETED",
+          "REJECTED"
+        ],
+        "type": "string"
+      },
+      "Kardit_Contracts_Dtos_Cards_Common_MoneyAmountDto": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "number",
+            "format": "double"
+          },
+          "currency": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_Cards_Common_MoneyAmountWithAmountDto": {
+        "type": "object",
+        "properties": {
+          "amount": {
+            "type": "number",
+            "format": "double"
+          },
+          "currency": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_Cards_Common_ProductType": {
+        "enum": [
+          "VIRTUAL",
+          "PHYSICAL"
+        ],
+        "type": "string"
+      },
+      "Kardit_Contracts_Dtos_Cards_Common_RequestContextDto": {
+        "required": [
+          "affiliateId",
+          "requestId",
+          "tenantId"
+        ],
+        "type": "object",
+        "properties": {
+          "requestId": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "actorUserId": {
+            "type": "string",
+            "nullable": true
+          },
+          "bankId": {
+            "type": "string",
+            "nullable": true
+          },
+          "role": {
+            "type": "string",
+            "nullable": true
+          },
+          "userType": {
+            "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Common_UserType"
+          },
+          "tenantId": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "affiliateId": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "idempotencyKey": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_Cards_Common_SmsDeliveryDto": {
+        "type": "object",
+        "properties": {
+          "channel": {
+            "type": "string",
+            "nullable": true
+          },
+          "phoneMasked": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "string",
+            "nullable": true
+          },
+          "sentAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_Cards_Common_TrackingDetailsDto": {
+        "type": "object",
+        "properties": {
+          "carrier": {
+            "type": "string",
+            "nullable": true
+          },
+          "trackingNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "trackingUrl": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_Cards_Common_TransferExternalReferenceDto": {
+        "type": "object",
+        "properties": {
+          "bankTransferReference": {
+            "type": "string",
+            "nullable": true
+          },
+          "cmsReference": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_Cards_Common_UserType": {
+        "enum": [
+          "AFFILIATE",
+          "BANK_ADMIN",
+          "SERVICE_PROVIDER",
+          "CUSTOMER"
+        ],
+        "type": "string"
+      },
+      "Kardit_Contracts_Dtos_Cards_Common_VirtualAccountSummaryDto": {
+        "type": "object",
+        "properties": {
+          "virtualAccountId": {
+            "type": "string",
+            "nullable": true
+          },
+          "accountNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "accountName": {
+            "type": "string",
+            "nullable": true
+          },
+          "bankName": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "string",
+            "nullable": true
+          },
+          "linkedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_Cards_Fulfillment_FulfillmentStatusDetailsDto": {
+        "type": "object",
+        "properties": {
+          "bureauStatus": {
+            "type": "string",
+            "nullable": true
+          },
+          "lastUpdatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "tracking": {
+            "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Common_TrackingDetailsDto"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_Cards_Fulfillment_GetFulfillmentStatusResponseDto": {
+        "type": "object",
+        "properties": {
+          "cardId": {
+            "type": "string",
+            "nullable": true
+          },
+          "productType": {
+            "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Common_ProductType"
+          },
+          "fulfillment": {
+            "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Fulfillment_FulfillmentStatusDetailsDto"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_Cards_Fulfillment_RefreshFulfillmentRequestDto": {
+        "required": [
+          "requestContext"
+        ],
+        "type": "object",
+        "properties": {
+          "requestContext": {
+            "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Common_RequestContextDto"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_Cards_Fulfillment_RefreshFulfillmentResponseDto": {
+        "type": "object",
+        "properties": {
+          "cardId": {
+            "type": "string",
+            "nullable": true
+          },
+          "previousStatus": {
+            "type": "string",
+            "nullable": true
+          },
+          "currentStatus": {
+            "type": "string",
+            "nullable": true
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_Cards_Fulfillment_ReinitiateFulfillmentRequestDto": {
+        "required": [
+          "requestContext"
+        ],
+        "type": "object",
+        "properties": {
+          "requestContext": {
+            "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Common_RequestContextDto"
+          },
+          "reason": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_Cards_Fulfillment_ReinitiateFulfillmentResponseDto": {
+        "type": "object",
+        "properties": {
+          "cardId": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "string",
+            "nullable": true
+          },
+          "bureauPushStatus": {
+            "type": "string",
+            "nullable": true
+          },
+          "lastPushedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_Cards_Lifecycle_FreezeCardRequestDto": {
+        "required": [
+          "requestContext"
+        ],
+        "type": "object",
+        "properties": {
+          "requestContext": {
+            "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Common_RequestContextDto"
+          },
+          "reason": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_Cards_Lifecycle_FreezeCardResponseDto": {
+        "type": "object",
+        "properties": {
+          "cardId": {
+            "type": "string",
+            "nullable": true
+          },
+          "previousStatus": {
+            "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Common_CardStatus"
+          },
+          "currentStatus": {
+            "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Common_CardStatus"
+          },
+          "frozenAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "external": {
+            "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Common_CmsReferenceDto"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_Cards_Lifecycle_PinResetRequestDto": {
+        "required": [
+          "requestContext"
+        ],
+        "type": "object",
+        "properties": {
+          "requestContext": {
+            "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Common_RequestContextDto"
+          },
+          "reason": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_Cards_Lifecycle_PinResetResponseDto": {
+        "type": "object",
+        "properties": {
+          "cardId": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "string",
+            "nullable": true
+          },
+          "smsDelivery": {
+            "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Common_SmsDeliveryDto"
+          },
+          "external": {
+            "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Common_CmsReferenceDto"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_Cards_Lifecycle_TerminateCardRequestDto": {
+        "required": [
+          "requestContext"
+        ],
+        "type": "object",
+        "properties": {
+          "requestContext": {
+            "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Common_RequestContextDto"
+          },
+          "reason": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_Cards_Lifecycle_TerminateCardResponseDto": {
+        "type": "object",
+        "properties": {
+          "cardId": {
+            "type": "string",
+            "nullable": true
+          },
+          "previousStatus": {
+            "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Common_CardStatus"
+          },
+          "currentStatus": {
+            "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Common_CardStatus"
+          },
+          "terminatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "external": {
+            "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Common_CmsReferenceDto"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_Cards_Lifecycle_UnfreezeCardRequestDto": {
+        "required": [
+          "requestContext"
+        ],
+        "type": "object",
+        "properties": {
+          "requestContext": {
+            "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Common_RequestContextDto"
+          },
+          "reason": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_Cards_Lifecycle_UnfreezeCardResponseDto": {
+        "type": "object",
+        "properties": {
+          "cardId": {
+            "type": "string",
+            "nullable": true
+          },
+          "previousStatus": {
+            "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Common_CardStatus"
+          },
+          "currentStatus": {
+            "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Common_CardStatus"
+          },
+          "unfrozenAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "external": {
+            "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Common_CmsReferenceDto"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_Cards_Limits_CompleteLimitRequestRequestDto": {
+        "required": [
+          "appliedLimit",
+          "external",
+          "requestContext"
+        ],
+        "type": "object",
+        "properties": {
+          "requestContext": {
+            "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Common_RequestContextDto"
+          },
+          "outcome": {
+            "type": "string",
+            "nullable": true
+          },
+          "appliedLimit": {
+            "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Common_MoneyAmountWithAmountDto"
+          },
+          "external": {
+            "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Common_CmsReferenceDto"
+          },
+          "opsRemarks": {
+            "type": "string",
+            "nullable": true
+          },
+          "remarks": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_Cards_Limits_CompleteLimitRequestResponseDto": {
+        "type": "object",
+        "properties": {
+          "limitRequestId": {
+            "type": "string",
+            "nullable": true
+          },
+          "cardId": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Common_LimitRequestStatus"
+          },
+          "appliedLimit": {
+            "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Common_MoneyAmountWithAmountDto"
+          },
+          "completedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "external": {
+            "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Common_CmsReferenceDto"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_Cards_Limits_CreateLimitRequestRequestDto": {
+        "required": [
+          "requestContext",
+          "requestedLimit"
+        ],
+        "type": "object",
+        "properties": {
+          "requestContext": {
+            "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Common_RequestContextDto"
+          },
+          "requestedLimit": {
+            "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Common_MoneyAmountWithAmountDto"
+          },
+          "reason": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_Cards_Limits_CreateLimitRequestResponseDto": {
+        "type": "object",
+        "properties": {
+          "limitRequestId": {
+            "type": "string",
+            "nullable": true
+          },
+          "cardId": {
+            "type": "string",
+            "nullable": true
+          },
+          "previousLimit": {
+            "type": "number",
+            "format": "double"
+          },
+          "requestedLimit": {
+            "type": "number",
+            "format": "double"
+          },
+          "status": {
+            "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Common_LimitRequestStatus"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_Cards_Loads_LoadCardRequestDto": {
+        "required": [
+          "amount",
+          "fundingReference",
+          "requestContext"
+        ],
+        "type": "object",
+        "properties": {
+          "requestContext": {
+            "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Common_RequestContextDto"
+          },
+          "amount": {
+            "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Common_MoneyAmountDto"
+          },
+          "fundingReference": {
+            "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Common_FundingReferenceDto"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_Cards_Loads_LoadCardResponseDto": {
+        "type": "object",
+        "properties": {
+          "fundingTransactionId": {
+            "type": "string",
+            "nullable": true
+          },
+          "cardId": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "string",
+            "nullable": true
+          },
+          "balanceAfter": {
+            "type": "number",
+            "format": "double"
+          },
+          "completedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "external": {
+            "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Common_CmsReferenceDto"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_Cards_Query_CardQueryFiltersDto": {
+        "type": "object",
+        "properties": {
+          "bankId": {
+            "type": "string",
+            "nullable": true
+          },
+          "affiliateId": {
+            "type": "string",
+            "nullable": true
+          },
+          "customerId": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "cardType": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "productType": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "productId": {
+            "type": "string",
+            "nullable": true
+          },
+          "fromDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "toDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_Cards_Query_CardQueryItemDto": {
+        "type": "object",
+        "properties": {
+          "cardId": {
+            "type": "string",
+            "nullable": true
+          },
+          "bankId": {
+            "type": "string",
+            "nullable": true
+          },
+          "affiliateId": {
+            "type": "string",
+            "nullable": true
+          },
+          "customerId": {
+            "type": "string",
+            "nullable": true
+          },
+          "productId": {
+            "type": "string",
+            "nullable": true
+          },
+          "cardType": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "string",
+            "nullable": true
+          },
+          "maskedPan": {
+            "type": "string",
+            "nullable": true
+          },
+          "issuedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_Cards_Query_CardQueryRequestDto": {
+        "type": "object",
+        "properties": {
+          "filters": {
+            "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Query_CardQueryFiltersDto"
+          },
+          "page": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_Cards_Query_CardQueryResponseDto": {
+        "type": "object",
+        "properties": {
+          "page": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "total": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Query_CardQueryItemDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_Cards_Unloads_CreateUnloadRequestDto": {
+        "required": [
+          "amount",
+          "destinationAccount",
+          "requestContext"
+        ],
+        "type": "object",
+        "properties": {
+          "requestContext": {
+            "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Common_RequestContextDto"
+          },
+          "amount": {
+            "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Common_MoneyAmountDto"
+          },
+          "destinationAccount": {
+            "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Unloads_UnloadDestinationAccountDto"
+          },
+          "reason": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_Cards_Unloads_CreateUnloadResponseDto": {
+        "type": "object",
+        "properties": {
+          "unloadTransactionId": {
+            "type": "string",
+            "nullable": true
+          },
+          "cardId": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "string",
+            "nullable": true
+          },
+          "balanceAfter": {
+            "type": "number",
+            "format": "double"
+          },
+          "transferredTo": {
+            "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Unloads_UnloadDestinationAccountDto"
+          },
+          "completedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "external": {
+            "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Cards_Common_TransferExternalReferenceDto"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_Cards_Unloads_UnloadDestinationAccountDto": {
+        "type": "object",
+        "properties": {
+          "accountId": {
+            "type": "string",
+            "nullable": true
+          },
+          "bankCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "accountNumberMasked": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_ContactDto": {
+        "type": "object",
+        "properties": {
+          "fullName": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "phone": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_CreateNotificationRequest": {
+        "type": "object",
+        "properties": {
+          "tenantId": {
+            "type": "string",
+            "nullable": true
+          },
+          "initiatingUserId": {
+            "type": "string",
+            "nullable": true
+          },
+          "eventType": {
+            "type": "string",
+            "nullable": true
+          },
+          "metadata": {
+            "type": "object",
+            "additionalProperties": {
+              "nullable": true
+            },
+            "nullable": true
+          },
+          "targetEntityType": {
+            "type": "string",
+            "nullable": true
+          },
+          "targetEntityId": {
+            "type": "string",
+            "nullable": true
+          },
+          "targetRoute": {
+            "type": "string",
+            "nullable": true
+          },
+          "idempotencyKey": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_CreateOnboardingCaseRequestDTO": {
+        "required": [
+          "declarations",
+          "onboardingSessionId"
+        ],
+        "type": "object",
+        "properties": {
+          "onboardingSessionId": {
+            "maxLength": 50,
+            "minLength": 3,
+            "type": "string"
+          },
+          "declarations": {
+            "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Declarations"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_DecisionRequestDto": {
+        "type": "object",
+        "properties": {
+          "decision": {
+            "type": "string",
+            "nullable": true
+          },
+          "reviewerNotes": {
+            "type": "string",
+            "nullable": true
+          },
+          "decisionReason": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_Declarations": {
+        "required": [
+          "authorizedSigner",
+          "infoAccurate"
+        ],
+        "type": "object",
+        "properties": {
+          "infoAccurate": {
+            "type": "boolean"
+          },
+          "authorizedSigner": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_DraftAddress": {
+        "required": [
+          "city",
+          "country",
+          "line1",
+          "state"
+        ],
+        "type": "object",
+        "properties": {
+          "line1": {
+            "maxLength": 50,
+            "minLength": 1,
+            "type": "string"
+          },
+          "city": {
+            "maxLength": 50,
+            "minLength": 1,
+            "type": "string"
+          },
+          "state": {
+            "maxLength": 50,
+            "minLength": 1,
+            "type": "string"
+          },
+          "country": {
+            "maxLength": 50,
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_ErrorDetailDto": {
+        "type": "object",
+        "properties": {
+          "errorCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_Filters": {
+        "type": "object",
+        "properties": {
+          "bankId": {
+            "type": "string",
+            "nullable": true
+          },
+          "affiliateId": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "fromDate": {
+            "type": "string",
+            "nullable": true
+          },
+          "toDate": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_LinkedEntityRefsDto": {
+        "type": "object",
+        "properties": {
+          "customerId": {
+            "type": "string",
+            "nullable": true
+          },
+          "cardId": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_NotificationChannelsDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "boolean"
+          },
+          "sms": {
+            "type": "boolean"
+          },
+          "inApp": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_OnboarAffiliateDraftRequestDTO": {
+        "required": [
+          "channel",
+          "consentAccepted"
+        ],
+        "type": "object",
+        "properties": {
+          "channel": {
+            "maxLength": 50,
+            "minLength": 0,
+            "type": "string"
+          },
+          "email": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string",
+            "format": "email",
+            "nullable": true
+          },
+          "phone": {
+            "pattern": "^\\d{10,15}$",
+            "type": "string",
+            "format": "tel",
+            "nullable": true
+          },
+          "consentAccepted": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_OnboardingCaseStatusRequestDTO": {
+        "required": [
+          "onboardingSessionId"
+        ],
+        "type": "object",
+        "properties": {
+          "onboardingSessionId": {
+            "maxLength": 50,
+            "minLength": 3,
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_Primarycontact": {
+        "required": [
+          "email",
+          "fullName",
+          "phone"
+        ],
+        "type": "object",
+        "properties": {
+          "fullName": {
+            "maxLength": 50,
+            "minLength": 3,
+            "type": "string"
+          },
+          "email": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string",
+            "format": "email"
+          },
+          "phone": {
+            "minLength": 1,
+            "pattern": "^\\d{10,15}$",
+            "type": "string",
+            "format": "tel"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_QueryAffiliateFilters": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "bankId": {
+            "type": "string",
+            "nullable": true
+          },
+          "country": {
+            "type": "string",
+            "nullable": true
+          },
+          "fromDate": {
+            "type": "string",
+            "nullable": true
+          },
+          "toDate": {
+            "type": "string",
+            "nullable": true
+          },
+          "search": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_QueryAffiliatesRequestDTO": {
+        "required": [
+          "page",
+          "pageSize"
+        ],
+        "type": "object",
+        "properties": {
+          "filters": {
+            "$ref": "#/components/schemas/Kardit_Contracts_Dtos_QueryAffiliateFilters"
+          },
+          "page": {
+            "maximum": 100,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "maximum": 500,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_QueryPartnershipRequestsDTO": {
+        "required": [
+          "page",
+          "pageSize"
+        ],
+        "type": "object",
+        "properties": {
+          "filters": {
+            "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Filters"
+          },
+          "page": {
+            "maximum": 100,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "maximum": 500,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_RequestContext": {
+        "type": "object",
+        "properties": {
+          "actorUserId": {
+            "type": "string",
+            "nullable": true
+          },
+          "userType": {
+            "type": "string",
+            "nullable": true
+          },
+          "tenantId": {
+            "type": "string",
+            "nullable": true
+          },
+          "affiliateId": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_RowResultDto": {
+        "type": "object",
+        "properties": {
+          "rowNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "status": {
+            "type": "string",
+            "nullable": true
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Kardit_Contracts_Dtos_ErrorDetailDto"
+            },
+            "nullable": true
+          },
+          "linkedEntityRefs": {
+            "$ref": "#/components/schemas/Kardit_Contracts_Dtos_LinkedEntityRefsDto"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_Selectedbank": {
+        "required": [
+          "bankId"
+        ],
+        "type": "object",
+        "properties": {
+          "bankId": {
+            "maxLength": 50,
+            "minLength": 3,
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_UpdateAffiliateDraftRequestDTO": {
+        "required": [
+          "address",
+          "legalName",
+          "onboardingSessionId",
+          "primaryContact",
+          "registrationNumber",
+          "tradingName"
+        ],
+        "type": "object",
+        "properties": {
+          "onboardingSessionId": {
+            "maxLength": 50,
+            "minLength": 3,
+            "type": "string"
+          },
+          "legalName": {
+            "maxLength": 50,
+            "minLength": 3,
+            "type": "string"
+          },
+          "tradingName": {
+            "maxLength": 50,
+            "minLength": 3,
+            "type": "string"
+          },
+          "registrationNumber": {
+            "maxLength": 50,
+            "minLength": 3,
+            "type": "string"
+          },
+          "address": {
+            "$ref": "#/components/schemas/Kardit_Contracts_Dtos_DraftAddress"
+          },
+          "primaryContact": {
+            "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Primarycontact"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_UpdateAffiliateIssuingBankRequestDTO": {
+        "required": [
+          "onboardingSessionId"
+        ],
+        "type": "object",
+        "properties": {
+          "onboardingSessionId": {
+            "maxLength": 50,
+            "minLength": 3,
+            "type": "string"
+          },
+          "selectedBanks": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Kardit_Contracts_Dtos_Selectedbank"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_UpdateNotificationSettingsRequest": {
+        "type": "object",
+        "properties": {
+          "tenantId": {
+            "type": "string",
+            "nullable": true
+          },
+          "channels": {
+            "$ref": "#/components/schemas/Kardit_Contracts_Dtos_NotificationChannelsDto"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_UpdateNotificationStatusRequest": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Contracts_Dtos_UploadAffiliateKYCDocumentsRequestDTO": {
+        "required": [
+          "contentType",
+          "docType",
+          "fileName",
+          "onboardingSessionId"
+        ],
+        "type": "object",
+        "properties": {
+          "onboardingSessionId": {
+            "maxLength": 50,
+            "minLength": 3,
+            "type": "string"
+          },
+          "docType": {
+            "maxLength": 50,
+            "minLength": 3,
+            "type": "string"
+          },
+          "fileName": {
+            "maxLength": 200,
+            "minLength": 3,
+            "type": "string"
+          },
+          "contentType": {
+            "maxLength": 50,
+            "minLength": 3,
+            "type": "string"
+          },
+          "fileBase64": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_DevKit_Dtos_Cards_Common_RequestContextDto": {
+        "type": "object",
+        "properties": {
+          "requestId": {
+            "type": "string",
+            "nullable": true
+          },
+          "actorUserId": {
+            "type": "string",
+            "nullable": true
+          },
+          "userType": {
+            "$ref": "#/components/schemas/Kardit_DevKit_Enums_UserType"
+          },
+          "tenantId": {
+            "type": "string",
+            "nullable": true
+          },
+          "affiliateId": {
+            "type": "string",
+            "nullable": true
+          },
+          "idempotencyKey": {
+            "type": "string",
+            "nullable": true
+          },
+          "role": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_DevKit_Dtos_Cards_Common_VirtualAccountSummaryDto": {
+        "type": "object",
+        "properties": {
+          "virtualAccountId": {
+            "type": "string",
+            "nullable": true
+          },
+          "accountNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "accountName": {
+            "type": "string",
+            "nullable": true
+          },
+          "bankName": {
+            "type": "string",
+            "nullable": true
+          },
+          "bankId": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "string",
+            "nullable": true
+          },
+          "linkedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_DevKit_Dtos_Cards_Requests_CreateCardIssuanceRequestDto": {
+        "type": "object",
+        "properties": {
+          "requestContext": {
+            "$ref": "#/components/schemas/Kardit_DevKit_Dtos_Cards_Common_RequestContextDto"
+          },
+          "issuance": {
+            "$ref": "#/components/schemas/Kardit_DevKit_Dtos_Cards_Requests_IssuancePayloadDto"
+          },
+          "customer": {
+            "$ref": "#/components/schemas/Kardit_DevKit_Dtos_Cards_Requests_IssuanceCustomerDto"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_DevKit_Dtos_Cards_Requests_EmbeddedCustomerPayloadDto": {
+        "type": "object",
+        "properties": {
+          "identity": {
+            "$ref": "#/components/schemas/Kardit_DevKit_Dtos_Cards_Requests_IdentityPayloadDto"
+          },
+          "kyc": {
+            "$ref": "#/components/schemas/Kardit_DevKit_Dtos_Cards_Requests_KycPayloadDto"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_DevKit_Dtos_Cards_Requests_IdentityPayloadDto": {
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string",
+            "nullable": true
+          },
+          "lastName": {
+            "type": "string",
+            "nullable": true
+          },
+          "dob": {
+            "type": "string",
+            "format": "date"
+          },
+          "phone": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_DevKit_Dtos_Cards_Requests_IssuanceCustomerDto": {
+        "type": "object",
+        "properties": {
+          "customerId": {
+            "type": "string",
+            "nullable": true
+          },
+          "embeddedPayload": {
+            "$ref": "#/components/schemas/Kardit_DevKit_Dtos_Cards_Requests_EmbeddedCustomerPayloadDto"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_DevKit_Dtos_Cards_Requests_IssuancePayloadDto": {
+        "type": "object",
+        "properties": {
+          "bankId": {
+            "type": "string",
+            "nullable": true
+          },
+          "productId": {
+            "type": "string",
+            "nullable": true
+          },
+          "productType": {
+            "$ref": "#/components/schemas/Kardit_DevKit_Enums_ProductType"
+          },
+          "billingModel": {
+            "$ref": "#/components/schemas/Kardit_DevKit_Enums_CardBillingModel"
+          },
+          "currency": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_DevKit_Dtos_Cards_Requests_KycPayloadDto": {
+        "type": "object",
+        "properties": {
+          "idType": {
+            "type": "string",
+            "nullable": true
+          },
+          "idNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "kycLevel": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_DevKit_Dtos_Cards_Responses_CardIssuanceResponseDto": {
+        "type": "object",
+        "properties": {
+          "cardId": {
+            "type": "string",
+            "nullable": true
+          },
+          "customerId": {
+            "type": "string",
+            "nullable": true
+          },
+          "bankId": {
+            "type": "string",
+            "nullable": true
+          },
+          "productType": {
+            "$ref": "#/components/schemas/Kardit_DevKit_Enums_ProductType"
+          },
+          "status": {
+            "$ref": "#/components/schemas/Kardit_DevKit_Enums_CardStatus"
+          },
+          "maskedPan": {
+            "type": "string",
+            "nullable": true
+          },
+          "expiryMonth": {
+            "type": "string",
+            "nullable": true
+          },
+          "expiryYear": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "virtualAccount": {
+            "$ref": "#/components/schemas/Kardit_DevKit_Dtos_Cards_Common_VirtualAccountSummaryDto"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_DevKit_Dtos_KarditCardApi_FreezeAffiliateCardsRequestDto": {
+        "type": "object",
+        "properties": {
+          "reason": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_DevKit_Dtos_KarditCardApi_TerminateAffiliateCardsRequestDto": {
+        "type": "object",
+        "properties": {
+          "reason": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_DevKit_Dtos_KarditCardApi_UnfreezeAffiliateCardsRequestDto": {
+        "type": "object",
+        "properties": {
+          "reason": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_DevKit_Enums_CardBillingModel": {
+        "enum": [
+          "PREPAID",
+          "POSTPAID"
+        ],
+        "type": "string"
+      },
+      "Kardit_DevKit_Enums_CardStatus": {
+        "enum": [
+          "NONE",
+          "ACTIVE",
+          "FROZEN",
+          "TERMINATED",
+          "PERSONALIZING",
+          "READY",
+          "DISPATCHED",
+          "PENDING_ISSUANCE",
+          "PENDING_ACTIVATION",
+          "PENDING_ACTIVATION_FAILED"
+        ],
+        "type": "string"
+      },
+      "Kardit_DevKit_Enums_NotificationType": {
+        "enum": [
+          "OnboardingCaseSubmitted",
+          "OnboardingCaseApprovedForBankReview",
+          "OnboardingCaseApproved",
+          "OnboardingCaseRejected",
+          "ExternalProcessingDeferred",
+          "ExternalProcessingResumed",
+          "ExternalProcessingCompleted",
+          "ExternalProcessingFailed"
+        ],
+        "type": "string"
+      },
+      "Kardit_DevKit_Enums_ProductType": {
+        "enum": [
+          "VIRTUAL",
+          "PHYSICAL"
+        ],
+        "type": "string"
+      },
+      "Kardit_DevKit_Enums_UserType": {
+        "enum": [
+          "AFFILIATE",
+          "SERVICE_PROVIDER",
+          "BANK_ADMIN"
+        ],
+        "type": "string"
+      },
+      "Kardit_Domain_Enums_TransactionStatusEnum": {
+        "enum": [
+          "AUTHORIZED",
+          "DECLINED",
+          "PENDING",
+          "SETTLED",
+          "FAILED",
+          "REFUNDED",
+          "CHARGEBACK",
+          "CANCELLED",
+          "REFUSED"
+        ],
+        "type": "string"
+      },
+      "Kardit_Domain_Models_KycLevel": {
+        "enum": [
+          "LEVEL_1",
+          "Level_2",
+          "Level_3"
+        ],
+        "type": "string"
+      },
+      "Kardit_Domain_RequestVm_Address": {
+        "required": [
+          "city",
+          "country",
+          "line1",
+          "state"
+        ],
+        "type": "object",
+        "properties": {
+          "line1": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "city": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "state": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "country": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Domain_RequestVm_CreateDraftRequestVm": {
+        "required": [
+          "customer",
+          "requestContext"
+        ],
+        "type": "object",
+        "properties": {
+          "requestContext": {
+            "$ref": "#/components/schemas/Kardit_Domain_RequestVm_RequestContext"
+          },
+          "customer": {
+            "$ref": "#/components/schemas/Kardit_Domain_RequestVm_CustomerPayload"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Domain_RequestVm_Criteria": {
+        "type": "object",
+        "properties": {
+          "phone": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "customerRefId": {
+            "type": "string",
+            "nullable": true
+          },
+          "idNumber": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Domain_RequestVm_CustomerPagination": {
+        "type": "object",
+        "properties": {
+          "page": {
+            "maximum": 2147483647,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "maximum": 2147483647,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Domain_RequestVm_CustomerPayload": {
+        "required": [
+          "identity",
+          "kyc"
+        ],
+        "type": "object",
+        "properties": {
+          "identity": {
+            "$ref": "#/components/schemas/Kardit_Domain_RequestVm_Identity"
+          },
+          "kyc": {
+            "$ref": "#/components/schemas/Kardit_Domain_RequestVm_Kyc"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Domain_RequestVm_CustomerSearchRequest": {
+        "type": "object",
+        "properties": {
+          "requestContext": {
+            "$ref": "#/components/schemas/Kardit_Domain_RequestVm_RequestSearchContext"
+          },
+          "criteria": {
+            "$ref": "#/components/schemas/Kardit_Domain_RequestVm_Criteria"
+          },
+          "pagination": {
+            "$ref": "#/components/schemas/Kardit_Domain_RequestVm_CustomerPagination"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Domain_RequestVm_ExportFilters": {
+        "type": "object",
+        "properties": {
+          "bankId": {
+            "type": "string",
+            "nullable": true
+          },
+          "affiliateId": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "transactionType": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "fromDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "toDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Domain_RequestVm_ExportQueryVm": {
+        "type": "object",
+        "properties": {
+          "filters": {
+            "$ref": "#/components/schemas/Kardit_Domain_RequestVm_ExportFilters"
+          },
+          "exportFormat": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Domain_RequestVm_Filters": {
+        "type": "object",
+        "properties": {
+          "bankId": {
+            "type": "string",
+            "nullable": true
+          },
+          "cardId": {
+            "type": "string",
+            "nullable": true
+          },
+          "affiliateId": {
+            "type": "string",
+            "nullable": true
+          },
+          "customerId": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "transactionType": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "fromDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "toDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "reference": {
+            "type": "string",
+            "nullable": true
+          },
+          "merchantName": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Domain_RequestVm_IdType": {
+        "enum": [
+          "NationalId",
+          "Passport",
+          "DriverLicense"
+        ],
+        "type": "string"
+      },
+      "Kardit_Domain_RequestVm_Identity": {
+        "required": [
+          "address",
+          "dob",
+          "email",
+          "firstName",
+          "lastName",
+          "phone"
+        ],
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "maxLength": 50,
+            "minLength": 2,
+            "pattern": "^[a-zA-Z]+$",
+            "type": "string"
+          },
+          "lastName": {
+            "maxLength": 50,
+            "minLength": 2,
+            "pattern": "^[a-zA-Z]+$",
+            "type": "string"
+          },
+          "dob": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "phone": {
+            "minLength": 1,
+            "type": "string",
+            "format": "tel"
+          },
+          "email": {
+            "minLength": 1,
+            "type": "string",
+            "format": "email"
+          },
+          "address": {
+            "$ref": "#/components/schemas/Kardit_Domain_RequestVm_Address"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Domain_RequestVm_Kyc": {
+        "required": [
+          "idNumberMasked",
+          "idType",
+          "kycLevel",
+          "verifiedAt"
+        ],
+        "type": "object",
+        "properties": {
+          "idType": {
+            "$ref": "#/components/schemas/Kardit_Domain_RequestVm_IdType"
+          },
+          "idNumberMasked": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "kycLevel": {
+            "$ref": "#/components/schemas/Kardit_Domain_Models_KycLevel"
+          },
+          "verifiedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Domain_RequestVm_RequestContext": {
+        "required": [
+          "affiliateId",
+          "requestId",
+          "tenantId"
+        ],
+        "type": "object",
+        "properties": {
+          "requestId": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "affiliateId": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "tenantId": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Domain_RequestVm_RequestSearchContext": {
+        "type": "object",
+        "properties": {
+          "actorUserId": {
+            "type": "string",
+            "nullable": true
+          },
+          "userType": {
+            "type": "string",
+            "nullable": true
+          },
+          "tenantId": {
+            "type": "string",
+            "nullable": true
+          },
+          "scopeType": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Kardit_Domain_RequestVm_TransactionQueryVm": {
+        "type": "object",
+        "properties": {
+          "filters": {
+            "$ref": "#/components/schemas/Kardit_Domain_RequestVm_Filters"
+          },
+          "pageNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  }
+}

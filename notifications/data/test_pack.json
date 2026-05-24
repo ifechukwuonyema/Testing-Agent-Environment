@@ -1,0 +1,3649 @@
+{
+  "microservice": "Notifications",
+  "version": "v1_40_tests_per_endpoint",
+  "coverage_type": "full_functional_positive_negative_edge_case",
+  "design_note": "SRS-aligned notifications endpoint test pack. 3 endpoints, 40 test cases each.",
+  "total_endpoints": 5,
+  "minimum_test_cases_per_endpoint": 40,
+  "endpoints": [
+    {
+      "api_id": "API-NOT-01",
+      "name": "Retrieve User Notifications",
+      "endpoint": "GET /api/v1/notifications",
+      "test_case_count": 40,
+      "functional_requirements": [
+        "FR-NOT-API-01-01",
+        "FR-NOT-API-01-02",
+        "FR-NOT-API-01-03",
+        "FR-NOT-API-01-04",
+        "FR-NOT-API-01-05",
+        "FR-NOT-API-01-06",
+        "FR-NOT-API-01-07",
+        "FR-NOT-API-01-08",
+        "FR-NOT-API-01-09",
+        "FR-NOT-API-01-10"
+      ],
+      "test_cases": [
+        {
+          "tc_id": "TC-API-NOT-01-001",
+          "scenario": "retrieve_notifications_success",
+          "test_type": "Functional",
+          "test_description": "Verify authenticated user can retrieve their notifications.",
+          "preconditions": "Authenticated user; notifications exist.",
+          "input_data": "GET /api/v1/notifications; no filters.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "200; notifications array returned; pagination metadata present.",
+          "fr_coverage": [
+            "FR-NOT-API-01-01",
+            "FR-NOT-API-01-02",
+            "FR-NOT-API-01-03",
+            "FR-NOT-API-01-04",
+            "FR-NOT-API-01-05",
+            "FR-NOT-API-01-06"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-NOT-01-002",
+          "scenario": "filter_by_status_unread",
+          "test_type": "Functional",
+          "test_description": "Verify filtering by status=UNREAD returns only unread notifications.",
+          "preconditions": "Authenticated user; mix of READ/UNREAD notifications.",
+          "input_data": "?status=UNREAD.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "200; all returned notifications have status=UNREAD.",
+          "fr_coverage": [
+            "FR-NOT-API-01-01",
+            "FR-NOT-API-01-02",
+            "FR-NOT-API-01-03",
+            "FR-NOT-API-01-04",
+            "FR-NOT-API-01-05"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-NOT-01-003",
+          "scenario": "filter_by_status_read",
+          "test_type": "Functional",
+          "test_description": "Verify filtering by status=READ returns only read notifications.",
+          "preconditions": "Authenticated user; mix of READ/UNREAD.",
+          "input_data": "?status=READ.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "200; all returned notifications have status=READ.",
+          "fr_coverage": [
+            "FR-NOT-API-01-01",
+            "FR-NOT-API-01-02",
+            "FR-NOT-API-01-03",
+            "FR-NOT-API-01-04",
+            "FR-NOT-API-01-05"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-NOT-01-005",
+          "scenario": "no_notifications_returns_empty",
+          "test_type": "Functional",
+          "test_description": "Verify empty array returned when user has no notifications.",
+          "preconditions": "Authenticated user; no notifications.",
+          "input_data": "GET /api/v1/notifications.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "200; notifications=[]; totalCount=0.",
+          "fr_coverage": [
+            "FR-NOT-API-01-01",
+            "FR-NOT-API-01-02",
+            "FR-NOT-API-01-03"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-NOT-01-006",
+          "scenario": "pagination_default",
+          "test_type": "Functional",
+          "test_description": "Verify default page=1, pageSize applied when not specified.",
+          "preconditions": "Authenticated user; notifications exist.",
+          "input_data": "GET with no pagination params.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "200; page 1 results; totalCount present.",
+          "fr_coverage": [
+            "FR-NOT-API-01-01",
+            "FR-NOT-API-01-02",
+            "FR-NOT-API-01-03",
+            "FR-NOT-API-01-04"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-NOT-01-007",
+          "scenario": "pagination_first_page",
+          "test_type": "Functional",
+          "test_description": "Verify first page returns correct subset.",
+          "preconditions": "More than 10 notifications.",
+          "input_data": "?page=1&pageSize=10.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "200; up to 10 notifications returned.",
+          "fr_coverage": [
+            "FR-NOT-API-01-01",
+            "FR-NOT-API-01-02",
+            "FR-NOT-API-01-03",
+            "FR-NOT-API-01-04",
+            "FR-NOT-API-01-05"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-NOT-01-008",
+          "scenario": "pagination_second_page",
+          "test_type": "Functional",
+          "test_description": "Verify second page returns next subset.",
+          "preconditions": "More than 10 notifications.",
+          "input_data": "?page=2&pageSize=10.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "200; next 10 notifications; differ from page 1.",
+          "fr_coverage": [
+            "FR-NOT-API-01-01",
+            "FR-NOT-API-01-02",
+            "FR-NOT-API-01-03",
+            "FR-NOT-API-01-04",
+            "FR-NOT-API-01-05"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-NOT-01-009",
+          "scenario": "pagination_beyond_last_page",
+          "test_type": "Functional",
+          "test_description": "Verify page beyond total returns empty data.",
+          "preconditions": "5 notifications; pageSize=5; page=3.",
+          "input_data": "?page=3&pageSize=5.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "200; notifications=[]; totalCount=5.",
+          "fr_coverage": [
+            "FR-NOT-API-01-01",
+            "FR-NOT-API-01-02",
+            "FR-NOT-API-01-03",
+            "FR-NOT-API-01-04",
+            "FR-NOT-API-01-05"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-NOT-01-010",
+          "scenario": "page_zero_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify page=0 is rejected.",
+          "preconditions": "Authenticated user.",
+          "input_data": "?page=0.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "400/422; validation error.",
+          "fr_coverage": [
+            "FR-NOT-API-01-03",
+            "FR-NOT-API-01-04"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-NOT-01-011",
+          "scenario": "page_size_zero_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify pageSize=0 is rejected.",
+          "preconditions": "Authenticated user.",
+          "input_data": "?pageSize=0.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "400/422; validation error.",
+          "fr_coverage": [
+            "FR-NOT-API-01-03",
+            "FR-NOT-API-01-04"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-NOT-01-012",
+          "scenario": "page_size_exceeds_max",
+          "test_type": "Functional",
+          "test_description": "Verify pageSize exceeding maximum is rejected or capped.",
+          "preconditions": "Authenticated user.",
+          "input_data": "?pageSize=10000.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "400/422 or 200 capped to max.",
+          "fr_coverage": [
+            "FR-NOT-API-01-03",
+            "FR-NOT-API-01-04"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-NOT-01-013",
+          "scenario": "unauthenticated_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify unauthenticated request is rejected.",
+          "preconditions": "No auth token.",
+          "input_data": "GET with no Authorization.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "401; no notifications returned.",
+          "fr_coverage": [
+            "FR-NOT-API-01-08",
+            "FR-NOT-API-01-09"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-NOT-01-014",
+          "scenario": "invalid_token_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify invalid bearer token is rejected.",
+          "preconditions": "Invalid token.",
+          "input_data": "Authorization: Bearer INVALID.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "401; no notifications.",
+          "fr_coverage": [
+            "FR-NOT-API-01-08",
+            "FR-NOT-API-01-09"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-NOT-01-015",
+          "scenario": "scope_isolation_own_notifications",
+          "test_type": "Functional",
+          "test_description": "Verify user only receives their own notifications.",
+          "preconditions": "Two users with different notifications.",
+          "input_data": "GET with user-A token.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "200; only user-A notifications returned.",
+          "fr_coverage": [
+            "FR-NOT-API-01-08",
+            "FR-NOT-API-01-09",
+            "FR-NOT-API-01-10"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-NOT-01-016",
+          "scenario": "foreign_tenant_cannot_access",
+          "test_type": "Functional",
+          "test_description": "Verify foreign-tenant user cannot access another tenant's notifications.",
+          "preconditions": "Foreign tenant user.",
+          "input_data": "GET with foreign tenant token.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "200; only empty or own-tenant notifications; no cross-tenant leakage.",
+          "fr_coverage": [
+            "FR-NOT-API-01-08",
+            "FR-NOT-API-01-09",
+            "FR-NOT-API-01-10"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-NOT-01-017",
+          "scenario": "response_contains_notification_id",
+          "test_type": "Functional",
+          "test_description": "Verify each notification has notificationId.",
+          "preconditions": "Authenticated user; notifications exist.",
+          "input_data": "GET with no filters.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "200; each notification has notificationId.",
+          "fr_coverage": [
+            "FR-NOT-API-01-01",
+            "FR-NOT-API-01-02"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-NOT-01-018",
+          "scenario": "response_contains_status",
+          "test_type": "Functional",
+          "test_description": "Verify each notification has status field.",
+          "preconditions": "Authenticated user; notifications exist.",
+          "input_data": "GET with no filters.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "200; each notification has status (READ or UNREAD).",
+          "fr_coverage": [
+            "FR-NOT-API-01-01",
+            "FR-NOT-API-01-02"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-NOT-01-019",
+          "scenario": "response_contains_message",
+          "test_type": "Functional",
+          "test_description": "Verify each notification has message or title field.",
+          "preconditions": "Authenticated user; notifications exist.",
+          "input_data": "GET with no filters.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "200; each notification has message/title.",
+          "fr_coverage": [
+            "FR-NOT-API-01-01",
+            "FR-NOT-API-01-02"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-NOT-01-020",
+          "scenario": "response_contains_created_at",
+          "test_type": "Functional",
+          "test_description": "Verify each notification has createdAt timestamp.",
+          "preconditions": "Authenticated user; notifications exist.",
+          "input_data": "GET with no filters.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "200; each notification has createdAt.",
+          "fr_coverage": [
+            "FR-NOT-API-01-01",
+            "FR-NOT-API-01-02"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-NOT-01-021",
+          "scenario": "notifications_sorted_newest_first",
+          "test_type": "Functional",
+          "test_description": "Verify notifications returned newest first.",
+          "preconditions": "Notifications with different createdAt.",
+          "input_data": "GET with no filters.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "200; createdAt descending order.",
+          "fr_coverage": [
+            "FR-NOT-API-01-01",
+            "FR-NOT-API-01-02",
+            "FR-NOT-API-01-03",
+            "FR-NOT-API-01-04"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-NOT-01-022",
+          "scenario": "response_contains_total_count",
+          "test_type": "Functional",
+          "test_description": "Verify totalCount present in response.",
+          "preconditions": "Authenticated user; notifications exist.",
+          "input_data": "GET with pagination.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "200; totalCount present.",
+          "fr_coverage": [
+            "FR-NOT-API-01-01",
+            "FR-NOT-API-01-02",
+            "FR-NOT-API-01-03"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-NOT-01-023",
+          "scenario": "response_contains_page_metadata",
+          "test_type": "Functional",
+          "test_description": "Verify page, pageSize, totalPages present.",
+          "preconditions": "Authenticated user; notifications exist.",
+          "input_data": "GET with pagination.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "200; page metadata present.",
+          "fr_coverage": [
+            "FR-NOT-API-01-01",
+            "FR-NOT-API-01-02",
+            "FR-NOT-API-01-03",
+            "FR-NOT-API-01-04"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-NOT-01-024",
+          "scenario": "notification_has_type_field",
+          "test_type": "Functional",
+          "test_description": "Verify each notification has a type/category field.",
+          "preconditions": "Authenticated user; notifications exist.",
+          "input_data": "GET with no filters.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "200; each notification has type.",
+          "fr_coverage": [
+            "FR-NOT-API-01-01",
+            "FR-NOT-API-01-02",
+            "FR-NOT-API-01-03"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-NOT-01-025",
+          "scenario": "read_count_matches_filter",
+          "test_type": "Functional",
+          "test_description": "Verify count returned with status=READ matches actual READ notifications.",
+          "preconditions": "User has 3 READ notifications.",
+          "input_data": "?status=READ.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "200; totalCount=3; all items READ.",
+          "fr_coverage": [
+            "FR-NOT-API-01-01",
+            "FR-NOT-API-01-02",
+            "FR-NOT-API-01-03",
+            "FR-NOT-API-01-04",
+            "FR-NOT-API-01-05"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-NOT-01-026",
+          "scenario": "unread_count_matches_filter",
+          "test_type": "Functional",
+          "test_description": "Verify count returned with status=UNREAD matches actual UNREAD notifications.",
+          "preconditions": "User has 5 UNREAD notifications.",
+          "input_data": "?status=UNREAD.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "200; totalCount=5; all items UNREAD.",
+          "fr_coverage": [
+            "FR-NOT-API-01-01",
+            "FR-NOT-API-01-02",
+            "FR-NOT-API-01-03",
+            "FR-NOT-API-01-04",
+            "FR-NOT-API-01-05"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-NOT-01-027",
+          "scenario": "no_filter_returns_all_statuses",
+          "test_type": "Functional",
+          "test_description": "Verify omitting status filter returns both READ and UNREAD notifications.",
+          "preconditions": "User has READ and UNREAD notifications.",
+          "input_data": "GET with no status filter.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "200; mix of READ and UNREAD returned.",
+          "fr_coverage": [
+            "FR-NOT-API-01-01",
+            "FR-NOT-API-01-02",
+            "FR-NOT-API-01-03",
+            "FR-NOT-API-01-04"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-NOT-01-028",
+          "scenario": "negative_page_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify negative page value is rejected.",
+          "preconditions": "Authenticated user.",
+          "input_data": "?page=-1.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "400/422; validation error.",
+          "fr_coverage": [
+            "FR-NOT-API-01-03",
+            "FR-NOT-API-01-04"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-NOT-01-029",
+          "scenario": "negative_page_size_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify negative pageSize is rejected.",
+          "preconditions": "Authenticated user.",
+          "input_data": "?pageSize=-1.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "400/422; validation error.",
+          "fr_coverage": [
+            "FR-NOT-API-01-03",
+            "FR-NOT-API-01-04"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-NOT-01-030",
+          "scenario": "non_numeric_page_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify non-numeric page is rejected.",
+          "preconditions": "Authenticated user.",
+          "input_data": "?page=abc.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "400/422; type validation error.",
+          "fr_coverage": [
+            "FR-NOT-API-01-03",
+            "FR-NOT-API-01-04"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-NOT-01-031",
+          "scenario": "expired_token_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify expired token is rejected.",
+          "preconditions": "Expired token.",
+          "input_data": "Authorization: Bearer EXPIRED.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "401; no notifications.",
+          "fr_coverage": [
+            "FR-NOT-API-01-08",
+            "FR-NOT-API-01-09"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-NOT-01-032",
+          "scenario": "response_time_within_sla",
+          "test_type": "Functional",
+          "test_description": "Verify response within 3 seconds.",
+          "preconditions": "Server healthy; valid credentials.",
+          "input_data": "GET default page.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "200; response <= 3s.",
+          "fr_coverage": [
+            "FR-NOT-API-01-01",
+            "FR-NOT-API-01-02"
+          ],
+          "priority": "Low"
+        },
+        {
+          "tc_id": "TC-API-NOT-01-033",
+          "scenario": "extra_query_params_ignored",
+          "test_type": "Functional",
+          "test_description": "Verify unknown query parameters do not cause errors.",
+          "preconditions": "Authenticated user.",
+          "input_data": "?unknownParam=x.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "200; param ignored; notifications returned.",
+          "fr_coverage": [
+            "FR-NOT-API-01-01",
+            "FR-NOT-API-01-02"
+          ],
+          "priority": "Low"
+        },
+        {
+          "tc_id": "TC-API-NOT-01-034",
+          "scenario": "notification_read_after_marking",
+          "test_type": "Functional",
+          "test_description": "Verify notification marked READ appears in READ filter.",
+          "preconditions": "User has UNREAD notification; PATCH marks it READ.",
+          "input_data": "?status=READ after PATCH.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "200; notification appears in READ results.",
+          "fr_coverage": [
+            "FR-NOT-API-01-01",
+            "FR-NOT-API-01-02",
+            "FR-NOT-API-01-03",
+            "FR-NOT-API-01-04",
+            "FR-NOT-API-01-05"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-NOT-01-035",
+          "scenario": "status_filter_case_sensitive",
+          "test_type": "Functional",
+          "test_description": "Verify status filter is case-sensitive.",
+          "preconditions": "Authenticated user.",
+          "input_data": "?status=unread (lowercase).",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "400/422; enum mismatch.",
+          "fr_coverage": [
+            "FR-NOT-API-01-03",
+            "FR-NOT-API-01-04"
+          ],
+          "priority": "Low"
+        },
+        {
+          "tc_id": "TC-API-NOT-01-036",
+          "scenario": "large_notification_set_performance",
+          "test_type": "Functional",
+          "test_description": "Verify endpoint handles large notification set within SLA.",
+          "preconditions": "User has 1000 notifications.",
+          "input_data": "?page=1&pageSize=100.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "200; response <= 3s; 100 items.",
+          "fr_coverage": [
+            "FR-NOT-API-01-01",
+            "FR-NOT-API-01-02",
+            "FR-NOT-API-01-03",
+            "FR-NOT-API-01-04"
+          ],
+          "priority": "Low"
+        },
+        {
+          "tc_id": "TC-API-NOT-01-037",
+          "scenario": "notification_has_entity_reference",
+          "test_type": "Functional",
+          "test_description": "Verify notification references related entity (cardId, affiliateId, etc.) if applicable.",
+          "preconditions": "Notifications linked to entities.",
+          "input_data": "GET with no filters.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "200; entityId or relatedEntityId present.",
+          "fr_coverage": [
+            "FR-NOT-API-01-01",
+            "FR-NOT-API-01-02",
+            "FR-NOT-API-01-03"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-NOT-01-038",
+          "scenario": "concurrent_requests_consistent",
+          "test_type": "Functional",
+          "test_description": "Verify concurrent GET requests return consistent data.",
+          "preconditions": "No status changes between requests.",
+          "input_data": "Two simultaneous GETs.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "200 for both; same response.",
+          "fr_coverage": [
+            "FR-NOT-API-01-01",
+            "FR-NOT-API-01-02"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-NOT-01-039",
+          "scenario": "page_one_and_total_pages_consistent",
+          "test_type": "Functional",
+          "test_description": "Verify totalPages consistent with totalCount and pageSize.",
+          "preconditions": "User has 25 notifications.",
+          "input_data": "?page=1&pageSize=10.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "200; totalPages=3; totalCount=25.",
+          "fr_coverage": [
+            "FR-NOT-API-01-01",
+            "FR-NOT-API-01-02",
+            "FR-NOT-API-01-03",
+            "FR-NOT-API-01-04",
+            "FR-NOT-API-01-05"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-NOT-01-040",
+          "scenario": "response_schema_complete",
+          "test_type": "Functional",
+          "test_description": "Verify full response schema: notifications[], totalCount, page, pageSize, totalPages; each item has notificationId, status, message, type, createdAt.",
+          "preconditions": "Authenticated user; notifications exist.",
+          "input_data": "GET with pagination.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "200; all documented fields present.",
+          "fr_coverage": [
+            "FR-NOT-API-01-01",
+            "FR-NOT-API-01-02",
+            "FR-NOT-API-01-03",
+            "FR-NOT-API-01-04",
+            "FR-NOT-API-01-05",
+            "FR-NOT-API-01-06",
+            "FR-NOT-API-01-07",
+            "FR-NOT-API-01-08",
+            "FR-NOT-API-01-09",
+            "FR-NOT-API-01-10"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-NOT-01-004",
+          "scenario": "invalid_status_filter",
+          "test_type": "Functional",
+          "test_description": "Verify invalid status enum in filter is rejected.",
+          "preconditions": "Authenticated user.",
+          "input_data": "?status=INVALID_STATUS.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "400/422; validation error.",
+          "fr_coverage": [
+            "FR-NOT-API-01-03",
+            "FR-NOT-API-01-04"
+          ],
+          "priority": "High"
+        }
+      ]
+    },
+    {
+      "api_id": "API-NOT-02",
+      "name": "Update Notification Status",
+      "endpoint": "PATCH /api/v1/notifications/{notificationId}",
+      "test_case_count": 40,
+      "functional_requirements": [
+        "FR-NOT-API-02-01",
+        "FR-NOT-API-02-02",
+        "FR-NOT-API-02-03",
+        "FR-NOT-API-02-04",
+        "FR-NOT-API-02-05",
+        "FR-NOT-API-02-06",
+        "FR-NOT-API-02-07",
+        "FR-NOT-API-02-08",
+        "FR-NOT-API-02-09",
+        "FR-NOT-API-02-10"
+      ],
+      "test_cases": [
+        {
+          "tc_id": "TC-API-NOT-02-001",
+          "scenario": "mark_notification_read_success",
+          "test_type": "Functional",
+          "test_description": "Verify authenticated user can mark a notification as READ.",
+          "preconditions": "Authenticated user; notification exists in UNREAD status.",
+          "input_data": "notificationId(path), status=READ.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "200; notification status updated to READ.",
+          "fr_coverage": [
+            "FR-NOT-API-02-01",
+            "FR-NOT-API-02-02",
+            "FR-NOT-API-02-03",
+            "FR-NOT-API-02-04",
+            "FR-NOT-API-02-05",
+            "FR-NOT-API-02-06"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-NOT-02-002",
+          "scenario": "mark_notification_unread_success",
+          "test_type": "Functional",
+          "test_description": "Verify authenticated user can mark a notification as UNREAD.",
+          "preconditions": "Authenticated user; notification exists in READ status.",
+          "input_data": "notificationId(path), status=UNREAD.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "200; notification status updated to UNREAD.",
+          "fr_coverage": [
+            "FR-NOT-API-02-01",
+            "FR-NOT-API-02-02",
+            "FR-NOT-API-02-03",
+            "FR-NOT-API-02-04",
+            "FR-NOT-API-02-05"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-NOT-02-003",
+          "scenario": "mark_already_read_as_read_idempotent",
+          "test_type": "Functional",
+          "test_description": "Verify marking already READ notification as READ is idempotent.",
+          "preconditions": "Notification already in READ status.",
+          "input_data": "notificationId(path), status=READ.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "200; no error; status remains READ.",
+          "fr_coverage": [
+            "FR-NOT-API-02-01",
+            "FR-NOT-API-02-02",
+            "FR-NOT-API-02-03",
+            "FR-NOT-API-02-04",
+            "FR-NOT-API-02-05"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-NOT-02-004",
+          "scenario": "mark_already_unread_as_unread_idempotent",
+          "test_type": "Functional",
+          "test_description": "Verify marking already UNREAD notification as UNREAD is idempotent.",
+          "preconditions": "Notification already in UNREAD status.",
+          "input_data": "notificationId(path), status=UNREAD.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "200; no error; status remains UNREAD.",
+          "fr_coverage": [
+            "FR-NOT-API-02-01",
+            "FR-NOT-API-02-02",
+            "FR-NOT-API-02-03",
+            "FR-NOT-API-02-04",
+            "FR-NOT-API-02-05"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-NOT-02-011",
+          "scenario": "unauthenticated_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify unauthenticated request is rejected.",
+          "preconditions": "No auth token.",
+          "input_data": "Valid notificationId in path; status=READ.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "401; no update.",
+          "fr_coverage": [
+            "FR-NOT-API-02-08",
+            "FR-NOT-API-02-09"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-NOT-02-012",
+          "scenario": "invalid_token_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify invalid bearer token is rejected.",
+          "preconditions": "Invalid token.",
+          "input_data": "Authorization: Bearer INVALID.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "401; no update.",
+          "fr_coverage": [
+            "FR-NOT-API-02-08",
+            "FR-NOT-API-02-09"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-NOT-02-013",
+          "scenario": "foreign_user_cannot_update_notification",
+          "test_type": "Functional",
+          "test_description": "Verify user cannot update another user's notification.",
+          "preconditions": "Foreign tenant user; notification belongs to different user.",
+          "input_data": "notificationId(path) of other user.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "403/404; access denied.",
+          "fr_coverage": [
+            "FR-NOT-API-02-08",
+            "FR-NOT-API-02-09"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-NOT-02-014",
+          "scenario": "foreign_tenant_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify cross-tenant access is denied.",
+          "preconditions": "Foreign tenant user.",
+          "input_data": "notificationId of foreign-tenant notification.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "403/404; access denied.",
+          "fr_coverage": [
+            "FR-NOT-API-02-08",
+            "FR-NOT-API-02-09"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-NOT-02-015",
+          "scenario": "response_contains_notification_id",
+          "test_type": "Functional",
+          "test_description": "Verify response body includes notificationId.",
+          "preconditions": "Authenticated user; valid notificationId.",
+          "input_data": "status=READ.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "200; notificationId in response.",
+          "fr_coverage": [
+            "FR-NOT-API-02-01",
+            "FR-NOT-API-02-02"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-NOT-02-016",
+          "scenario": "response_contains_updated_status",
+          "test_type": "Functional",
+          "test_description": "Verify response body includes updated status.",
+          "preconditions": "Authenticated user; valid notificationId.",
+          "input_data": "status=READ.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "200; status=READ in response.",
+          "fr_coverage": [
+            "FR-NOT-API-02-01",
+            "FR-NOT-API-02-02"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-NOT-02-017",
+          "scenario": "response_contains_updated_at",
+          "test_type": "Functional",
+          "test_description": "Verify response contains updatedAt timestamp.",
+          "preconditions": "Authenticated user; valid notificationId.",
+          "input_data": "status=READ.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "200; updatedAt present in response.",
+          "fr_coverage": [
+            "FR-NOT-API-02-01",
+            "FR-NOT-API-02-02"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-NOT-02-018",
+          "scenario": "status_persisted_after_update",
+          "test_type": "Functional",
+          "test_description": "Verify status change is persisted and visible on GET.",
+          "preconditions": "Authenticated user; notification UNREAD.",
+          "input_data": "PATCH status=READ; GET notification after.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "200; GET returns status=READ.",
+          "fr_coverage": [
+            "FR-NOT-API-02-01",
+            "FR-NOT-API-02-02",
+            "FR-NOT-API-02-03",
+            "FR-NOT-API-02-04",
+            "FR-NOT-API-02-05",
+            "FR-NOT-API-02-06"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-NOT-02-019",
+          "scenario": "read_at_timestamp_set_when_marked_read",
+          "test_type": "Functional",
+          "test_description": "Verify readAt timestamp is set when marking notification READ.",
+          "preconditions": "Authenticated user; UNREAD notification.",
+          "input_data": "status=READ.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "200; readAt timestamp present in response.",
+          "fr_coverage": [
+            "FR-NOT-API-02-01",
+            "FR-NOT-API-02-02",
+            "FR-NOT-API-02-03",
+            "FR-NOT-API-02-04"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-NOT-02-020",
+          "scenario": "read_at_cleared_when_marked_unread",
+          "test_type": "Functional",
+          "test_description": "Verify readAt is cleared or null when marking notification UNREAD.",
+          "preconditions": "Authenticated user; READ notification.",
+          "input_data": "status=UNREAD.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "200; readAt absent or null.",
+          "fr_coverage": [
+            "FR-NOT-API-02-01",
+            "FR-NOT-API-02-02",
+            "FR-NOT-API-02-03",
+            "FR-NOT-API-02-04"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-NOT-02-021",
+          "scenario": "empty_body_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify empty request body is rejected.",
+          "preconditions": "Authenticated user; valid notificationId.",
+          "input_data": "Body={}.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "400/422; status required.",
+          "fr_coverage": [
+            "FR-NOT-API-02-01",
+            "FR-NOT-API-02-02"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-NOT-02-022",
+          "scenario": "unsupported_content_type",
+          "test_type": "Functional",
+          "test_description": "Verify text/plain content type is rejected.",
+          "preconditions": "Authenticated user; valid notificationId.",
+          "input_data": "Content-Type: text/plain.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "400/415; error.",
+          "fr_coverage": [
+            "FR-NOT-API-02-01",
+            "FR-NOT-API-02-02"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-NOT-02-023",
+          "scenario": "extra_fields_tolerated",
+          "test_type": "Functional",
+          "test_description": "Verify extra unknown fields do not cause 500.",
+          "preconditions": "Authenticated user; valid notificationId.",
+          "input_data": "status=READ; unknownField=extra.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "200 or 400; no 500.",
+          "fr_coverage": [
+            "FR-NOT-API-02-01",
+            "FR-NOT-API-02-02"
+          ],
+          "priority": "Low"
+        },
+        {
+          "tc_id": "TC-API-NOT-02-024",
+          "scenario": "duplicate_request_idempotent",
+          "test_type": "Functional",
+          "test_description": "Verify duplicate requestId returns consistent response.",
+          "preconditions": "Authenticated user; prior requestId used.",
+          "input_data": "Same requestId; status=READ.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "200; idempotent.",
+          "fr_coverage": [
+            "FR-NOT-API-02-08",
+            "FR-NOT-API-02-09"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-NOT-02-025",
+          "scenario": "expired_token_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify expired token is rejected.",
+          "preconditions": "Expired token.",
+          "input_data": "Authorization: Bearer EXPIRED.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "401; no update.",
+          "fr_coverage": [
+            "FR-NOT-API-02-08",
+            "FR-NOT-API-02-09"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-NOT-02-026",
+          "scenario": "status_case_sensitive",
+          "test_type": "Functional",
+          "test_description": "Verify status enum is case-sensitive.",
+          "preconditions": "Authenticated user; valid notificationId.",
+          "input_data": "status=read (lowercase).",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "400/422; enum mismatch.",
+          "fr_coverage": [
+            "FR-NOT-API-02-02"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-NOT-02-027",
+          "scenario": "notification_not_deleted_on_update",
+          "test_type": "Functional",
+          "test_description": "Verify notification still exists after status update.",
+          "preconditions": "Authenticated user; valid notificationId.",
+          "input_data": "PATCH status=READ; GET after.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "200 on GET; notification present.",
+          "fr_coverage": [
+            "FR-NOT-API-02-01",
+            "FR-NOT-API-02-02",
+            "FR-NOT-API-02-03",
+            "FR-NOT-API-02-04",
+            "FR-NOT-API-02-05"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-NOT-02-028",
+          "scenario": "response_time_within_sla",
+          "test_type": "Functional",
+          "test_description": "Verify response within 3 seconds.",
+          "preconditions": "Server healthy; valid credentials.",
+          "input_data": "PATCH status=READ.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "200; response <= 3s.",
+          "fr_coverage": [
+            "FR-NOT-API-02-01",
+            "FR-NOT-API-02-02"
+          ],
+          "priority": "Low"
+        },
+        {
+          "tc_id": "TC-API-NOT-02-029",
+          "scenario": "integer_status_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify integer value for status is rejected.",
+          "preconditions": "Authenticated user; valid notificationId.",
+          "input_data": "status=1.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "400/422; type validation error.",
+          "fr_coverage": [
+            "FR-NOT-API-02-02"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-NOT-02-030",
+          "scenario": "boolean_status_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify boolean value for status is rejected.",
+          "preconditions": "Authenticated user; valid notificationId.",
+          "input_data": "status=true.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "400/422; type validation error.",
+          "fr_coverage": [
+            "FR-NOT-API-02-02"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-NOT-02-031",
+          "scenario": "empty_notificationId_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify empty notificationId in path returns 400/404.",
+          "preconditions": "Authenticated user.",
+          "input_data": "notificationId='' in path.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "400/404; validation error.",
+          "fr_coverage": [
+            "FR-NOT-API-02-06",
+            "FR-NOT-API-02-07"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-NOT-02-032",
+          "scenario": "concurrent_updates_consistent",
+          "test_type": "Functional",
+          "test_description": "Verify concurrent PATCH requests to same notificationId return consistent state.",
+          "preconditions": "Two simultaneous PATCH requests.",
+          "input_data": "Both status=READ.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "200 for both; final status=READ; no 500.",
+          "fr_coverage": [
+            "FR-NOT-API-02-01",
+            "FR-NOT-API-02-02"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-NOT-02-033",
+          "scenario": "update_triggers_side_effect_if_any",
+          "test_type": "Functional",
+          "test_description": "Verify marking as READ does not unintentionally alter other notification fields.",
+          "preconditions": "Authenticated user; UNREAD notification with message and type.",
+          "input_data": "PATCH status=READ.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "200; message and type unchanged.",
+          "fr_coverage": [
+            "FR-NOT-API-02-01",
+            "FR-NOT-API-02-02",
+            "FR-NOT-API-02-03",
+            "FR-NOT-API-02-04",
+            "FR-NOT-API-02-05"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-NOT-02-034",
+          "scenario": "response_contains_original_message",
+          "test_type": "Functional",
+          "test_description": "Verify response includes notification message unchanged after update.",
+          "preconditions": "Authenticated user; notification has message.",
+          "input_data": "PATCH status=READ.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "200; message field unchanged.",
+          "fr_coverage": [
+            "FR-NOT-API-02-01",
+            "FR-NOT-API-02-02",
+            "FR-NOT-API-02-03"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-NOT-02-035",
+          "scenario": "response_contains_type",
+          "test_type": "Functional",
+          "test_description": "Verify response includes notification type unchanged after update.",
+          "preconditions": "Authenticated user; notification has type.",
+          "input_data": "PATCH status=READ.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "200; type field unchanged.",
+          "fr_coverage": [
+            "FR-NOT-API-02-01",
+            "FR-NOT-API-02-02",
+            "FR-NOT-API-02-03"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-NOT-02-036",
+          "scenario": "update_only_status_field",
+          "test_type": "Functional",
+          "test_description": "Verify PATCH only modifies status; no other fields changed.",
+          "preconditions": "Authenticated user; valid notification.",
+          "input_data": "PATCH status=READ only.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "200; only status and updatedAt changed.",
+          "fr_coverage": [
+            "FR-NOT-API-02-01",
+            "FR-NOT-API-02-02",
+            "FR-NOT-API-02-03",
+            "FR-NOT-API-02-04",
+            "FR-NOT-API-02-05"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-NOT-02-037",
+          "scenario": "affiliate_notification_scope",
+          "test_type": "Functional",
+          "test_description": "Verify affiliate user's notification update is scoped to their tenant.",
+          "preconditions": "Authenticated affiliate user.",
+          "input_data": "PATCH own notification; status=READ.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "200; update applied; no cross-tenant effect.",
+          "fr_coverage": [
+            "FR-NOT-API-02-08",
+            "FR-NOT-API-02-09",
+            "FR-NOT-API-02-10"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-NOT-02-038",
+          "scenario": "bank_user_notification_scope",
+          "test_type": "Functional",
+          "test_description": "Verify bank user's notification update is scoped to their bank.",
+          "preconditions": "Authenticated bank user.",
+          "input_data": "PATCH own notification; status=READ.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "200; update applied; no cross-bank effect.",
+          "fr_coverage": [
+            "FR-NOT-API-02-08",
+            "FR-NOT-API-02-09",
+            "FR-NOT-API-02-10"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-NOT-02-039",
+          "scenario": "notification_id_case_sensitive",
+          "test_type": "Functional",
+          "test_description": "Verify notificationId lookup is case-sensitive.",
+          "preconditions": "Authenticated user.",
+          "input_data": "notificationId=valid-id but wrong case.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "404; not found.",
+          "fr_coverage": [
+            "FR-NOT-API-02-06",
+            "FR-NOT-API-02-07"
+          ],
+          "priority": "Low"
+        },
+        {
+          "tc_id": "TC-API-NOT-02-040",
+          "scenario": "response_schema_complete",
+          "test_type": "Functional",
+          "test_description": "Verify full response schema: notificationId, status, updatedAt, readAt, message, type.",
+          "preconditions": "Authenticated user; valid UNREAD notification.",
+          "input_data": "PATCH status=READ.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "200; all documented fields present.",
+          "fr_coverage": [
+            "FR-NOT-API-02-01",
+            "FR-NOT-API-02-02",
+            "FR-NOT-API-02-03",
+            "FR-NOT-API-02-04",
+            "FR-NOT-API-02-05",
+            "FR-NOT-API-02-06",
+            "FR-NOT-API-02-07",
+            "FR-NOT-API-02-08",
+            "FR-NOT-API-02-09",
+            "FR-NOT-API-02-10"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-NOT-02-005",
+          "scenario": "missing_status_field",
+          "test_type": "Functional",
+          "test_description": "Verify status field is required.",
+          "preconditions": "Authenticated user; valid notificationId.",
+          "input_data": "status omitted.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "400/422; validation error.",
+          "fr_coverage": [
+            "FR-NOT-API-02-02"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-NOT-02-006",
+          "scenario": "blank_status_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify blank status is rejected.",
+          "preconditions": "Authenticated user; valid notificationId.",
+          "input_data": "status=''.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "400/422; validation error.",
+          "fr_coverage": [
+            "FR-NOT-API-02-02"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-NOT-02-007",
+          "scenario": "invalid_status_enum",
+          "test_type": "Functional",
+          "test_description": "Verify unsupported status value is rejected.",
+          "preconditions": "Authenticated user; valid notificationId.",
+          "input_data": "status=ARCHIVED.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "400/422; enum validation error.",
+          "fr_coverage": [
+            "FR-NOT-API-02-02"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-NOT-02-008",
+          "scenario": "null_status_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify null status is rejected.",
+          "preconditions": "Authenticated user; valid notificationId.",
+          "input_data": "status=null.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "400/422; validation error.",
+          "fr_coverage": [
+            "FR-NOT-API-02-02"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-NOT-02-009",
+          "scenario": "unknown_notification_id",
+          "test_type": "Functional",
+          "test_description": "Verify unknown notificationId returns 404.",
+          "preconditions": "Authenticated user; notificationId does not exist.",
+          "input_data": "notificationId=NOT-0000-00000 in path.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "404; notification not found.",
+          "fr_coverage": [
+            "FR-NOT-API-02-06",
+            "FR-NOT-API-02-07"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-NOT-02-010",
+          "scenario": "malformed_notification_id",
+          "test_type": "Functional",
+          "test_description": "Verify malformed notificationId returns 400/404.",
+          "preconditions": "Authenticated user.",
+          "input_data": "notificationId=!!!INVALID in path.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "400/404; error.",
+          "fr_coverage": [
+            "FR-NOT-API-02-06",
+            "FR-NOT-API-02-07"
+          ],
+          "priority": "High"
+        }
+      ]
+    },
+    {
+      "api_id": "API-NOT-03",
+      "name": "Update Notification Settings",
+      "endpoint": "POST /api/v1/notifications/settings",
+      "test_case_count": 40,
+      "functional_requirements": [
+        "FR-NOT-API-03-01",
+        "FR-NOT-API-03-02",
+        "FR-NOT-API-03-03",
+        "FR-NOT-API-03-04",
+        "FR-NOT-API-03-05",
+        "FR-NOT-API-03-06",
+        "FR-NOT-API-03-07",
+        "FR-NOT-API-03-08",
+        "FR-NOT-API-03-09",
+        "FR-NOT-API-03-10"
+      ],
+      "test_cases": [
+        {
+          "tc_id": "TC-API-NOT-03-001",
+          "scenario": "update_settings_success",
+          "test_type": "Functional",
+          "test_description": "Verify authenticated user can update notification settings.",
+          "preconditions": "Authenticated user; valid settings body.",
+          "input_data": "channels={email:true, inApp:true, sms:false}, events={cardFreeze:true, cardTerminate:true, limitRequest:true}.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "200; settings saved; updated settings returned.",
+          "fr_coverage": [
+            "FR-NOT-API-03-01",
+            "FR-NOT-API-03-02",
+            "FR-NOT-API-03-03",
+            "FR-NOT-API-03-04",
+            "FR-NOT-API-03-05",
+            "FR-NOT-API-03-06",
+            "FR-NOT-API-03-07"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-NOT-03-002",
+          "scenario": "enable_all_channels",
+          "test_type": "Functional",
+          "test_description": "Verify all channels can be enabled simultaneously.",
+          "preconditions": "Authenticated user.",
+          "input_data": "channels={email:true, inApp:true, sms:true}.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "200; all channels enabled.",
+          "fr_coverage": [
+            "FR-NOT-API-03-01",
+            "FR-NOT-API-03-02",
+            "FR-NOT-API-03-03",
+            "FR-NOT-API-03-04",
+            "FR-NOT-API-03-05"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-NOT-03-003",
+          "scenario": "disable_all_channels",
+          "test_type": "Functional",
+          "test_description": "Verify all channels can be disabled.",
+          "preconditions": "Authenticated user.",
+          "input_data": "channels={email:false, inApp:false, sms:false}.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "200; all channels disabled.",
+          "fr_coverage": [
+            "FR-NOT-API-03-01",
+            "FR-NOT-API-03-02",
+            "FR-NOT-API-03-03",
+            "FR-NOT-API-03-04",
+            "FR-NOT-API-03-05"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-NOT-03-004",
+          "scenario": "enable_email_only",
+          "test_type": "Functional",
+          "test_description": "Verify only email channel can be enabled while others disabled.",
+          "preconditions": "Authenticated user.",
+          "input_data": "channels={email:true, inApp:false, sms:false}.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "200; email=true; others=false.",
+          "fr_coverage": [
+            "FR-NOT-API-03-01",
+            "FR-NOT-API-03-02",
+            "FR-NOT-API-03-03",
+            "FR-NOT-API-03-04",
+            "FR-NOT-API-03-05"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-NOT-03-005",
+          "scenario": "enable_inapp_only",
+          "test_type": "Functional",
+          "test_description": "Verify only inApp channel can be enabled.",
+          "preconditions": "Authenticated user.",
+          "input_data": "channels={email:false, inApp:true, sms:false}.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "200; inApp=true; others=false.",
+          "fr_coverage": [
+            "FR-NOT-API-03-01",
+            "FR-NOT-API-03-02",
+            "FR-NOT-API-03-03",
+            "FR-NOT-API-03-04",
+            "FR-NOT-API-03-05"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-NOT-03-006",
+          "scenario": "enable_sms_only",
+          "test_type": "Functional",
+          "test_description": "Verify only sms channel can be enabled.",
+          "preconditions": "Authenticated user.",
+          "input_data": "channels={email:false, inApp:false, sms:true}.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "200; sms=true; others=false.",
+          "fr_coverage": [
+            "FR-NOT-API-03-01",
+            "FR-NOT-API-03-02",
+            "FR-NOT-API-03-03",
+            "FR-NOT-API-03-04",
+            "FR-NOT-API-03-05"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-NOT-03-012",
+          "scenario": "invalid_channel_email_format_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify non-boolean value for channels.email is rejected.",
+          "preconditions": "Authenticated user.",
+          "input_data": "channels={email:'yes', inApp:true, sms:false}.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "400/422; type validation error.",
+          "fr_coverage": [
+            "FR-NOT-API-03-01",
+            "FR-NOT-API-03-02",
+            "FR-NOT-API-03-03",
+            "FR-NOT-API-03-04"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-NOT-03-013",
+          "scenario": "invalid_channel_inapp_format_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify non-boolean value for channels.inApp is rejected.",
+          "preconditions": "Authenticated user.",
+          "input_data": "channels={email:true, inApp:1, sms:false}.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "400/422; type validation error.",
+          "fr_coverage": [
+            "FR-NOT-API-03-01",
+            "FR-NOT-API-03-02",
+            "FR-NOT-API-03-03",
+            "FR-NOT-API-03-04"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-NOT-03-014",
+          "scenario": "invalid_channel_sms_format_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify non-boolean value for channels.sms is rejected.",
+          "preconditions": "Authenticated user.",
+          "input_data": "channels={email:true, inApp:true, sms:'false'}.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "400/422; type validation error.",
+          "fr_coverage": [
+            "FR-NOT-API-03-01",
+            "FR-NOT-API-03-02",
+            "FR-NOT-API-03-03",
+            "FR-NOT-API-03-04"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-NOT-03-015",
+          "scenario": "enable_card_freeze_event",
+          "test_type": "Functional",
+          "test_description": "Verify cardFreeze event subscription can be enabled.",
+          "preconditions": "Authenticated user; valid channels.",
+          "input_data": "events={cardFreeze:true, cardTerminate:false, limitRequest:false}.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "200; cardFreeze=true.",
+          "fr_coverage": [
+            "FR-NOT-API-03-01",
+            "FR-NOT-API-03-02",
+            "FR-NOT-API-03-03",
+            "FR-NOT-API-03-04",
+            "FR-NOT-API-03-05"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-NOT-03-016",
+          "scenario": "enable_card_terminate_event",
+          "test_type": "Functional",
+          "test_description": "Verify cardTerminate event subscription can be enabled.",
+          "preconditions": "Authenticated user; valid channels.",
+          "input_data": "events={cardFreeze:false, cardTerminate:true, limitRequest:false}.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "200; cardTerminate=true.",
+          "fr_coverage": [
+            "FR-NOT-API-03-01",
+            "FR-NOT-API-03-02",
+            "FR-NOT-API-03-03",
+            "FR-NOT-API-03-04",
+            "FR-NOT-API-03-05"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-NOT-03-017",
+          "scenario": "enable_limit_request_event",
+          "test_type": "Functional",
+          "test_description": "Verify limitRequest event subscription can be enabled.",
+          "preconditions": "Authenticated user; valid channels.",
+          "input_data": "events={cardFreeze:false, cardTerminate:false, limitRequest:true}.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "200; limitRequest=true.",
+          "fr_coverage": [
+            "FR-NOT-API-03-01",
+            "FR-NOT-API-03-02",
+            "FR-NOT-API-03-03",
+            "FR-NOT-API-03-04",
+            "FR-NOT-API-03-05"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-NOT-03-018",
+          "scenario": "disable_all_events",
+          "test_type": "Functional",
+          "test_description": "Verify all events can be disabled.",
+          "preconditions": "Authenticated user; valid channels.",
+          "input_data": "events={cardFreeze:false, cardTerminate:false, limitRequest:false}.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "200; all events disabled.",
+          "fr_coverage": [
+            "FR-NOT-API-03-01",
+            "FR-NOT-API-03-02",
+            "FR-NOT-API-03-03",
+            "FR-NOT-API-03-04",
+            "FR-NOT-API-03-05"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-NOT-03-019",
+          "scenario": "enable_all_events",
+          "test_type": "Functional",
+          "test_description": "Verify all events can be enabled.",
+          "preconditions": "Authenticated user; valid channels.",
+          "input_data": "events={cardFreeze:true, cardTerminate:true, limitRequest:true}.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "200; all events enabled.",
+          "fr_coverage": [
+            "FR-NOT-API-03-01",
+            "FR-NOT-API-03-02",
+            "FR-NOT-API-03-03",
+            "FR-NOT-API-03-04",
+            "FR-NOT-API-03-05"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-NOT-03-020",
+          "scenario": "invalid_event_value_format_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify non-boolean event value is rejected.",
+          "preconditions": "Authenticated user.",
+          "input_data": "events={cardFreeze:'yes', cardTerminate:true, limitRequest:true}.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "400/422; type validation error.",
+          "fr_coverage": [
+            "FR-NOT-API-03-01",
+            "FR-NOT-API-03-02",
+            "FR-NOT-API-03-03",
+            "FR-NOT-API-03-04"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-NOT-03-021",
+          "scenario": "unauthenticated_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify unauthenticated request is rejected.",
+          "preconditions": "No auth token.",
+          "input_data": "Valid body.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "401; no settings updated.",
+          "fr_coverage": [
+            "FR-NOT-API-03-08",
+            "FR-NOT-API-03-09"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-NOT-03-022",
+          "scenario": "invalid_token_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify invalid bearer token is rejected.",
+          "preconditions": "Invalid token.",
+          "input_data": "Authorization: Bearer INVALID.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "401; no settings updated.",
+          "fr_coverage": [
+            "FR-NOT-API-03-08",
+            "FR-NOT-API-03-09"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-NOT-03-023",
+          "scenario": "scope_settings_per_user",
+          "test_type": "Functional",
+          "test_description": "Verify settings update only affects the authenticated user's settings.",
+          "preconditions": "Two users; user-A updates settings.",
+          "input_data": "POST with user-A token.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "200; user-B settings unchanged.",
+          "fr_coverage": [
+            "FR-NOT-API-03-08",
+            "FR-NOT-API-03-09",
+            "FR-NOT-API-03-10"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-NOT-03-024",
+          "scenario": "settings_persist_after_update",
+          "test_type": "Functional",
+          "test_description": "Verify updated settings are persisted and retrievable.",
+          "preconditions": "Authenticated user; valid settings.",
+          "input_data": "POST settings; GET settings after.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "200; settings returned match what was set.",
+          "fr_coverage": [
+            "FR-NOT-API-03-01",
+            "FR-NOT-API-03-02",
+            "FR-NOT-API-03-03",
+            "FR-NOT-API-03-04",
+            "FR-NOT-API-03-05",
+            "FR-NOT-API-03-06"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-NOT-03-025",
+          "scenario": "response_contains_channels",
+          "test_type": "Functional",
+          "test_description": "Verify response body includes channels object.",
+          "preconditions": "Authenticated user; valid body.",
+          "input_data": "POST settings.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "200; channels object in response.",
+          "fr_coverage": [
+            "FR-NOT-API-03-01",
+            "FR-NOT-API-03-02"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-NOT-03-026",
+          "scenario": "response_contains_events",
+          "test_type": "Functional",
+          "test_description": "Verify response body includes events object.",
+          "preconditions": "Authenticated user; valid body.",
+          "input_data": "POST settings.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "200; events object in response.",
+          "fr_coverage": [
+            "FR-NOT-API-03-01",
+            "FR-NOT-API-03-02"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-NOT-03-027",
+          "scenario": "response_contains_updated_at",
+          "test_type": "Functional",
+          "test_description": "Verify response contains updatedAt timestamp.",
+          "preconditions": "Authenticated user; valid body.",
+          "input_data": "POST settings.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "200; updatedAt present.",
+          "fr_coverage": [
+            "FR-NOT-API-03-01",
+            "FR-NOT-API-03-02"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-NOT-03-028",
+          "scenario": "response_channels_match_request",
+          "test_type": "Functional",
+          "test_description": "Verify response channels values match what was sent in request.",
+          "preconditions": "Authenticated user.",
+          "input_data": "channels={email:true, inApp:false, sms:true}.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "200; response channels match request.",
+          "fr_coverage": [
+            "FR-NOT-API-03-01",
+            "FR-NOT-API-03-02",
+            "FR-NOT-API-03-03",
+            "FR-NOT-API-03-04"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-NOT-03-029",
+          "scenario": "response_events_match_request",
+          "test_type": "Functional",
+          "test_description": "Verify response events values match what was sent.",
+          "preconditions": "Authenticated user.",
+          "input_data": "events={cardFreeze:true, cardTerminate:false, limitRequest:true}.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "200; response events match request.",
+          "fr_coverage": [
+            "FR-NOT-API-03-01",
+            "FR-NOT-API-03-02",
+            "FR-NOT-API-03-03",
+            "FR-NOT-API-03-04"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-NOT-03-030",
+          "scenario": "empty_body_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify empty body is rejected.",
+          "preconditions": "Authenticated user.",
+          "input_data": "Body={}.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "400/422; channels and events required.",
+          "fr_coverage": [
+            "FR-NOT-API-03-01",
+            "FR-NOT-API-03-02",
+            "FR-NOT-API-03-03"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-NOT-03-033",
+          "scenario": "overwrite_existing_settings",
+          "test_type": "Functional",
+          "test_description": "Verify re-posting settings completely overwrites previous settings.",
+          "preconditions": "User previously had email=true, sms=true.",
+          "input_data": "channels={email:false, inApp:false, sms:false}.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "200; all channels now false.",
+          "fr_coverage": [
+            "FR-NOT-API-03-01",
+            "FR-NOT-API-03-02",
+            "FR-NOT-API-03-03",
+            "FR-NOT-API-03-04",
+            "FR-NOT-API-03-05"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-NOT-03-034",
+          "scenario": "unsupported_content_type",
+          "test_type": "Functional",
+          "test_description": "Verify text/plain content type is rejected.",
+          "preconditions": "Authenticated user.",
+          "input_data": "Content-Type: text/plain.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "400/415; error.",
+          "fr_coverage": [
+            "FR-NOT-API-03-01",
+            "FR-NOT-API-03-02"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-NOT-03-035",
+          "scenario": "extra_fields_tolerated",
+          "test_type": "Functional",
+          "test_description": "Verify extra unknown fields do not cause 500.",
+          "preconditions": "Authenticated user.",
+          "input_data": "Valid body plus unknownField=extra.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "200 or 400; no 500.",
+          "fr_coverage": [
+            "FR-NOT-API-03-01",
+            "FR-NOT-API-03-02"
+          ],
+          "priority": "Low"
+        },
+        {
+          "tc_id": "TC-API-NOT-03-036",
+          "scenario": "extra_unknown_event_ignored",
+          "test_type": "Functional",
+          "test_description": "Verify unknown event key in events object does not cause 500.",
+          "preconditions": "Authenticated user.",
+          "input_data": "events={cardFreeze:true, unknownEvent:true}.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "200 or 400; no 500.",
+          "fr_coverage": [
+            "FR-NOT-API-03-01",
+            "FR-NOT-API-03-02",
+            "FR-NOT-API-03-03",
+            "FR-NOT-API-03-04"
+          ],
+          "priority": "Low"
+        },
+        {
+          "tc_id": "TC-API-NOT-03-037",
+          "scenario": "duplicate_request_idempotent",
+          "test_type": "Functional",
+          "test_description": "Verify duplicate requestId returns consistent response.",
+          "preconditions": "Authenticated user; prior requestId used.",
+          "input_data": "Same requestId; same settings body.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "200; idempotent.",
+          "fr_coverage": [
+            "FR-NOT-API-03-08",
+            "FR-NOT-API-03-09"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-NOT-03-038",
+          "scenario": "expired_token_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify expired token is rejected.",
+          "preconditions": "Expired token.",
+          "input_data": "Authorization: Bearer EXPIRED.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "401; no update.",
+          "fr_coverage": [
+            "FR-NOT-API-03-08",
+            "FR-NOT-API-03-09"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-NOT-03-039",
+          "scenario": "settings_applied_to_future_notifications",
+          "test_type": "Functional",
+          "test_description": "Verify channel preferences are applied when next notification is generated.",
+          "preconditions": "User disables email channel; notification triggered.",
+          "input_data": "channels={email:false, inApp:true, sms:false}; trigger event.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "Notification delivered via inApp only; no email sent.",
+          "fr_coverage": [
+            "FR-NOT-API-03-01",
+            "FR-NOT-API-03-02",
+            "FR-NOT-API-03-03",
+            "FR-NOT-API-03-04",
+            "FR-NOT-API-03-05",
+            "FR-NOT-API-03-06",
+            "FR-NOT-API-03-07"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-NOT-03-040",
+          "scenario": "response_schema_complete",
+          "test_type": "Functional",
+          "test_description": "Verify full response schema: channels(email, inApp, sms), events(cardFreeze, cardTerminate, limitRequest), updatedAt.",
+          "preconditions": "Authenticated user; valid body.",
+          "input_data": "POST settings.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "200; all documented fields present.",
+          "fr_coverage": [
+            "FR-NOT-API-03-01",
+            "FR-NOT-API-03-02",
+            "FR-NOT-API-03-03",
+            "FR-NOT-API-03-04",
+            "FR-NOT-API-03-05",
+            "FR-NOT-API-03-06",
+            "FR-NOT-API-03-07",
+            "FR-NOT-API-03-08",
+            "FR-NOT-API-03-09",
+            "FR-NOT-API-03-10"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-NOT-03-007",
+          "scenario": "missing_channels_object",
+          "test_type": "Functional",
+          "test_description": "Verify channels object is required.",
+          "preconditions": "Authenticated user.",
+          "input_data": "channels omitted; events provided.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "400/422; channels required.",
+          "fr_coverage": [
+            "FR-NOT-API-03-02"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-NOT-03-008",
+          "scenario": "missing_events_object",
+          "test_type": "Functional",
+          "test_description": "Verify events object is required.",
+          "preconditions": "Authenticated user.",
+          "input_data": "events omitted; channels provided.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "400/422; events required.",
+          "fr_coverage": [
+            "FR-NOT-API-03-03"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-NOT-03-009",
+          "scenario": "missing_email_channel",
+          "test_type": "Functional",
+          "test_description": "Verify missing email field in channels is rejected or defaults to false.",
+          "preconditions": "Authenticated user.",
+          "input_data": "channels={inApp:true, sms:false}; no email field.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "200 (defaults false) or 400/422 per SRS.",
+          "fr_coverage": [
+            "FR-NOT-API-03-01",
+            "FR-NOT-API-03-02",
+            "FR-NOT-API-03-03",
+            "FR-NOT-API-03-04"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-NOT-03-010",
+          "scenario": "missing_inapp_channel",
+          "test_type": "Functional",
+          "test_description": "Verify missing inApp field is rejected or defaults to false.",
+          "preconditions": "Authenticated user.",
+          "input_data": "channels={email:true, sms:false}; no inApp.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "200 (defaults false) or 400/422 per SRS.",
+          "fr_coverage": [
+            "FR-NOT-API-03-01",
+            "FR-NOT-API-03-02",
+            "FR-NOT-API-03-03",
+            "FR-NOT-API-03-04"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-NOT-03-011",
+          "scenario": "missing_sms_channel",
+          "test_type": "Functional",
+          "test_description": "Verify missing sms field is rejected or defaults to false.",
+          "preconditions": "Authenticated user.",
+          "input_data": "channels={email:true, inApp:true}; no sms.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "200 (defaults false) or 400/422 per SRS.",
+          "fr_coverage": [
+            "FR-NOT-API-03-01",
+            "FR-NOT-API-03-02",
+            "FR-NOT-API-03-03",
+            "FR-NOT-API-03-04"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-API-NOT-03-031",
+          "scenario": "null_channels_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify null channels is rejected.",
+          "preconditions": "Authenticated user.",
+          "input_data": "channels=null.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "400/422; validation error.",
+          "fr_coverage": [
+            "FR-NOT-API-03-02"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-NOT-03-032",
+          "scenario": "null_events_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify null events is rejected.",
+          "preconditions": "Authenticated user.",
+          "input_data": "events=null.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "400/422; validation error.",
+          "fr_coverage": [
+            "FR-NOT-API-03-03"
+          ],
+          "priority": "High"
+        }
+      ]
+    },
+    {
+      "api_id": "NOT-GET-01",
+      "name": "Get notification by id",
+      "endpoint": "GET /api/v1/notifications/{notificationId}",
+      "test_case_count": 33,
+      "functional_requirements": [
+        "FR-NOT-API-GET-01"
+      ],
+      "test_cases": [
+        {
+          "tc_id": "TC-API-NOT-GET-01-001",
+          "scenario": "happy_path_success",
+          "test_type": "Functional",
+          "test_description": "Verify GET by notificationId returns the notification.",
+          "preconditions": "Authorized actor; notification exists.",
+          "input_data": "notificationId.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "200 OK; response includes id, status, payload, timestamps.",
+          "fr_coverage": [
+            "FR-NOT-API-GET-01"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-NOT-GET-01-002",
+          "scenario": "unknown_notification_not_found",
+          "test_type": "Functional",
+          "test_description": "Verify unknown notificationId returns 404.",
+          "preconditions": "Authorized actor.",
+          "input_data": "Random unknown notificationId.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "404 Not Found.",
+          "fr_coverage": [
+            "FR-NOT-API-GET-01"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-NOT-GET-01-003",
+          "scenario": "unauthenticated_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify request without auth is rejected.",
+          "preconditions": "No auth token.",
+          "input_data": "notificationId.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "401 Unauthorized.",
+          "fr_coverage": [
+            "FR-NOT-API-GET-01"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-NOT-GET-01-004",
+          "scenario": "invalid_token_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify invalid token is rejected.",
+          "preconditions": "Invalid bearer token.",
+          "input_data": "notificationId.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "401 Unauthorized.",
+          "fr_coverage": [
+            "FR-NOT-API-GET-01"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-NOT-GET-01-005",
+          "scenario": "forbidden_role_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify caller without read role is rejected.",
+          "preconditions": "Authenticated actor without permission.",
+          "input_data": "notificationId.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "403 Forbidden.",
+          "fr_coverage": [
+            "FR-NOT-API-GET-01"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-NOT-GET-01-006",
+          "scenario": "foreign_tenant_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify cross-tenant read is rejected.",
+          "preconditions": "Actor outside notification's tenant.",
+          "input_data": "notificationId.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "403 Forbidden.",
+          "fr_coverage": [
+            "FR-NOT-API-GET-01"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-NOT-GET-01-007",
+          "scenario": "response_includes_id",
+          "test_type": "Functional",
+          "test_description": "Verify response includes notification id.",
+          "preconditions": "Notification exists.",
+          "input_data": "notificationId.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "Response includes id.",
+          "fr_coverage": [
+            "FR-NOT-API-GET-01"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-NOT-GET-01-008",
+          "scenario": "response_includes_status",
+          "test_type": "Functional",
+          "test_description": "Verify response includes status.",
+          "preconditions": "Notification exists.",
+          "input_data": "notificationId.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "Response includes status.",
+          "fr_coverage": [
+            "FR-NOT-API-GET-01"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-NOT-GET-01-009",
+          "scenario": "response_includes_event_type",
+          "test_type": "Functional",
+          "test_description": "Verify response includes eventType.",
+          "preconditions": "Notification exists.",
+          "input_data": "notificationId.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "Response includes eventType.",
+          "fr_coverage": [
+            "FR-NOT-API-GET-01"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-NOT-GET-01-010",
+          "scenario": "response_includes_metadata",
+          "test_type": "Functional",
+          "test_description": "Verify response includes metadata.",
+          "preconditions": "Notification exists.",
+          "input_data": "notificationId.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "Response includes metadata.",
+          "fr_coverage": [
+            "FR-NOT-API-GET-01"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-NOT-GET-01-011",
+          "scenario": "response_includes_created_at",
+          "test_type": "Functional",
+          "test_description": "Verify response includes createdAt.",
+          "preconditions": "Notification exists.",
+          "input_data": "notificationId.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "Response includes createdAt.",
+          "fr_coverage": [
+            "FR-NOT-API-GET-01"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-NOT-GET-01-012",
+          "scenario": "read_does_not_mutate_state",
+          "test_type": "Functional",
+          "test_description": "Verify GET is side-effect free.",
+          "preconditions": "Notification exists.",
+          "input_data": "notificationId.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "Notification state unchanged after GET.",
+          "fr_coverage": [
+            "FR-NOT-API-GET-01"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-NOT-GET-01-013",
+          "scenario": "expired_token_rejected",
+          "test_description": "Verify get-notification with an expired bearer token is rejected.",
+          "preconditions": "Existing notification id; bearer token expired.",
+          "input_data": "GET /notifications/{id} with expired JWT.",
+          "expected_result": "401 Unauthorized; never 200.",
+          "priority": "High",
+          "test_type": "Functional",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "fr_coverage": []
+        },
+        {
+          "tc_id": "TC-API-NOT-GET-01-014",
+          "scenario": "malformed_token_rejected",
+          "test_description": "Verify get-notification with a structurally malformed JWT is rejected.",
+          "preconditions": "Existing notification id.",
+          "input_data": "Authorization: Bearer not.a.real.jwt",
+          "expected_result": "401 Unauthorized; never 200; never 5xx.",
+          "priority": "High",
+          "test_type": "Functional",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "fr_coverage": []
+        },
+        {
+          "tc_id": "TC-API-NOT-GET-01-015",
+          "scenario": "wrong_role_rejected",
+          "test_description": "Verify a role lacking NOTIFICATION_READ permission is rejected.",
+          "preconditions": "Authenticated user with insufficient role.",
+          "input_data": "GET /notifications/{id} as wrong-role user.",
+          "expected_result": "403 Forbidden; never 200.",
+          "priority": "High",
+          "test_type": "Functional",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "fr_coverage": []
+        },
+        {
+          "tc_id": "TC-API-NOT-GET-01-016",
+          "scenario": "malformed_notificationId_rejected",
+          "test_description": "Verify a non-UUID/non-conforming notificationId is rejected.",
+          "preconditions": "Authorized user.",
+          "input_data": "GET /notifications/not-a-real-id-format.",
+          "expected_result": "400 or 404; never 5xx.",
+          "priority": "High",
+          "test_type": "Functional",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "fr_coverage": []
+        },
+        {
+          "tc_id": "TC-API-NOT-GET-01-017",
+          "scenario": "notificationId_with_sql_injection_payload",
+          "test_description": "Verify SQL-injection attempt in path id is rejected safely.",
+          "preconditions": "Authorized user.",
+          "input_data": "GET /notifications/' OR 1=1--",
+          "expected_result": "400 or 404; no DB error leakage; never 5xx.",
+          "priority": "High",
+          "test_type": "Functional",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "fr_coverage": []
+        },
+        {
+          "tc_id": "TC-API-NOT-GET-01-018",
+          "scenario": "notificationId_with_xss_payload",
+          "test_description": "Verify XSS attempt in path id is rejected safely (no reflection).",
+          "preconditions": "Authorized user.",
+          "input_data": "GET /notifications/<script>alert(1)</script>",
+          "expected_result": "400 or 404; payload not reflected in response.",
+          "priority": "Medium",
+          "test_type": "Functional",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "fr_coverage": []
+        },
+        {
+          "tc_id": "TC-API-NOT-GET-01-019",
+          "scenario": "notificationId_extremely_long_rejected",
+          "test_description": "Verify a 10KB notificationId path segment is rejected with 400/414.",
+          "preconditions": "Authorized user.",
+          "input_data": "GET /notifications/<10KB string>",
+          "expected_result": "400 or 414; not 5xx.",
+          "priority": "Low",
+          "test_type": "Functional",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "fr_coverage": []
+        },
+        {
+          "tc_id": "TC-API-NOT-GET-01-020",
+          "scenario": "concurrent_reads_consistent",
+          "test_description": "Verify N concurrent reads of the same notification return identical state.",
+          "preconditions": "Existing notification; no concurrent writes.",
+          "input_data": "Same GET fired N=5 times in parallel.",
+          "expected_result": "All return 200; payloads identical.",
+          "priority": "Medium",
+          "test_type": "Functional",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "fr_coverage": []
+        },
+        {
+          "tc_id": "TC-API-NOT-GET-01-021",
+          "scenario": "repeated_read_idempotent",
+          "test_description": "Verify repeated sequential reads return identical case state.",
+          "preconditions": "Existing notification; stable.",
+          "input_data": "Same GET fired N=3 times sequentially.",
+          "expected_result": "All return 200; payloads identical.",
+          "priority": "Medium",
+          "test_type": "Functional",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "fr_coverage": []
+        },
+        {
+          "tc_id": "TC-API-NOT-GET-01-022",
+          "scenario": "response_includes_message",
+          "test_description": "Verify response body includes the notification message text field.",
+          "preconditions": "Existing notification with non-empty message.",
+          "input_data": "GET /notifications/{id}.",
+          "expected_result": "200; body contains a non-empty `message` (or equivalent text field).",
+          "priority": "High",
+          "test_type": "Functional",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "fr_coverage": []
+        },
+        {
+          "tc_id": "TC-API-NOT-GET-01-023",
+          "scenario": "response_includes_recipient_id",
+          "test_description": "Verify response body includes the recipient/user id the notification was created for.",
+          "preconditions": "Existing notification.",
+          "input_data": "GET /notifications/{id}.",
+          "expected_result": "200; body contains `recipientId` (or equivalent).",
+          "priority": "High",
+          "test_type": "Functional",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "fr_coverage": []
+        },
+        {
+          "tc_id": "TC-API-NOT-GET-01-024",
+          "scenario": "response_includes_target_entity_type",
+          "test_description": "Verify response body includes targetEntityType when notification was created with one.",
+          "preconditions": "Notification created with targetEntityType set.",
+          "input_data": "GET /notifications/{id}.",
+          "expected_result": "200; body contains `targetEntityType`.",
+          "priority": "Medium",
+          "test_type": "Functional",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "fr_coverage": []
+        },
+        {
+          "tc_id": "TC-API-NOT-GET-01-025",
+          "scenario": "response_includes_target_entity_id",
+          "test_description": "Verify response body includes targetEntityId when notification was created with one.",
+          "preconditions": "Notification created with targetEntityId set.",
+          "input_data": "GET /notifications/{id}.",
+          "expected_result": "200; body contains `targetEntityId`.",
+          "priority": "Medium",
+          "test_type": "Functional",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "fr_coverage": []
+        },
+        {
+          "tc_id": "TC-API-NOT-GET-01-026",
+          "scenario": "response_includes_target_route",
+          "test_description": "Verify response body includes targetRoute (deep-link) when set.",
+          "preconditions": "Notification created with targetRoute set.",
+          "input_data": "GET /notifications/{id}.",
+          "expected_result": "200; body contains `targetRoute`.",
+          "priority": "Medium",
+          "test_type": "Functional",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "fr_coverage": []
+        },
+        {
+          "tc_id": "TC-API-NOT-GET-01-027",
+          "scenario": "response_includes_updated_at",
+          "test_description": "Verify response includes updatedAt timestamp when notification has been read/modified.",
+          "preconditions": "Notification that has been updated since creation.",
+          "input_data": "GET /notifications/{id}.",
+          "expected_result": "200; body contains `updatedAt` ISO timestamp.",
+          "priority": "Medium",
+          "test_type": "Functional",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "fr_coverage": []
+        },
+        {
+          "tc_id": "TC-API-NOT-GET-01-028",
+          "scenario": "response_contract_valid",
+          "test_description": "Verify the response body matches the documented Notification DTO contract.",
+          "preconditions": "Existing notification.",
+          "input_data": "GET /notifications/{id}.",
+          "expected_result": "200; response body validates against Notification DTO schema; no extra/missing required fields.",
+          "priority": "High",
+          "test_type": "Functional",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "fr_coverage": []
+        },
+        {
+          "tc_id": "TC-API-NOT-GET-01-029",
+          "scenario": "correlationId_echoed_in_response",
+          "test_description": "Verify X-Correlation-Id sent on the request is echoed in the response headers.",
+          "preconditions": "Authorized user; X-Correlation-Id supplied.",
+          "input_data": "GET /notifications/{id} with X-Correlation-Id: abc-123.",
+          "expected_result": "200; response includes X-Correlation-Id header equal to the request value.",
+          "priority": "Medium",
+          "test_type": "Functional",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "fr_coverage": []
+        },
+        {
+          "tc_id": "TC-API-NOT-GET-01-030",
+          "scenario": "service_provider_read_access_or_rejected",
+          "test_description": "Verify service-provider role is either granted read or explicitly rejected per policy (no leakage).",
+          "preconditions": "Authenticated as service-provider role.",
+          "input_data": "GET /notifications/{id} as service provider.",
+          "expected_result": "200 (read allowed) OR 403 Forbidden (per policy); never 500.",
+          "priority": "Medium",
+          "test_type": "Functional",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "fr_coverage": []
+        },
+        {
+          "tc_id": "TC-API-NOT-GET-01-031",
+          "scenario": "delete_method_not_allowed",
+          "test_description": "Verify DELETE on this read path returns 405.",
+          "preconditions": "Existing notification.",
+          "input_data": "DELETE /notifications/{id}.",
+          "expected_result": "405 Method Not Allowed; Allow header lists supported methods.",
+          "priority": "Medium",
+          "test_type": "Functional",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "fr_coverage": []
+        },
+        {
+          "tc_id": "TC-API-NOT-GET-01-032",
+          "scenario": "post_method_not_allowed",
+          "test_description": "Verify POST on this read path returns 405.",
+          "preconditions": "Existing notification.",
+          "input_data": "POST /notifications/{id}.",
+          "expected_result": "405 Method Not Allowed.",
+          "priority": "Low",
+          "test_type": "Functional",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "fr_coverage": []
+        },
+        {
+          "tc_id": "TC-API-NOT-GET-01-033",
+          "scenario": "content_type_application_json",
+          "test_description": "Verify successful response Content-Type is application/json.",
+          "preconditions": "Existing notification.",
+          "input_data": "GET /notifications/{id}.",
+          "expected_result": "200; Content-Type: application/json.",
+          "priority": "Low",
+          "test_type": "Functional",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "fr_coverage": []
+        }
+      ]
+    },
+    {
+      "api_id": "NOT-CRT-01",
+      "name": "Create notification",
+      "endpoint": "POST /api/v1/notifications/create",
+      "test_case_count": 33,
+      "functional_requirements": [
+        "FR-NOT-API-CRT-01"
+      ],
+      "test_cases": [
+        {
+          "tc_id": "TC-API-NOT-CRT-01-001",
+          "scenario": "happy_path_success",
+          "test_type": "Functional",
+          "test_description": "Verify creating a notification with full body succeeds.",
+          "preconditions": "Authorized actor.",
+          "input_data": "tenantId, initiatingUserId, eventType, metadata, targetEntityType, targetEntityId, targetRoute, idempotencyKey.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "200 OK; notification persisted with id and status.",
+          "fr_coverage": [
+            "FR-NOT-API-CRT-01"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-NOT-CRT-01-002",
+          "scenario": "minimum_body_success",
+          "test_type": "Functional",
+          "test_description": "Verify creating a notification with minimum body succeeds.",
+          "preconditions": "Authorized actor.",
+          "input_data": "Empty/minimum body per swagger contract.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "200 OK; notification persisted.",
+          "fr_coverage": [
+            "FR-NOT-API-CRT-01"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-NOT-CRT-01-003",
+          "scenario": "unknown_field_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify unknown body field is rejected (additionalProperties:false).",
+          "preconditions": "Authorized actor.",
+          "input_data": "Valid body plus an unknown field 'extraField'.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "400/422 validation error.",
+          "fr_coverage": [
+            "FR-NOT-API-CRT-01"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-NOT-CRT-01-004",
+          "scenario": "duplicate_idempotency_key_safe",
+          "test_type": "Functional",
+          "test_description": "Verify duplicate idempotencyKey returns the same notification idempotently.",
+          "preconditions": "Reuse same idempotencyKey.",
+          "input_data": "Same body twice.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "Second call returns the same notification id without duplicate persistence.",
+          "fr_coverage": [
+            "FR-NOT-API-CRT-01"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-NOT-CRT-01-005",
+          "scenario": "unauthenticated_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify request without auth is rejected.",
+          "preconditions": "No auth token.",
+          "input_data": "Valid body.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "401 Unauthorized.",
+          "fr_coverage": [
+            "FR-NOT-API-CRT-01"
+          ],
+          "priority": "Critical"
+        },
+        {
+          "tc_id": "TC-API-NOT-CRT-01-006",
+          "scenario": "invalid_token_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify invalid token is rejected.",
+          "preconditions": "Invalid bearer token.",
+          "input_data": "Valid body.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "401 Unauthorized.",
+          "fr_coverage": [
+            "FR-NOT-API-CRT-01"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-NOT-CRT-01-007",
+          "scenario": "forbidden_role_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify caller without create role is rejected.",
+          "preconditions": "Authenticated actor without permission.",
+          "input_data": "Valid body.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "403 Forbidden.",
+          "fr_coverage": [
+            "FR-NOT-API-CRT-01"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-NOT-CRT-01-008",
+          "scenario": "foreign_tenant_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify creating for a different tenant is rejected.",
+          "preconditions": "Actor outside requested tenantId.",
+          "input_data": "tenantId of another tenant.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "403 Forbidden.",
+          "fr_coverage": [
+            "FR-NOT-API-CRT-01"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-NOT-CRT-01-009",
+          "scenario": "unsupported_content_type_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify non-JSON content-type is rejected.",
+          "preconditions": "Authorized actor.",
+          "input_data": "Body sent with text/plain.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "415 Unsupported Media Type or 400.",
+          "fr_coverage": [
+            "FR-NOT-API-CRT-01"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-NOT-CRT-01-010",
+          "scenario": "malformed_json_rejected",
+          "test_type": "Functional",
+          "test_description": "Verify malformed JSON body is rejected.",
+          "preconditions": "Authorized actor.",
+          "input_data": "Broken JSON.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "400 Bad Request.",
+          "fr_coverage": [
+            "FR-NOT-API-CRT-01"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-NOT-CRT-01-011",
+          "scenario": "audit_log_created",
+          "test_type": "Functional",
+          "test_description": "Verify an audit log is recorded for the creation.",
+          "preconditions": "Action succeeds.",
+          "input_data": "Valid body.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "AuditLog includes actor, tenant, eventType, timestamp.",
+          "fr_coverage": [
+            "FR-NOT-API-CRT-01"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-NOT-CRT-01-012",
+          "scenario": "response_includes_id",
+          "test_type": "Functional",
+          "test_description": "Verify response returns the new notificationId.",
+          "preconditions": "Action succeeds.",
+          "input_data": "Valid body.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "Response includes id.",
+          "fr_coverage": [
+            "FR-NOT-API-CRT-01"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-NOT-CRT-01-013",
+          "scenario": "response_includes_status",
+          "test_type": "Functional",
+          "test_description": "Verify response returns initial status.",
+          "preconditions": "Action succeeds.",
+          "input_data": "Valid body.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "Response includes status.",
+          "fr_coverage": [
+            "FR-NOT-API-CRT-01"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-NOT-CRT-01-014",
+          "scenario": "response_includes_created_at",
+          "test_type": "Functional",
+          "test_description": "Verify response returns createdAt.",
+          "preconditions": "Action succeeds.",
+          "input_data": "Valid body.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "Response includes createdAt.",
+          "fr_coverage": [
+            "FR-NOT-API-CRT-01"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-NOT-CRT-01-015",
+          "scenario": "read_after_create_consistent",
+          "test_type": "Functional",
+          "test_description": "Verify GET-by-id returns the freshly created notification.",
+          "preconditions": "Action succeeds.",
+          "input_data": "notificationId from create response.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "GET returns the notification with matching fields.",
+          "fr_coverage": [
+            "FR-NOT-API-CRT-01"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-NOT-CRT-01-016",
+          "scenario": "scope_other_tenant_unaffected",
+          "test_type": "Functional",
+          "test_description": "Verify other tenants' notifications are not affected.",
+          "preconditions": "Action succeeds.",
+          "input_data": "Valid body.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "Other tenants' notifications unchanged.",
+          "fr_coverage": [
+            "FR-NOT-API-CRT-01"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-NOT-CRT-01-017",
+          "scenario": "concurrent_creates_handled",
+          "test_type": "Functional",
+          "test_description": "Verify concurrent creates with same idempotencyKey resolve to one notification.",
+          "preconditions": "Two concurrent calls with same idempotencyKey.",
+          "input_data": "Same body.",
+          "steps": [
+            "Prepare endpoint-specific request.",
+            "Execute the request.",
+            "Validate status code, response body, persistence, scope, and side effects."
+          ],
+          "expected_result": "Single notification persisted; both calls return same id.",
+          "fr_coverage": [
+            "FR-NOT-API-CRT-01"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-API-NOT-CRT-01-018",
+          "scenario": "expired_token_rejected",
+          "test_description": "Verify create-notification with an expired bearer token is rejected.",
+          "preconditions": "Bearer token whose `exp` claim is in the past.",
+          "input_data": "POST /notifications/create with expired JWT.",
+          "expected_result": "401 Unauthorized; notification not persisted.",
+          "priority": "High",
+          "test_type": "Functional",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "fr_coverage": []
+        },
+        {
+          "tc_id": "TC-API-NOT-CRT-01-019",
+          "scenario": "malformed_token_rejected",
+          "test_description": "Verify a structurally malformed JWT is rejected.",
+          "preconditions": "Valid request body.",
+          "input_data": "Authorization: Bearer not.a.jwt",
+          "expected_result": "401 Unauthorized; never 200; never 5xx.",
+          "priority": "High",
+          "test_type": "Functional",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "fr_coverage": []
+        },
+        {
+          "tc_id": "TC-API-NOT-CRT-01-020",
+          "scenario": "wrong_role_rejected",
+          "test_description": "Verify a role without NOTIFICATION_CREATE permission is rejected even within tenant scope.",
+          "preconditions": "Authenticated user lacking NOTIFICATION_CREATE.",
+          "input_data": "POST /notifications/create with valid body.",
+          "expected_result": "403 Forbidden; notification not persisted.",
+          "priority": "High",
+          "test_type": "Functional",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "fr_coverage": []
+        },
+        {
+          "tc_id": "TC-API-NOT-CRT-01-021",
+          "scenario": "missing_eventType_handled",
+          "test_description": "Verify behavior when body omits eventType (swagger marks nullable but business rules require categorization).",
+          "preconditions": "Authorized user.",
+          "input_data": "Body without eventType field.",
+          "expected_result": "Either 400/422 (preferred) or 200 with default eventType set; never 5xx.",
+          "priority": "High",
+          "test_type": "Functional",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "fr_coverage": []
+        },
+        {
+          "tc_id": "TC-API-NOT-CRT-01-022",
+          "scenario": "missing_tenantId_handled",
+          "test_description": "Verify behavior when body omits tenantId — caller's tenant should be inferred from token.",
+          "preconditions": "Authorized user (tenant resolvable from token).",
+          "input_data": "Body without tenantId.",
+          "expected_result": "200 with notification created against caller's tenant; OR 400 if explicit required; never 5xx.",
+          "priority": "Medium",
+          "test_type": "Functional",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "fr_coverage": []
+        },
+        {
+          "tc_id": "TC-API-NOT-CRT-01-023",
+          "scenario": "empty_eventType_string_rejected",
+          "test_description": "Verify empty-string eventType is rejected.",
+          "preconditions": "Authorized user.",
+          "input_data": "Body with eventType=\"\".",
+          "expected_result": "400 or 422 validation error.",
+          "priority": "Medium",
+          "test_type": "Functional",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "fr_coverage": []
+        },
+        {
+          "tc_id": "TC-API-NOT-CRT-01-024",
+          "scenario": "invalid_eventType_enum_handled",
+          "test_description": "Verify an unrecognized eventType value is either rejected or stored verbatim per policy.",
+          "preconditions": "Authorized user.",
+          "input_data": "Body with eventType=\"NOT_A_REAL_EVENT_TYPE\".",
+          "expected_result": "400/422 if enum enforced, OR 200 with verbatim storage; never 5xx.",
+          "priority": "Medium",
+          "test_type": "Functional",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "fr_coverage": []
+        },
+        {
+          "tc_id": "TC-API-NOT-CRT-01-025",
+          "scenario": "metadata_nested_object_handled",
+          "test_description": "Verify metadata as a nested JSON object is stored intact.",
+          "preconditions": "Authorized user.",
+          "input_data": "Body with metadata={\"a\":{\"b\":1}}.",
+          "expected_result": "200; subsequent read returns the same nested structure.",
+          "priority": "Medium",
+          "test_type": "Functional",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "fr_coverage": []
+        },
+        {
+          "tc_id": "TC-API-NOT-CRT-01-026",
+          "scenario": "oversized_metadata_rejected",
+          "test_description": "Verify a metadata object > server limit (e.g., >256KB) is rejected.",
+          "preconditions": "Authorized user.",
+          "input_data": "metadata containing a 256KB+ string field.",
+          "expected_result": "413 Payload Too Large or 400; never 5xx; never silently truncated.",
+          "priority": "Medium",
+          "test_type": "Functional",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "fr_coverage": []
+        },
+        {
+          "tc_id": "TC-API-NOT-CRT-01-027",
+          "scenario": "unicode_eventType_handled",
+          "test_description": "Verify Unicode/emoji content in fields is preserved and not corrupted.",
+          "preconditions": "Authorized user.",
+          "input_data": "eventType=\"USER_😀_EVENT\"; metadata with non-ASCII strings.",
+          "expected_result": "200; round-trip read returns identical bytes.",
+          "priority": "Low",
+          "test_type": "Functional",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "fr_coverage": []
+        },
+        {
+          "tc_id": "TC-API-NOT-CRT-01-028",
+          "scenario": "html_in_metadata_safely_stored",
+          "test_description": "Verify HTML/script payloads in metadata are stored safely (not executed/reflected).",
+          "preconditions": "Authorized user.",
+          "input_data": "metadata={\"html\":\"<script>alert(1)</script>\"}.",
+          "expected_result": "200 with verbatim storage; no reflection in subsequent renders; never 5xx.",
+          "priority": "Medium",
+          "test_type": "Functional",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "fr_coverage": []
+        },
+        {
+          "tc_id": "TC-API-NOT-CRT-01-029",
+          "scenario": "notification_persisted_in_db",
+          "test_description": "Verify a successful create persists a row that subsequent GET can fetch by id.",
+          "preconditions": "Authorized user.",
+          "input_data": "Valid body; capture returned id.",
+          "expected_result": "200; subsequent GET /notifications/{id} returns 200 with matching fields.",
+          "priority": "Critical",
+          "test_type": "Functional",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "fr_coverage": []
+        },
+        {
+          "tc_id": "TC-API-NOT-CRT-01-030",
+          "scenario": "notification_visible_to_recipient_after_create",
+          "test_description": "Verify the recipient's listing endpoint includes the new notification after create.",
+          "preconditions": "Authorized creator; recipient user exists.",
+          "input_data": "Create notification targeting recipient X; then GET /notifications as X.",
+          "expected_result": "200 on create; subsequent list as X includes the new notification id.",
+          "priority": "Critical",
+          "test_type": "Functional",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "fr_coverage": []
+        },
+        {
+          "tc_id": "TC-API-NOT-CRT-01-031",
+          "scenario": "audit_log_includes_actor",
+          "test_description": "Verify the audit log entry for a create includes the initiating user/actor and timestamp.",
+          "preconditions": "Authorized user; audit log accessible.",
+          "input_data": "Create notification, then query audit log for the action.",
+          "expected_result": "200 on create; audit-log row exists with actor=caller, action=NOTIFICATION_CREATE, ISO timestamp.",
+          "priority": "High",
+          "test_type": "Functional",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "fr_coverage": []
+        },
+        {
+          "tc_id": "TC-API-NOT-CRT-01-032",
+          "scenario": "delete_method_not_allowed",
+          "test_description": "Verify DELETE on the create path returns 405.",
+          "preconditions": "Authorized user.",
+          "input_data": "DELETE /notifications/create.",
+          "expected_result": "405 Method Not Allowed; Allow header lists POST.",
+          "priority": "Low",
+          "test_type": "Functional",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "fr_coverage": []
+        },
+        {
+          "tc_id": "TC-API-NOT-CRT-01-033",
+          "scenario": "additional_property_rejected_per_swagger",
+          "test_description": "Verify body with an unknown property is rejected per `additionalProperties:false`.",
+          "preconditions": "Authorized user.",
+          "input_data": "Body with extra `bogusField=true`.",
+          "expected_result": "400 ValidationProblemDetails citing the unknown property.",
+          "priority": "High",
+          "test_type": "Functional",
+          "steps": [
+            "Prepare endpoint-specific request data.",
+            "Execute the request.",
+            "Validate response status, response body, scope, persistence or read-only behavior, and audit trace where required."
+          ],
+          "fr_coverage": []
+        }
+      ]
+    }
+  ]
+}

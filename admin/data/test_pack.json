@@ -1,0 +1,4539 @@
+{
+  "microservice": "Admin Services",
+  "version": "v1_30_plus_tests_per_endpoint",
+  "coverage_type": "full_functional_positive_negative_security_state_audit",
+  "design_note": "Generated from Admin Services FR specification. Each endpoint has at least 30 executable test-case definitions for local runner execution and review. Some scenarios require seeded fixtures or manual verification hooks.",
+  "total_endpoints": 5,
+  "minimum_test_cases_per_endpoint": 30,
+  "endpoints": [
+    {
+      "api_id": "API-ONB-07",
+      "name": "List Onboarding Cases for Service Provider",
+      "endpoint": "GET /api/v1/admin/onboarding/cases",
+      "test_case_count": 30,
+      "functional_requirements": [
+        "FR-API-ONB-07-01",
+        "FR-API-ONB-07-02",
+        "FR-API-ONB-07-03",
+        "FR-API-ONB-07-04",
+        "FR-API-ONB-07-05",
+        "FR-API-ONB-07-06",
+        "FR-API-ONB-07-07",
+        "FR-API-ONB-07-08"
+      ],
+      "test_cases": [
+        {
+          "tc_id": "TC-ONB-07-001",
+          "scenario": "list_submitted_cases",
+          "test_type": "Functional",
+          "test_description": "List SUBMITTED onboarding cases.",
+          "preconditions": "Service Provider reviewer token; matching cases exist.",
+          "input_data": "status=SUBMITTED, page=1, pageSize=25",
+          "request": {
+            "role": "service_provider",
+            "query": {
+              "status": "SUBMITTED",
+              "page": 1,
+              "pageSize": 25
+            },
+            "path_params": {},
+            "payload": null
+          },
+          "expected_result": "200 OK; response contains page, pageSize, total and only matching cases.",
+          "expected_checks": [
+            "status_code",
+            "pagination_fields",
+            "case_summary_fields"
+          ],
+          "fr_coverage": [
+            "FR-API-ONB-07-01",
+            "FR-API-ONB-07-03",
+            "FR-API-ONB-07-04",
+            "FR-API-ONB-07-05",
+            "FR-API-ONB-07-06"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-07-002",
+          "scenario": "list_clarification_required_cases",
+          "test_type": "Functional",
+          "test_description": "List CLARIFICATION_REQUIRED onboarding cases.",
+          "preconditions": "Service Provider reviewer token; matching cases exist.",
+          "input_data": "status=CLARIFICATION_REQUIRED, page=1, pageSize=25",
+          "request": {
+            "role": "service_provider",
+            "query": {
+              "status": "CLARIFICATION_REQUIRED",
+              "page": 1,
+              "pageSize": 25
+            },
+            "path_params": {},
+            "payload": null
+          },
+          "expected_result": "200 OK; response contains page, pageSize, total and only matching cases.",
+          "expected_checks": [
+            "status_code",
+            "pagination_fields",
+            "case_summary_fields"
+          ],
+          "fr_coverage": [
+            "FR-API-ONB-07-01",
+            "FR-API-ONB-07-03",
+            "FR-API-ONB-07-04",
+            "FR-API-ONB-07-05",
+            "FR-API-ONB-07-06"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-07-003",
+          "scenario": "list_approved_cases",
+          "test_type": "Functional",
+          "test_description": "List APPROVED onboarding cases.",
+          "preconditions": "Service Provider reviewer token; matching cases exist.",
+          "input_data": "status=APPROVED, page=1, pageSize=25",
+          "request": {
+            "role": "service_provider",
+            "query": {
+              "status": "APPROVED",
+              "page": 1,
+              "pageSize": 25
+            },
+            "path_params": {},
+            "payload": null
+          },
+          "expected_result": "200 OK; response contains page, pageSize, total and only matching cases.",
+          "expected_checks": [
+            "status_code",
+            "pagination_fields",
+            "case_summary_fields"
+          ],
+          "fr_coverage": [
+            "FR-API-ONB-07-01",
+            "FR-API-ONB-07-03",
+            "FR-API-ONB-07-04",
+            "FR-API-ONB-07-05",
+            "FR-API-ONB-07-06"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-07-004",
+          "scenario": "list_rejected_cases",
+          "test_type": "Functional",
+          "test_description": "List REJECTED onboarding cases.",
+          "preconditions": "Service Provider reviewer token; matching cases exist.",
+          "input_data": "status=REJECTED, page=1, pageSize=25",
+          "request": {
+            "role": "service_provider",
+            "query": {
+              "status": "REJECTED",
+              "page": 1,
+              "pageSize": 25
+            },
+            "path_params": {},
+            "payload": null
+          },
+          "expected_result": "200 OK; response contains page, pageSize, total and only matching cases.",
+          "expected_checks": [
+            "status_code",
+            "pagination_fields",
+            "case_summary_fields"
+          ],
+          "fr_coverage": [
+            "FR-API-ONB-07-01",
+            "FR-API-ONB-07-03",
+            "FR-API-ONB-07-04",
+            "FR-API-ONB-07-05",
+            "FR-API-ONB-07-06"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-07-005",
+          "scenario": "list_without_status_filter",
+          "test_type": "Functional",
+          "test_description": "List cases without status filter.",
+          "preconditions": "Service Provider reviewer token.",
+          "input_data": "page=1,pageSize=25",
+          "request": {
+            "role": "service_provider",
+            "query": {
+              "page": 1,
+              "pageSize": 25
+            },
+            "path_params": {},
+            "payload": null
+          },
+          "expected_result": "200 OK; returns permitted onboarding cases across statuses.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-API-ONB-07-01",
+            "FR-API-ONB-07-04"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-07-006",
+          "scenario": "pagination_page_2_size_10",
+          "test_type": "Functional",
+          "test_description": "Validate page two metadata.",
+          "preconditions": "At least 11 cases exist.",
+          "input_data": "page=2,pageSize=10",
+          "request": {
+            "role": "service_provider",
+            "query": {
+              "status": "SUBMITTED",
+              "page": 2,
+              "pageSize": 10
+            },
+            "path_params": {},
+            "payload": null
+          },
+          "expected_result": "200 OK; page=2, pageSize=10, total numeric.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-API-ONB-07-04",
+            "FR-API-ONB-07-06"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-07-007",
+          "scenario": "minimum_page_size",
+          "test_type": "Boundary",
+          "test_description": "Use minimum pageSize.",
+          "preconditions": "Cases exist.",
+          "input_data": "pageSize=1",
+          "request": {
+            "role": "service_provider",
+            "query": {
+              "page": 1,
+              "pageSize": 1
+            },
+            "path_params": {},
+            "payload": null
+          },
+          "expected_result": "200 OK; cases length <= 1.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-API-ONB-07-04"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-07-008",
+          "scenario": "maximum_page_size",
+          "test_type": "Boundary",
+          "test_description": "Use large but acceptable pageSize.",
+          "preconditions": "Cases exist.",
+          "input_data": "pageSize=100",
+          "request": {
+            "role": "service_provider",
+            "query": {
+              "page": 1,
+              "pageSize": 100
+            },
+            "path_params": {},
+            "payload": null
+          },
+          "expected_result": "200 OK or 400 Bad Request (validation error on large pageSize; documented cap behavior); no 500.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-API-ONB-07-04"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-07-009",
+          "scenario": "page_size_exceeds_limit",
+          "test_type": "Negative",
+          "test_description": "Reject excessive pageSize.",
+          "preconditions": "Service Provider reviewer token.",
+          "input_data": "pageSize=10000",
+          "request": {
+            "role": "service_provider",
+            "query": {
+              "page": 1,
+              "pageSize": 10000
+            },
+            "path_params": {},
+            "payload": null
+          },
+          "expected_result": "400 Bad Request or documented cap behavior; no server error.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-API-ONB-07-04"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-07-010",
+          "scenario": "page_zero_rejected",
+          "test_type": "Negative",
+          "test_description": "Reject page zero.",
+          "preconditions": "Service Provider reviewer token.",
+          "input_data": "page=0",
+          "request": {
+            "role": "service_provider",
+            "query": {
+              "page": 0,
+              "pageSize": 25
+            },
+            "path_params": {},
+            "payload": null
+          },
+          "expected_result": "400 Bad Request.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-API-ONB-07-04"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-07-011",
+          "scenario": "negative_page_rejected",
+          "test_type": "Negative",
+          "test_description": "Reject negative page.",
+          "preconditions": "Service Provider reviewer token.",
+          "input_data": "page=-1",
+          "request": {
+            "role": "service_provider",
+            "query": {
+              "page": -1,
+              "pageSize": 25
+            },
+            "path_params": {},
+            "payload": null
+          },
+          "expected_result": "400 Bad Request.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-API-ONB-07-04"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-07-012",
+          "scenario": "non_numeric_page_rejected",
+          "test_type": "Negative",
+          "test_description": "Reject non-numeric page.",
+          "preconditions": "Service Provider reviewer token.",
+          "input_data": "page=abc",
+          "request": {
+            "role": "service_provider",
+            "query": {
+              "page": "abc",
+              "pageSize": 25
+            },
+            "path_params": {},
+            "payload": null
+          },
+          "expected_result": "400 Bad Request.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-API-ONB-07-04"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-07-013",
+          "scenario": "non_numeric_page_size_rejected",
+          "test_type": "Negative",
+          "test_description": "Reject non-numeric pageSize.",
+          "preconditions": "Service Provider reviewer token.",
+          "input_data": "pageSize=abc",
+          "request": {
+            "role": "service_provider",
+            "query": {
+              "page": 1,
+              "pageSize": "abc"
+            },
+            "path_params": {},
+            "payload": null
+          },
+          "expected_result": "400 Bad Request.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-API-ONB-07-04"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-07-015",
+          "scenario": "empty_status_policy",
+          "test_type": "Negative",
+          "test_description": "Handle empty status safely.",
+          "preconditions": "Service Provider reviewer token.",
+          "input_data": "status=",
+          "request": {
+            "role": "service_provider",
+            "query": {
+              "status": "",
+              "page": 1,
+              "pageSize": 25
+            },
+            "path_params": {},
+            "payload": null
+          },
+          "expected_result": "200 OK (no-filter behavior — backend confirmed 2026-05-05 ignores empty Status and returns all statuses) or 400 Bad Request; no 500.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-API-ONB-07-03"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-07-016",
+          "scenario": "unauthenticated_access_blocked",
+          "test_type": "Security",
+          "test_description": "Block missing token.",
+          "preconditions": "No Authorization header.",
+          "input_data": "None",
+          "request": {
+            "role": "none",
+            "query": {
+              "page": 1,
+              "pageSize": 25
+            },
+            "path_params": {},
+            "payload": null
+          },
+          "expected_result": "401 Unauthorized; no case data.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-API-ONB-07-02"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-07-017",
+          "scenario": "expired_token_blocked",
+          "test_type": "Security",
+          "test_description": "Block expired token.",
+          "preconditions": "Expired token.",
+          "input_data": "None",
+          "request": {
+            "role": "expired",
+            "query": {
+              "page": 1,
+              "pageSize": 25
+            },
+            "path_params": {},
+            "payload": null
+          },
+          "expected_result": "401 Unauthorized; no case data.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-API-ONB-07-02"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-07-018",
+          "scenario": "invalid_token_blocked",
+          "test_type": "Security",
+          "test_description": "Block malformed token.",
+          "preconditions": "Invalid token.",
+          "input_data": "None",
+          "request": {
+            "role": "invalid",
+            "query": {
+              "page": 1,
+              "pageSize": 25
+            },
+            "path_params": {},
+            "payload": null
+          },
+          "expected_result": "401 Unauthorized; no case data.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-API-ONB-07-02"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-07-019",
+          "scenario": "affiliate_user_forbidden",
+          "test_type": "Security",
+          "test_description": "Block affiliate user.",
+          "preconditions": "Affiliate token.",
+          "input_data": "None",
+          "request": {
+            "role": "affiliate",
+            "query": {
+              "page": 1,
+              "pageSize": 25
+            },
+            "path_params": {},
+            "payload": null
+          },
+          "expected_result": "403 Forbidden; no case data.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-API-ONB-07-07"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-07-020",
+          "scenario": "bank_user_forbidden",
+          "test_type": "Security",
+          "test_description": "Block bank user.",
+          "preconditions": "Bank token.",
+          "input_data": "None",
+          "request": {
+            "role": "bank",
+            "query": {
+              "page": 1,
+              "pageSize": 25
+            },
+            "path_params": {},
+            "payload": null
+          },
+          "expected_result": "403 Forbidden; no case data.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-API-ONB-07-07"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-07-021",
+          "scenario": "wrong_role_rejected",
+          "test_type": "Security",
+          "test_description": "Block Service Provider viewer without review permission.",
+          "preconditions": "SP viewer token.",
+          "input_data": "None",
+          "request": {
+            "role": "sp_viewer",
+            "query": {
+              "page": 1,
+              "pageSize": 25
+            },
+            "path_params": {},
+            "payload": null
+          },
+          "expected_result": "403 Forbidden; no case data.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-API-ONB-07-02",
+            "FR-API-ONB-07-07"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-07-022",
+          "scenario": "cross_affiliate_visibility_for_sp",
+          "test_type": "Functional",
+          "test_description": "SP user can list cases across affiliates.",
+          "preconditions": "Multiple affiliates have onboarding cases.",
+          "input_data": "valid request",
+          "request": {
+            "role": "service_provider",
+            "query": {
+              "page": 1,
+              "pageSize": 25
+            },
+            "path_params": {},
+            "payload": null
+          },
+          "expected_result": "200 OK; cases may include multiple affiliates.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-API-ONB-07-01"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-07-023",
+          "scenario": "empty_result_set",
+          "test_type": "Functional",
+          "test_description": "Return valid empty page.",
+          "preconditions": "No cases match filter.",
+          "input_data": "status=ARCHIVED_TEST or known empty status fixture",
+          "request": {
+            "role": "service_provider",
+            "query": {
+              "status": "SUBMITTED",
+              "page": 9999,
+              "pageSize": 25
+            },
+            "path_params": {},
+            "payload": null
+          },
+          "expected_result": "200 OK; total=0 and cases=[].",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-API-ONB-07-06"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-07-024",
+          "scenario": "case_fields_present",
+          "test_type": "Contract",
+          "test_description": "Validate case summary fields.",
+          "preconditions": "Cases exist.",
+          "input_data": "valid request",
+          "request": {
+            "role": "service_provider",
+            "query": {
+              "page": 1,
+              "pageSize": 25
+            },
+            "path_params": {},
+            "payload": null
+          },
+          "expected_result": "200 OK; every case has caseId, affiliateName, submittedAt, status.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-API-ONB-07-05"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-07-025",
+          "scenario": "submitted_at_iso_format",
+          "test_type": "Contract",
+          "test_description": "Validate timestamp format.",
+          "preconditions": "Cases exist.",
+          "input_data": "valid request",
+          "request": {
+            "role": "service_provider",
+            "query": {
+              "page": 1,
+              "pageSize": 25
+            },
+            "path_params": {},
+            "payload": null
+          },
+          "expected_result": "200 OK; submittedAt is ISO-8601 UTC.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-API-ONB-07-05"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-07-026",
+          "scenario": "stable_sort_order",
+          "test_type": "Functional",
+          "test_description": "Validate default sort order is stable.",
+          "preconditions": "Multiple cases exist.",
+          "input_data": "valid request",
+          "request": {
+            "role": "service_provider",
+            "query": {
+              "page": 1,
+              "pageSize": 25
+            },
+            "path_params": {},
+            "payload": null
+          },
+          "expected_result": "200 OK; ordering is stable according to product default.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-API-ONB-07-05"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-07-027",
+          "scenario": "audit_log_success",
+          "test_type": "Audit",
+          "test_description": "Audit successful list access.",
+          "preconditions": "Audit log verification available.",
+          "input_data": "valid request",
+          "request": {
+            "role": "service_provider",
+            "query": {
+              "page": 1,
+              "pageSize": 25
+            },
+            "path_params": {},
+            "payload": null
+          },
+          "expected_result": "200 OK and audit log exists with actor, action, filters, timestamp.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-API-ONB-07-08"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-07-028",
+          "scenario": "audit_log_forbidden_attempt",
+          "test_type": "Audit",
+          "test_description": "Audit denied list access.",
+          "preconditions": "Audit log verification available.",
+          "input_data": "affiliate token",
+          "request": {
+            "role": "affiliate",
+            "query": {
+              "page": 1,
+              "pageSize": 25
+            },
+            "path_params": {},
+            "payload": null
+          },
+          "expected_result": "403 Forbidden and denied access audit/security event exists.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-API-ONB-07-08",
+            "FR-API-ONB-07-07"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-07-029",
+          "scenario": "no_sensitive_data_in_list_response",
+          "test_type": "Security",
+          "test_description": "Ensure listing does not expose KYB details.",
+          "preconditions": "Cases exist.",
+          "input_data": "valid request",
+          "request": {
+            "role": "service_provider",
+            "query": {
+              "page": 1,
+              "pageSize": 25
+            },
+            "path_params": {},
+            "payload": null
+          },
+          "expected_result": "200 OK; response does not include documents, account numbers, internal notes, or raw KYB data.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-API-ONB-07-05"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-07-030",
+          "scenario": "server_error_safe_response",
+          "test_type": "Resilience",
+          "test_description": "Controlled response on backend failure.",
+          "preconditions": "Simulate DB/listing failure.",
+          "input_data": "valid request",
+          "request": {
+            "role": "service_provider",
+            "query": {
+              "page": 1,
+              "pageSize": 25
+            },
+            "path_params": {},
+            "payload": null
+          },
+          "expected_result": "500 Internal Server Error with safe error body and no stack trace.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "ERR-ONB-07-500"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-07-014",
+          "scenario": "invalid_status_rejected",
+          "test_type": "Negative",
+          "test_description": "Reject invalid status filter.",
+          "preconditions": "Service Provider reviewer token.",
+          "input_data": "status=INVALID",
+          "request": {
+            "role": "service_provider",
+            "query": {
+              "status": "INVALID",
+              "page": 1,
+              "pageSize": 25
+            },
+            "path_params": {},
+            "payload": null
+          },
+          "expected_result": "400 Bad Request.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-API-ONB-07-03"
+          ],
+          "priority": "High"
+        }
+      ]
+    },
+    {
+      "api_id": "API-ONB-08",
+      "name": "Review Decision on Onboarding Case",
+      "endpoint": "POST /api/v1/admin/onboarding/cases/{caseId}/decision",
+      "test_case_count": 28,
+      "functional_requirements": [
+        "FR-API-ONB-08-01",
+        "FR-API-ONB-08-02",
+        "FR-API-ONB-08-03",
+        "FR-API-ONB-08-04",
+        "FR-API-ONB-08-05",
+        "FR-API-ONB-08-06",
+        "FR-API-ONB-08-07",
+        "FR-API-ONB-08-08",
+        "FR-API-ONB-08-09",
+        "FR-API-ONB-08-10",
+        "FR-API-ONB-08-11",
+        "FR-API-ONB-08-12"
+      ],
+      "test_cases": [
+        {
+          "tc_id": "TC-ONB-08-001",
+          "scenario": "approve_submitted_case",
+          "test_type": "Functional",
+          "test_description": "Approve a submitted onboarding case.",
+          "preconditions": "Case exists in SUBMITTED status.",
+          "input_data": "{'decision': 'APPROVE', 'reviewerNotes': 'KYB complete. Approved.', 'decisionReason': 'COMPLIANT', 'selectedBanksApproved': ['BNK-UBA-001', 'BNK-ZEN-002']}",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {
+              "caseId": "CASE-2026000981"
+            },
+            "payload": {
+              "decision": "APPROVE",
+              "reviewerNotes": "KYB complete. Approved.",
+              "decisionReason": "COMPLIANT",
+              "selectedBanksApproved": [
+                "BNK-UBA-001",
+                "BNK-ZEN-002"
+              ]
+            }
+          },
+          "expected_result": "200 OK; status becomes APPROVED; decisionAt and decisionBy returned.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-API-ONB-08-01",
+            "FR-API-ONB-08-03",
+            "FR-API-ONB-08-09",
+            "FR-API-ONB-08-10"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-08-002",
+          "scenario": "reject_submitted_case",
+          "test_type": "Functional",
+          "test_description": "Reject a submitted onboarding case.",
+          "preconditions": "Case exists in SUBMITTED status.",
+          "input_data": "{'decision': 'REJECT', 'reviewerNotes': 'KYB failed.', 'decisionReason': 'NON_COMPLIANT', 'selectedBanksApproved': []}",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {
+              "caseId": "CASE-2026000981"
+            },
+            "payload": {
+              "decision": "REJECT",
+              "reviewerNotes": "KYB failed.",
+              "decisionReason": "NON_COMPLIANT",
+              "selectedBanksApproved": []
+            }
+          },
+          "expected_result": "200 OK; status becomes REJECTED; reason recorded; affiliate notified.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-API-ONB-08-01",
+            "FR-API-ONB-08-08",
+            "FR-API-ONB-08-10"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-08-003",
+          "scenario": "clarify_submitted_case",
+          "test_type": "Functional",
+          "test_description": "Request clarification.",
+          "preconditions": "Case exists in SUBMITTED status.",
+          "input_data": "{'decision': 'CLARIFY', 'reviewerNotes': 'Need extra documents.', 'decisionReason': 'INCOMPLETE_DOCUMENTATION', 'clarificationItems': [{'field': 'cacDocument', 'message': 'Upload clear CAC document'}]}",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {
+              "caseId": "CASE-2026000981"
+            },
+            "payload": {
+              "decision": "CLARIFY",
+              "reviewerNotes": "Need extra documents.",
+              "decisionReason": "INCOMPLETE_DOCUMENTATION",
+              "clarificationItems": [
+                {
+                  "field": "cacDocument",
+                  "message": "Upload clear CAC document"
+                }
+              ]
+            }
+          },
+          "expected_result": "200 OK; status becomes CLARIFICATION_REQUIRED; affiliate notified.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-API-ONB-08-01",
+            "FR-API-ONB-08-06",
+            "FR-API-ONB-08-07"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-08-007",
+          "scenario": "lowercase_decision_policy",
+          "test_type": "Boundary",
+          "test_description": "Handle lowercase decision consistently.",
+          "preconditions": "Case fixture prepared as required for scenario.",
+          "input_data": "{'decision': 'approve', 'reviewerNotes': 'KYB complete. Approved.', 'decisionReason': 'COMPLIANT', 'selectedBanksApproved': ['BNK-UBA-001']}",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {
+              "caseId": "CASE-2026000981"
+            },
+            "payload": {
+              "decision": "approve",
+              "reviewerNotes": "KYB complete. Approved.",
+              "decisionReason": "COMPLIANT",
+              "selectedBanksApproved": [
+                "BNK-UBA-001"
+              ]
+            }
+          },
+          "expected_result": "400 Bad Request if strict; or 200 if normalized. No silent inconsistent behavior.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-API-ONB-08-03"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-08-009",
+          "scenario": "approve_invalid_bank_id",
+          "test_type": "Negative",
+          "test_description": "Reject unknown selected bank.",
+          "preconditions": "Case fixture prepared as required for scenario.",
+          "input_data": "{'decision': 'APPROVE', 'reviewerNotes': 'KYB complete. Approved.', 'decisionReason': 'COMPLIANT', 'selectedBanksApproved': ['BNK-DOES-NOT-EXIST']}",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {
+              "caseId": "CASE-2026000981"
+            },
+            "payload": {
+              "decision": "APPROVE",
+              "reviewerNotes": "KYB complete. Approved.",
+              "decisionReason": "COMPLIANT",
+              "selectedBanksApproved": [
+                "BNK-DOES-NOT-EXIST"
+              ]
+            }
+          },
+          "expected_result": "422 Unprocessable Entity; no state change.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-API-ONB-08-09"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-08-011",
+          "scenario": "clarify_missing_items",
+          "test_type": "Negative",
+          "test_description": "CLARIFY requires clarification items.",
+          "preconditions": "Case fixture prepared as required for scenario.",
+          "input_data": "{'decision': 'CLARIFY', 'reviewerNotes': 'Need docs', 'decisionReason': 'INCOMPLETE_DOCUMENTATION'}",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {
+              "caseId": "CASE-2026000981"
+            },
+            "payload": {
+              "decision": "CLARIFY",
+              "reviewerNotes": "Need docs",
+              "decisionReason": "INCOMPLETE_DOCUMENTATION"
+            }
+          },
+          "expected_result": "422 Unprocessable Entity; no state change.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-API-ONB-08-06"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-08-012",
+          "scenario": "clarify_notification_triggered",
+          "test_type": "Notification",
+          "test_description": "Affiliate is notified on clarification.",
+          "preconditions": "Case fixture prepared as required for scenario.",
+          "input_data": "{'decision': 'CLARIFY', 'reviewerNotes': 'Need docs', 'decisionReason': 'INCOMPLETE_DOCUMENTATION', 'clarificationItems': [{'field': 'address', 'message': 'Confirm address'}]}",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {
+              "caseId": "CASE-2026000981"
+            },
+            "payload": {
+              "decision": "CLARIFY",
+              "reviewerNotes": "Need docs",
+              "decisionReason": "INCOMPLETE_DOCUMENTATION",
+              "clarificationItems": [
+                {
+                  "field": "address",
+                  "message": "Confirm address"
+                }
+              ]
+            }
+          },
+          "expected_result": "200 OK and notification event exists.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-API-ONB-08-07"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-08-013",
+          "scenario": "reject_missing_reason",
+          "test_type": "Negative",
+          "test_description": "Reject requires reason.",
+          "preconditions": "Case fixture prepared as required for scenario.",
+          "input_data": "{'decision': 'REJECT', 'reviewerNotes': 'Failed KYB'}",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {
+              "caseId": "CASE-2026000981"
+            },
+            "payload": {
+              "decision": "REJECT",
+              "reviewerNotes": "Failed KYB"
+            }
+          },
+          "expected_result": "422 Unprocessable Entity or 400; no state change.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-API-ONB-08-08"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-08-014",
+          "scenario": "reject_notification_triggered",
+          "test_type": "Notification",
+          "test_description": "Affiliate is notified on rejection.",
+          "preconditions": "Case fixture prepared as required for scenario.",
+          "input_data": "{'decision': 'REJECT', 'reviewerNotes': 'Failed KYB', 'decisionReason': 'NON_COMPLIANT', 'selectedBanksApproved': []}",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {
+              "caseId": "CASE-2026000981"
+            },
+            "payload": {
+              "decision": "REJECT",
+              "reviewerNotes": "Failed KYB",
+              "decisionReason": "NON_COMPLIANT",
+              "selectedBanksApproved": []
+            }
+          },
+          "expected_result": "200 OK and rejection notification event exists.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-API-ONB-08-08"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-08-015",
+          "scenario": "approve_clarification_required_case_policy",
+          "test_type": "State",
+          "test_description": "Approve case currently in clarification state only if permitted.",
+          "preconditions": "Case fixture prepared as required for scenario.",
+          "input_data": "{'decision': 'APPROVE', 'reviewerNotes': 'KYB complete. Approved.', 'decisionReason': 'COMPLIANT', 'selectedBanksApproved': ['BNK-UBA-001']}",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {
+              "caseId": "CASE-2026000981"
+            },
+            "payload": {
+              "decision": "APPROVE",
+              "reviewerNotes": "KYB complete. Approved.",
+              "decisionReason": "COMPLIANT",
+              "selectedBanksApproved": [
+                "BNK-UBA-001"
+              ]
+            }
+          },
+          "expected_result": "200 OK if resolved; otherwise 409 Conflict.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-API-ONB-08-04",
+            "FR-API-ONB-08-05"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-08-016",
+          "scenario": "approve_already_approved_case_blocked",
+          "test_type": "State",
+          "test_description": "Block approving already approved case.",
+          "preconditions": "Case fixture prepared as required for scenario.",
+          "input_data": "{'decision': 'APPROVE', 'reviewerNotes': 'KYB complete. Approved.', 'decisionReason': 'COMPLIANT', 'selectedBanksApproved': ['BNK-UBA-001']}",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {
+              "caseId": "CASE-2026000981"
+            },
+            "payload": {
+              "decision": "APPROVE",
+              "reviewerNotes": "KYB complete. Approved.",
+              "decisionReason": "COMPLIANT",
+              "selectedBanksApproved": [
+                "BNK-UBA-001"
+              ]
+            }
+          },
+          "expected_result": "409 Conflict; no duplicate decision.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-API-ONB-08-04",
+            "FR-API-ONB-08-05"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-08-017",
+          "scenario": "reject_already_approved_case_blocked",
+          "test_type": "State",
+          "test_description": "Block rejecting already approved case.",
+          "preconditions": "Case fixture prepared as required for scenario.",
+          "input_data": "{'decision': 'REJECT', 'reviewerNotes': 'late reject', 'decisionReason': 'NON_COMPLIANT', 'selectedBanksApproved': []}",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {
+              "caseId": "CASE-2026000981"
+            },
+            "payload": {
+              "decision": "REJECT",
+              "reviewerNotes": "late reject",
+              "decisionReason": "NON_COMPLIANT",
+              "selectedBanksApproved": []
+            }
+          },
+          "expected_result": "409 Conflict; no state change.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-API-ONB-08-05"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-08-018",
+          "scenario": "clarify_already_approved_case_blocked",
+          "test_type": "State",
+          "test_description": "Block clarifying already approved case.",
+          "preconditions": "Case fixture prepared as required for scenario.",
+          "input_data": "{'decision': 'CLARIFY', 'reviewerNotes': 'late clarify', 'decisionReason': 'INCOMPLETE_DOCUMENTATION', 'clarificationItems': [{'field': 'x', 'message': 'y'}]}",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {
+              "caseId": "CASE-2026000981"
+            },
+            "payload": {
+              "decision": "CLARIFY",
+              "reviewerNotes": "late clarify",
+              "decisionReason": "INCOMPLETE_DOCUMENTATION",
+              "clarificationItems": [
+                {
+                  "field": "x",
+                  "message": "y"
+                }
+              ]
+            }
+          },
+          "expected_result": "409 Conflict; no state change.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-API-ONB-08-05"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-08-019",
+          "scenario": "approve_rejected_case_blocked",
+          "test_type": "State",
+          "test_description": "Block approving rejected case.",
+          "preconditions": "Case fixture prepared as required for scenario.",
+          "input_data": "{'decision': 'APPROVE', 'reviewerNotes': 'KYB complete. Approved.', 'decisionReason': 'COMPLIANT', 'selectedBanksApproved': ['BNK-UBA-001']}",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {
+              "caseId": "CASE-2026000981"
+            },
+            "payload": {
+              "decision": "APPROVE",
+              "reviewerNotes": "KYB complete. Approved.",
+              "decisionReason": "COMPLIANT",
+              "selectedBanksApproved": [
+                "BNK-UBA-001"
+              ]
+            }
+          },
+          "expected_result": "409 Conflict; no state change.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-API-ONB-08-05"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-08-020",
+          "scenario": "decision_nonexistent_case",
+          "test_type": "Negative",
+          "test_description": "Decision on unknown case.",
+          "preconditions": "Case fixture prepared as required for scenario.",
+          "input_data": "{'decision': 'APPROVE', 'reviewerNotes': 'KYB complete. Approved.', 'decisionReason': 'COMPLIANT', 'selectedBanksApproved': ['BNK-UBA-001']}",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {
+              "caseId": "CASE-DOES-NOT-EXIST"
+            },
+            "payload": {
+              "decision": "APPROVE",
+              "reviewerNotes": "KYB complete. Approved.",
+              "decisionReason": "COMPLIANT",
+              "selectedBanksApproved": [
+                "BNK-UBA-001"
+              ]
+            }
+          },
+          "expected_result": "404 Not Found or documented logical error; no state change.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "ERR-ONB-08-404"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-08-021",
+          "scenario": "unauthenticated_decision_blocked",
+          "test_type": "Security",
+          "test_description": "Block missing token.",
+          "preconditions": "Case fixture prepared as required for scenario.",
+          "input_data": "{'decision': 'APPROVE', 'reviewerNotes': 'KYB complete. Approved.', 'decisionReason': 'COMPLIANT', 'selectedBanksApproved': ['BNK-UBA-001']}",
+          "request": {
+            "role": "none",
+            "query": {},
+            "path_params": {
+              "caseId": "CASE-2026000981"
+            },
+            "payload": {
+              "decision": "APPROVE",
+              "reviewerNotes": "KYB complete. Approved.",
+              "decisionReason": "COMPLIANT",
+              "selectedBanksApproved": [
+                "BNK-UBA-001"
+              ]
+            }
+          },
+          "expected_result": "401 Unauthorized; no decision recorded.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-API-ONB-08-02"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-08-022",
+          "scenario": "expired_token_decision_blocked",
+          "test_type": "Security",
+          "test_description": "Block expired token.",
+          "preconditions": "Case fixture prepared as required for scenario.",
+          "input_data": "{'decision': 'APPROVE', 'reviewerNotes': 'KYB complete. Approved.', 'decisionReason': 'COMPLIANT', 'selectedBanksApproved': ['BNK-UBA-001']}",
+          "request": {
+            "role": "expired",
+            "query": {},
+            "path_params": {
+              "caseId": "CASE-2026000981"
+            },
+            "payload": {
+              "decision": "APPROVE",
+              "reviewerNotes": "KYB complete. Approved.",
+              "decisionReason": "COMPLIANT",
+              "selectedBanksApproved": [
+                "BNK-UBA-001"
+              ]
+            }
+          },
+          "expected_result": "401 Unauthorized; no decision recorded.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-API-ONB-08-02"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-08-023",
+          "scenario": "affiliate_user_decision_forbidden",
+          "test_type": "Security",
+          "test_description": "Block affiliate decision attempt.",
+          "preconditions": "Case fixture prepared as required for scenario.",
+          "input_data": "{'decision': 'APPROVE', 'reviewerNotes': 'KYB complete. Approved.', 'decisionReason': 'COMPLIANT', 'selectedBanksApproved': ['BNK-UBA-001']}",
+          "request": {
+            "role": "affiliate",
+            "query": {},
+            "path_params": {
+              "caseId": "CASE-2026000981"
+            },
+            "payload": {
+              "decision": "APPROVE",
+              "reviewerNotes": "KYB complete. Approved.",
+              "decisionReason": "COMPLIANT",
+              "selectedBanksApproved": [
+                "BNK-UBA-001"
+              ]
+            }
+          },
+          "expected_result": "403 Forbidden; no decision recorded.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-API-ONB-08-02"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-08-024",
+          "scenario": "bank_user_decision_forbidden",
+          "test_type": "Security",
+          "test_description": "Block bank decision attempt.",
+          "preconditions": "Case fixture prepared as required for scenario.",
+          "input_data": "{'decision': 'APPROVE', 'reviewerNotes': 'KYB complete. Approved.', 'decisionReason': 'COMPLIANT', 'selectedBanksApproved': ['BNK-UBA-001']}",
+          "request": {
+            "role": "bank",
+            "query": {},
+            "path_params": {
+              "caseId": "CASE-2026000981"
+            },
+            "payload": {
+              "decision": "APPROVE",
+              "reviewerNotes": "KYB complete. Approved.",
+              "decisionReason": "COMPLIANT",
+              "selectedBanksApproved": [
+                "BNK-UBA-001"
+              ]
+            }
+          },
+          "expected_result": "403 Forbidden; no decision recorded.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-API-ONB-08-02"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-08-025",
+          "scenario": "wrong_role_rejected",
+          "test_type": "Security",
+          "test_description": "Block Service Provider viewer without reviewer permission.",
+          "preconditions": "Case fixture prepared as required for scenario.",
+          "input_data": "{'decision': 'APPROVE', 'reviewerNotes': 'KYB complete. Approved.', 'decisionReason': 'COMPLIANT', 'selectedBanksApproved': ['BNK-UBA-001']}",
+          "request": {
+            "role": "sp_viewer",
+            "query": {},
+            "path_params": {
+              "caseId": "CASE-2026000981"
+            },
+            "payload": {
+              "decision": "APPROVE",
+              "reviewerNotes": "KYB complete. Approved.",
+              "decisionReason": "COMPLIANT",
+              "selectedBanksApproved": [
+                "BNK-UBA-001"
+              ]
+            }
+          },
+          "expected_result": "403 Forbidden; no decision recorded.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-API-ONB-08-02"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-08-026",
+          "scenario": "reviewer_notes_persisted",
+          "test_type": "Persistence",
+          "test_description": "Reviewer notes are recorded.",
+          "preconditions": "Case fixture prepared as required for scenario.",
+          "input_data": "{'decision': 'APPROVE', 'reviewerNotes': 'Detailed review notes', 'decisionReason': 'COMPLIANT', 'selectedBanksApproved': ['BNK-UBA-001']}",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {
+              "caseId": "CASE-2026000981"
+            },
+            "payload": {
+              "decision": "APPROVE",
+              "reviewerNotes": "Detailed review notes",
+              "decisionReason": "COMPLIANT",
+              "selectedBanksApproved": [
+                "BNK-UBA-001"
+              ]
+            }
+          },
+          "expected_result": "200 OK and notes persisted.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-API-ONB-08-10"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-08-027",
+          "scenario": "reviewer_identity_recorded",
+          "test_type": "Audit",
+          "test_description": "Authenticated reviewer identity is recorded.",
+          "preconditions": "Case fixture prepared as required for scenario.",
+          "input_data": "{'decision': 'APPROVE', 'reviewerNotes': 'KYB complete. Approved.', 'decisionReason': 'COMPLIANT', 'selectedBanksApproved': ['BNK-UBA-001']}",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {
+              "caseId": "CASE-2026000981"
+            },
+            "payload": {
+              "decision": "APPROVE",
+              "reviewerNotes": "KYB complete. Approved.",
+              "decisionReason": "COMPLIANT",
+              "selectedBanksApproved": [
+                "BNK-UBA-001"
+              ]
+            }
+          },
+          "expected_result": "200 OK; decisionBy contains authenticated reviewer identity.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-API-ONB-08-10"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-08-028",
+          "scenario": "affiliate_tracking_visible",
+          "test_type": "Functional",
+          "test_description": "Decision outcome visible in affiliate tracking.",
+          "preconditions": "Case fixture prepared as required for scenario.",
+          "input_data": "{'decision': 'APPROVE', 'reviewerNotes': 'KYB complete. Approved.', 'decisionReason': 'COMPLIANT', 'selectedBanksApproved': ['BNK-UBA-001']}",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {
+              "caseId": "CASE-2026000981"
+            },
+            "payload": {
+              "decision": "APPROVE",
+              "reviewerNotes": "KYB complete. Approved.",
+              "decisionReason": "COMPLIANT",
+              "selectedBanksApproved": [
+                "BNK-UBA-001"
+              ]
+            }
+          },
+          "expected_result": "200 OK and affiliate tracking reflects outcome where applicable.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-API-ONB-08-11"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-08-029",
+          "scenario": "decision_audit_log_recorded",
+          "test_type": "Audit",
+          "test_description": "Audit log created for decision.",
+          "preconditions": "Case fixture prepared as required for scenario.",
+          "input_data": "{'decision': 'APPROVE', 'reviewerNotes': 'KYB complete. Approved.', 'decisionReason': 'COMPLIANT', 'selectedBanksApproved': ['BNK-UBA-001']}",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {
+              "caseId": "CASE-2026000981"
+            },
+            "payload": {
+              "decision": "APPROVE",
+              "reviewerNotes": "KYB complete. Approved.",
+              "decisionReason": "COMPLIANT",
+              "selectedBanksApproved": [
+                "BNK-UBA-001"
+              ]
+            }
+          },
+          "expected_result": "200 OK and audit log records actor, caseId, decision, timestamp.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-API-ONB-08-12"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-08-030",
+          "scenario": "decision_backend_failure_safe",
+          "test_type": "Resilience",
+          "test_description": "Controlled error on persistence/notification failure.",
+          "preconditions": "Case fixture prepared as required for scenario.",
+          "input_data": "{'decision': 'APPROVE', 'reviewerNotes': 'KYB complete. Approved.', 'decisionReason': 'COMPLIANT', 'selectedBanksApproved': ['BNK-UBA-001']}",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {
+              "caseId": "CASE-2026000981"
+            },
+            "payload": {
+              "decision": "APPROVE",
+              "reviewerNotes": "KYB complete. Approved.",
+              "decisionReason": "COMPLIANT",
+              "selectedBanksApproved": [
+                "BNK-UBA-001"
+              ]
+            }
+          },
+          "expected_result": "500 Internal Server Error or safe partial-failure policy; no inconsistent state.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "ERR-ONB-08-500"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-08-004",
+          "scenario": "invalid_decision_type",
+          "test_type": "Negative",
+          "test_description": "Reject invalid decision enum.",
+          "preconditions": "Case fixture prepared as required for scenario.",
+          "input_data": "{'decision': 'ESCALATE', 'reviewerNotes': 'KYB complete. Approved.', 'decisionReason': 'COMPLIANT'}",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {
+              "caseId": "CASE-2026000981"
+            },
+            "payload": {
+              "decision": "ESCALATE",
+              "reviewerNotes": "KYB complete. Approved.",
+              "decisionReason": "COMPLIANT"
+            }
+          },
+          "expected_result": "400 Bad Request; no state change.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-API-ONB-08-03"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-08-005",
+          "scenario": "missing_decision",
+          "test_type": "Negative",
+          "test_description": "Reject missing decision.",
+          "preconditions": "Case fixture prepared as required for scenario.",
+          "input_data": "{'reviewerNotes': 'x'}",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {
+              "caseId": "CASE-2026000981"
+            },
+            "payload": {
+              "reviewerNotes": "x"
+            }
+          },
+          "expected_result": "400 Bad Request; decision required.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-API-ONB-08-03"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-08-006",
+          "scenario": "empty_decision",
+          "test_type": "Negative",
+          "test_description": "Reject empty decision.",
+          "preconditions": "Case fixture prepared as required for scenario.",
+          "input_data": "{'decision': '', 'reviewerNotes': 'KYB complete. Approved.', 'decisionReason': 'COMPLIANT'}",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {
+              "caseId": "CASE-2026000981"
+            },
+            "payload": {
+              "decision": "",
+              "reviewerNotes": "KYB complete. Approved.",
+              "decisionReason": "COMPLIANT"
+            }
+          },
+          "expected_result": "400 Bad Request; decision required/invalid.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-API-ONB-08-03"
+          ],
+          "priority": "High"
+        }
+      ]
+    },
+    {
+      "api_id": "API-ONB-09",
+      "name": "Provision Approved Affiliate",
+      "endpoint": "POST /api/v1/admin/onboarding/cases/{caseId}/provision",
+      "test_case_count": 31,
+      "functional_requirements": [
+        "FR-API-ONB-09-01",
+        "FR-API-ONB-09-02",
+        "FR-API-ONB-09-03",
+        "FR-API-ONB-09-04",
+        "FR-API-ONB-09-05",
+        "FR-API-ONB-09-06",
+        "FR-API-ONB-09-07",
+        "FR-API-ONB-09-08",
+        "FR-API-ONB-09-09",
+        "FR-API-ONB-09-10",
+        "FR-API-ONB-09-11",
+        "FR-API-ONB-09-12",
+        "FR-API-ONB-09-13",
+        "FR-API-ONB-09-14",
+        "FR-API-ONB-09-15",
+        "FR-API-ONB-09-16",
+        "FR-API-ONB-09-17"
+      ],
+      "test_cases": [
+        {
+          "tc_id": "TC-ONB-09-001",
+          "scenario": "provision_approved_external_affiliate_success",
+          "test_type": "Functional",
+          "test_description": "Provision approved external affiliate.",
+          "preconditions": "Approved case with approved banks.",
+          "input_data": "{'adminContact': {'fullName': 'Amaka Okoye', 'email': 'ops@acmefinance.ng', 'phone': '+2348012345678'}, 'deliveryChannels': ['EMAIL']}",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {
+              "caseId": "CASE-2026000981"
+            },
+            "payload": {
+              "adminContact": {
+                "fullName": "Amaka Okoye",
+                "email": "ops@acmefinance.ng",
+                "phone": "+2348012345678"
+              },
+              "deliveryChannels": [
+                "EMAIL"
+              ]
+            }
+          },
+          "expected_result": "200; affiliateId, affiliateType EXTERNAL, tenantId, status, partnership requests and provisionedAt returned.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-API-ONB-09-01",
+            "FR-API-ONB-09-04",
+            "FR-API-ONB-09-06",
+            "FR-API-ONB-09-07",
+            "FR-API-ONB-09-08",
+            "FR-API-ONB-09-15"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-09-002",
+          "scenario": "submitted_case_provision_blocked",
+          "test_type": "State",
+          "test_description": "Block provisioning submitted case.",
+          "preconditions": "Case status SUBMITTED.",
+          "input_data": "{'adminContact': {'fullName': 'Amaka Okoye', 'email': 'ops@acmefinance.ng', 'phone': '+2348012345678'}, 'deliveryChannels': ['EMAIL']}",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {
+              "caseId": "CASE-2026000981"
+            },
+            "payload": {
+              "adminContact": {
+                "fullName": "Amaka Okoye",
+                "email": "ops@acmefinance.ng",
+                "phone": "+2348012345678"
+              },
+              "deliveryChannels": [
+                "EMAIL"
+              ]
+            }
+          },
+          "expected_result": "409 Conflict; no affiliate/tenant created.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-API-ONB-09-01",
+            "FR-API-ONB-09-16"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-09-003",
+          "scenario": "clarification_case_provision_blocked",
+          "test_type": "State",
+          "test_description": "Block provisioning clarification-required case.",
+          "preconditions": "Case status CLARIFICATION_REQUIRED.",
+          "input_data": "{'adminContact': {'fullName': 'Amaka Okoye', 'email': 'ops@acmefinance.ng', 'phone': '+2348012345678'}, 'deliveryChannels': ['EMAIL']}",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {
+              "caseId": "CASE-2026000981"
+            },
+            "payload": {
+              "adminContact": {
+                "fullName": "Amaka Okoye",
+                "email": "ops@acmefinance.ng",
+                "phone": "+2348012345678"
+              },
+              "deliveryChannels": [
+                "EMAIL"
+              ]
+            }
+          },
+          "expected_result": "409 Conflict; no affiliate/tenant created.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-API-ONB-09-01",
+            "FR-API-ONB-09-16"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-09-004",
+          "scenario": "rejected_case_provision_blocked",
+          "test_type": "State",
+          "test_description": "Block provisioning rejected case.",
+          "preconditions": "Case status REJECTED.",
+          "input_data": "{'adminContact': {'fullName': 'Amaka Okoye', 'email': 'ops@acmefinance.ng', 'phone': '+2348012345678'}, 'deliveryChannels': ['EMAIL']}",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {
+              "caseId": "CASE-2026000981"
+            },
+            "payload": {
+              "adminContact": {
+                "fullName": "Amaka Okoye",
+                "email": "ops@acmefinance.ng",
+                "phone": "+2348012345678"
+              },
+              "deliveryChannels": [
+                "EMAIL"
+              ]
+            }
+          },
+          "expected_result": "409 Conflict; no affiliate/tenant created.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-API-ONB-09-01",
+            "FR-API-ONB-09-16"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-09-005",
+          "scenario": "duplicate_provisioning_blocked",
+          "test_type": "State",
+          "test_description": "Block duplicate provisioning.",
+          "preconditions": "Case already provisioned.",
+          "input_data": "{'adminContact': {'fullName': 'Amaka Okoye', 'email': 'ops@acmefinance.ng', 'phone': '+2348012345678'}, 'deliveryChannels': ['EMAIL']}",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {
+              "caseId": "CASE-2026000981"
+            },
+            "payload": {
+              "adminContact": {
+                "fullName": "Amaka Okoye",
+                "email": "ops@acmefinance.ng",
+                "phone": "+2348012345678"
+              },
+              "deliveryChannels": [
+                "EMAIL"
+              ]
+            }
+          },
+          "expected_result": "409 Conflict; no duplicate affiliate/tenant.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-API-ONB-09-02",
+            "FR-API-ONB-09-17"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-09-013",
+          "scenario": "email_delivery_channel_accepted",
+          "test_type": "Functional",
+          "test_description": "EMAIL delivery channel accepted.",
+          "preconditions": "Approved case.",
+          "input_data": "{'adminContact': {'fullName': 'Amaka Okoye', 'email': 'ops@acmefinance.ng', 'phone': '+2348012345678'}, 'deliveryChannels': ['EMAIL']}",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {
+              "caseId": "CASE-2026000981"
+            },
+            "payload": {
+              "adminContact": {
+                "fullName": "Amaka Okoye",
+                "email": "ops@acmefinance.ng",
+                "phone": "+2348012345678"
+              },
+              "deliveryChannels": [
+                "EMAIL"
+              ]
+            }
+          },
+          "expected_result": "200 and EMAIL notification/access delivery triggered.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-API-ONB-09-09",
+            "FR-API-ONB-09-12"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-09-014",
+          "scenario": "unsupported_delivery_channel_rejected",
+          "test_type": "Negative",
+          "test_description": "Reject unsupported delivery channel.",
+          "preconditions": "Approved case.",
+          "input_data": "{'adminContact': {'fullName': 'Amaka Okoye', 'email': 'ops@acmefinance.ng', 'phone': '+2348012345678'}, 'deliveryChannels': ['WHATSAPP']}",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {
+              "caseId": "CASE-2026000981"
+            },
+            "payload": {
+              "adminContact": {
+                "fullName": "Amaka Okoye",
+                "email": "ops@acmefinance.ng",
+                "phone": "+2348012345678"
+              },
+              "deliveryChannels": [
+                "WHATSAPP"
+              ]
+            }
+          },
+          "expected_result": "422 Unprocessable Entity if unsupported.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-API-ONB-09-09"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-09-016",
+          "scenario": "affiliate_identifier_assigned",
+          "test_type": "Contract",
+          "test_description": "affiliateId returned.",
+          "preconditions": "Approved case.",
+          "input_data": "{'adminContact': {'fullName': 'Amaka Okoye', 'email': 'ops@acmefinance.ng', 'phone': '+2348012345678'}, 'deliveryChannels': ['EMAIL']}",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {
+              "caseId": "CASE-2026000981"
+            },
+            "payload": {
+              "adminContact": {
+                "fullName": "Amaka Okoye",
+                "email": "ops@acmefinance.ng",
+                "phone": "+2348012345678"
+              },
+              "deliveryChannels": [
+                "EMAIL"
+              ]
+            }
+          },
+          "expected_result": "200; affiliateId non-empty.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-API-ONB-09-08",
+            "FR-API-ONB-09-15"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-09-017",
+          "scenario": "tenant_identifier_assigned",
+          "test_type": "Contract",
+          "test_description": "tenantId returned.",
+          "preconditions": "Approved case.",
+          "input_data": "{'adminContact': {'fullName': 'Amaka Okoye', 'email': 'ops@acmefinance.ng', 'phone': '+2348012345678'}, 'deliveryChannels': ['EMAIL']}",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {
+              "caseId": "CASE-2026000981"
+            },
+            "payload": {
+              "adminContact": {
+                "fullName": "Amaka Okoye",
+                "email": "ops@acmefinance.ng",
+                "phone": "+2348012345678"
+              },
+              "deliveryChannels": [
+                "EMAIL"
+              ]
+            }
+          },
+          "expected_result": "200; tenantId non-empty.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-API-ONB-09-08",
+            "FR-API-ONB-09-15"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-09-018",
+          "scenario": "affiliate_type_external_returned",
+          "test_type": "Contract",
+          "test_description": "affiliateType is EXTERNAL.",
+          "preconditions": "Approved case.",
+          "input_data": "{'adminContact': {'fullName': 'Amaka Okoye', 'email': 'ops@acmefinance.ng', 'phone': '+2348012345678'}, 'deliveryChannels': ['EMAIL']}",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {
+              "caseId": "CASE-2026000981"
+            },
+            "payload": {
+              "adminContact": {
+                "fullName": "Amaka Okoye",
+                "email": "ops@acmefinance.ng",
+                "phone": "+2348012345678"
+              },
+              "deliveryChannels": [
+                "EMAIL"
+              ]
+            }
+          },
+          "expected_result": "200; affiliateType=EXTERNAL.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-API-ONB-09-04",
+            "FR-API-ONB-09-06",
+            "FR-API-ONB-09-15"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-09-019",
+          "scenario": "created_affiliate_active_status",
+          "test_type": "Contract",
+          "test_description": "Created affiliate status active.",
+          "preconditions": "Approved case.",
+          "input_data": "{'adminContact': {'fullName': 'Amaka Okoye', 'email': 'ops@acmefinance.ng', 'phone': '+2348012345678'}, 'deliveryChannels': ['EMAIL']}",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {
+              "caseId": "CASE-2026000981"
+            },
+            "payload": {
+              "adminContact": {
+                "fullName": "Amaka Okoye",
+                "email": "ops@acmefinance.ng",
+                "phone": "+2348012345678"
+              },
+              "deliveryChannels": [
+                "EMAIL"
+              ]
+            }
+          },
+          "expected_result": "200; status ACTIVE or configured initial status.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-API-ONB-09-07"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-09-020",
+          "scenario": "partnership_requests_created_for_approved_banks",
+          "test_type": "Functional",
+          "test_description": "Create partnership requests for approved banks.",
+          "preconditions": "Approved case with two approved banks.",
+          "input_data": "{'adminContact': {'fullName': 'Amaka Okoye', 'email': 'ops@acmefinance.ng', 'phone': '+2348012345678'}, 'deliveryChannels': ['EMAIL']}",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {
+              "caseId": "CASE-2026000981"
+            },
+            "payload": {
+              "adminContact": {
+                "fullName": "Amaka Okoye",
+                "email": "ops@acmefinance.ng",
+                "phone": "+2348012345678"
+              },
+              "deliveryChannels": [
+                "EMAIL"
+              ]
+            }
+          },
+          "expected_result": "200; one request per approved bank.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-API-ONB-09-10"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-09-021",
+          "scenario": "partnership_requests_pending_bank_approval",
+          "test_type": "Contract",
+          "test_description": "Partnership request status initialized.",
+          "preconditions": "Approved case.",
+          "input_data": "{'adminContact': {'fullName': 'Amaka Okoye', 'email': 'ops@acmefinance.ng', 'phone': '+2348012345678'}, 'deliveryChannels': ['EMAIL']}",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {
+              "caseId": "CASE-2026000981"
+            },
+            "payload": {
+              "adminContact": {
+                "fullName": "Amaka Okoye",
+                "email": "ops@acmefinance.ng",
+                "phone": "+2348012345678"
+              },
+              "deliveryChannels": [
+                "EMAIL"
+              ]
+            }
+          },
+          "expected_result": "200; all partnership statuses PENDING_BANK_APPROVAL.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-API-ONB-09-11"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-09-022",
+          "scenario": "invalid_approved_bank_selection_blocks",
+          "test_type": "Negative",
+          "test_description": "Block provisioning when approved bank selection is invalid.",
+          "preconditions": "Approved case has no valid approved banks.",
+          "input_data": "{'adminContact': {'fullName': 'Amaka Okoye', 'email': 'ops@acmefinance.ng', 'phone': '+2348012345678'}, 'deliveryChannels': ['EMAIL']}",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {
+              "caseId": "CASE-2026000981"
+            },
+            "payload": {
+              "adminContact": {
+                "fullName": "Amaka Okoye",
+                "email": "ops@acmefinance.ng",
+                "phone": "+2348012345678"
+              },
+              "deliveryChannels": [
+                "EMAIL"
+              ]
+            }
+          },
+          "expected_result": "422 Unprocessable Entity; no affiliate created.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-API-ONB-09-10",
+            "FR-API-ONB-09-16"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-09-023",
+          "scenario": "iam_or_access_provisioning_triggered",
+          "test_type": "Integration",
+          "test_description": "Provision access for affiliate admin.",
+          "preconditions": "Approved case.",
+          "input_data": "{'adminContact': {'fullName': 'Amaka Okoye', 'email': 'ops@acmefinance.ng', 'phone': '+2348012345678'}, 'deliveryChannels': ['EMAIL']}",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {
+              "caseId": "CASE-2026000981"
+            },
+            "payload": {
+              "adminContact": {
+                "fullName": "Amaka Okoye",
+                "email": "ops@acmefinance.ng",
+                "phone": "+2348012345678"
+              },
+              "deliveryChannels": [
+                "EMAIL"
+              ]
+            }
+          },
+          "expected_result": "200; IAM status/login URL or access provisioning event captured.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-API-ONB-09-09",
+            "FR-API-ONB-09-12"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-09-024",
+          "scenario": "provisioned_at_timestamp_returned",
+          "test_type": "Contract",
+          "test_description": "provisionedAt returned.",
+          "preconditions": "Approved case.",
+          "input_data": "{'adminContact': {'fullName': 'Amaka Okoye', 'email': 'ops@acmefinance.ng', 'phone': '+2348012345678'}, 'deliveryChannels': ['EMAIL']}",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {
+              "caseId": "CASE-2026000981"
+            },
+            "payload": {
+              "adminContact": {
+                "fullName": "Amaka Okoye",
+                "email": "ops@acmefinance.ng",
+                "phone": "+2348012345678"
+              },
+              "deliveryChannels": [
+                "EMAIL"
+              ]
+            }
+          },
+          "expected_result": "200; provisionedAt is valid ISO-8601 UTC.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-API-ONB-09-12",
+            "FR-API-ONB-09-15"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-09-025",
+          "scenario": "unauthenticated_provision_blocked",
+          "test_type": "Security",
+          "test_description": "Block missing token.",
+          "preconditions": "No Authorization header.",
+          "input_data": "{'adminContact': {'fullName': 'Amaka Okoye', 'email': 'ops@acmefinance.ng', 'phone': '+2348012345678'}, 'deliveryChannels': ['EMAIL']}",
+          "request": {
+            "role": "none",
+            "query": {},
+            "path_params": {
+              "caseId": "CASE-2026000981"
+            },
+            "payload": {
+              "adminContact": {
+                "fullName": "Amaka Okoye",
+                "email": "ops@acmefinance.ng",
+                "phone": "+2348012345678"
+              },
+              "deliveryChannels": [
+                "EMAIL"
+              ]
+            }
+          },
+          "expected_result": "401 Unauthorized; no provisioning.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-API-ONB-09-03"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-09-026",
+          "scenario": "expired_token_provision_blocked",
+          "test_type": "Security",
+          "test_description": "Block expired token.",
+          "preconditions": "Expired token.",
+          "input_data": "{'adminContact': {'fullName': 'Amaka Okoye', 'email': 'ops@acmefinance.ng', 'phone': '+2348012345678'}, 'deliveryChannels': ['EMAIL']}",
+          "request": {
+            "role": "expired",
+            "query": {},
+            "path_params": {
+              "caseId": "CASE-2026000981"
+            },
+            "payload": {
+              "adminContact": {
+                "fullName": "Amaka Okoye",
+                "email": "ops@acmefinance.ng",
+                "phone": "+2348012345678"
+              },
+              "deliveryChannels": [
+                "EMAIL"
+              ]
+            }
+          },
+          "expected_result": "401 Unauthorized; no provisioning.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-API-ONB-09-03"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-09-027",
+          "scenario": "affiliate_user_provision_forbidden",
+          "test_type": "Security",
+          "test_description": "Block affiliate user.",
+          "preconditions": "Affiliate token.",
+          "input_data": "{'adminContact': {'fullName': 'Amaka Okoye', 'email': 'ops@acmefinance.ng', 'phone': '+2348012345678'}, 'deliveryChannels': ['EMAIL']}",
+          "request": {
+            "role": "affiliate",
+            "query": {},
+            "path_params": {
+              "caseId": "CASE-2026000981"
+            },
+            "payload": {
+              "adminContact": {
+                "fullName": "Amaka Okoye",
+                "email": "ops@acmefinance.ng",
+                "phone": "+2348012345678"
+              },
+              "deliveryChannels": [
+                "EMAIL"
+              ]
+            }
+          },
+          "expected_result": "403 Forbidden; no provisioning.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-API-ONB-09-03"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-09-028",
+          "scenario": "bank_user_provision_forbidden",
+          "test_type": "Security",
+          "test_description": "Block bank user.",
+          "preconditions": "Bank token.",
+          "input_data": "{'adminContact': {'fullName': 'Amaka Okoye', 'email': 'ops@acmefinance.ng', 'phone': '+2348012345678'}, 'deliveryChannels': ['EMAIL']}",
+          "request": {
+            "role": "bank",
+            "query": {},
+            "path_params": {
+              "caseId": "CASE-2026000981"
+            },
+            "payload": {
+              "adminContact": {
+                "fullName": "Amaka Okoye",
+                "email": "ops@acmefinance.ng",
+                "phone": "+2348012345678"
+              },
+              "deliveryChannels": [
+                "EMAIL"
+              ]
+            }
+          },
+          "expected_result": "403 Forbidden; no provisioning.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-API-ONB-09-03"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-09-030",
+          "scenario": "provisioning_audit_log_recorded",
+          "test_type": "Audit",
+          "test_description": "Audit provisioning and partnership creation.",
+          "preconditions": "Audit log verification available.",
+          "input_data": "{'adminContact': {'fullName': 'Amaka Okoye', 'email': 'ops@acmefinance.ng', 'phone': '+2348012345678'}, 'deliveryChannels': ['EMAIL']}",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {
+              "caseId": "CASE-2026000981"
+            },
+            "payload": {
+              "adminContact": {
+                "fullName": "Amaka Okoye",
+                "email": "ops@acmefinance.ng",
+                "phone": "+2348012345678"
+              },
+              "deliveryChannels": [
+                "EMAIL"
+              ]
+            }
+          },
+          "expected_result": "200 and audit log records actor, caseId, affiliateId, tenantId, partnership summary, timestamp.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-API-ONB-09-13"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-09-031",
+          "scenario": "partial_downstream_failure_safe",
+          "test_type": "Resilience",
+          "test_description": "No inconsistent state after downstream failure.",
+          "preconditions": "Simulate tenant created but partnership creation fails.",
+          "input_data": "{'adminContact': {'fullName': 'Amaka Okoye', 'email': 'ops@acmefinance.ng', 'phone': '+2348012345678'}, 'deliveryChannels': ['EMAIL']}",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {
+              "caseId": "CASE-2026000981"
+            },
+            "payload": {
+              "adminContact": {
+                "fullName": "Amaka Okoye",
+                "email": "ops@acmefinance.ng",
+                "phone": "+2348012345678"
+              },
+              "deliveryChannels": [
+                "EMAIL"
+              ]
+            }
+          },
+          "expected_result": "500 or controlled partial failure; rollback or retry-safe behavior.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-API-ONB-09-12",
+            "FR-API-ONB-09-13"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-09-006",
+          "scenario": "nonexistent_case_not_found",
+          "test_type": "Negative",
+          "test_description": "Provision unknown case.",
+          "preconditions": "caseId does not exist.",
+          "input_data": "{'adminContact': {'fullName': 'Amaka Okoye', 'email': 'ops@acmefinance.ng', 'phone': '+2348012345678'}, 'deliveryChannels': ['EMAIL']}",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {
+              "caseId": "CASE-DOES-NOT-EXIST"
+            },
+            "payload": {
+              "adminContact": {
+                "fullName": "Amaka Okoye",
+                "email": "ops@acmefinance.ng",
+                "phone": "+2348012345678"
+              },
+              "deliveryChannels": [
+                "EMAIL"
+              ]
+            }
+          },
+          "expected_result": "404 Not Found; no affiliate created.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-API-ONB-09-05"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-09-007",
+          "scenario": "missing_admin_contact_rejected",
+          "test_type": "Negative",
+          "test_description": "Reject missing adminContact.",
+          "preconditions": "Approved case.",
+          "input_data": "{'deliveryChannels': ['EMAIL']}",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {
+              "caseId": "CASE-2026000981"
+            },
+            "payload": {
+              "deliveryChannels": [
+                "EMAIL"
+              ]
+            }
+          },
+          "expected_result": "422 Unprocessable Entity.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-API-ONB-09-09"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-09-008",
+          "scenario": "missing_admin_full_name_rejected",
+          "test_type": "Negative",
+          "test_description": "Reject missing admin fullName.",
+          "preconditions": "Approved case.",
+          "input_data": "{'adminContact': {'email': 'ops@acmefinance.ng', 'phone': '+2348012345678'}, 'deliveryChannels': ['EMAIL']}",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {
+              "caseId": "CASE-2026000981"
+            },
+            "payload": {
+              "adminContact": {
+                "email": "ops@acmefinance.ng",
+                "phone": "+2348012345678"
+              },
+              "deliveryChannels": [
+                "EMAIL"
+              ]
+            }
+          },
+          "expected_result": "422 Unprocessable Entity.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-API-ONB-09-09"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-09-009",
+          "scenario": "missing_admin_email_rejected",
+          "test_type": "Negative",
+          "test_description": "Reject missing admin email.",
+          "preconditions": "Approved case.",
+          "input_data": "{'adminContact': {'fullName': 'Amaka Okoye', 'phone': '+2348012345678'}, 'deliveryChannels': ['EMAIL']}",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {
+              "caseId": "CASE-2026000981"
+            },
+            "payload": {
+              "adminContact": {
+                "fullName": "Amaka Okoye",
+                "phone": "+2348012345678"
+              },
+              "deliveryChannels": [
+                "EMAIL"
+              ]
+            }
+          },
+          "expected_result": "422 Unprocessable Entity.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-API-ONB-09-09"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-09-010",
+          "scenario": "invalid_admin_email_format_rejected",
+          "test_type": "Negative",
+          "test_description": "Reject invalid admin email.",
+          "preconditions": "Approved case.",
+          "input_data": "{'adminContact': {'fullName': 'Amaka Okoye', 'email': 'not-an-email', 'phone': '+2348012345678'}, 'deliveryChannels': ['EMAIL']}",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {
+              "caseId": "CASE-2026000981"
+            },
+            "payload": {
+              "adminContact": {
+                "fullName": "Amaka Okoye",
+                "email": "not-an-email",
+                "phone": "+2348012345678"
+              },
+              "deliveryChannels": [
+                "EMAIL"
+              ]
+            }
+          },
+          "expected_result": "422 Unprocessable Entity.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-API-ONB-09-09"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-09-011",
+          "scenario": "missing_phone_policy",
+          "test_type": "Boundary",
+          "test_description": "Handle missing phone consistently.",
+          "preconditions": "Approved case.",
+          "input_data": "{'adminContact': {'fullName': 'Amaka Okoye', 'email': 'ops@acmefinance.ng'}, 'deliveryChannels': ['EMAIL']}",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {
+              "caseId": "CASE-2026000981"
+            },
+            "payload": {
+              "adminContact": {
+                "fullName": "Amaka Okoye",
+                "email": "ops@acmefinance.ng"
+              },
+              "deliveryChannels": [
+                "EMAIL"
+              ]
+            }
+          },
+          "expected_result": "422 if phone required; otherwise 200.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-API-ONB-09-09"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-09-012",
+          "scenario": "invalid_phone_format_rejected",
+          "test_type": "Negative",
+          "test_description": "Reject invalid phone.",
+          "preconditions": "Approved case.",
+          "input_data": "{'adminContact': {'fullName': 'Amaka Okoye', 'email': 'ops@acmefinance.ng', 'phone': '12345'}, 'deliveryChannels': ['EMAIL']}",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {
+              "caseId": "CASE-2026000981"
+            },
+            "payload": {
+              "adminContact": {
+                "fullName": "Amaka Okoye",
+                "email": "ops@acmefinance.ng",
+                "phone": "12345"
+              },
+              "deliveryChannels": [
+                "EMAIL"
+              ]
+            }
+          },
+          "expected_result": "422 Unprocessable Entity.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-API-ONB-09-09"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-09-015",
+          "scenario": "empty_delivery_channels_policy",
+          "test_type": "Boundary",
+          "test_description": "Handle empty delivery channel list.",
+          "preconditions": "Approved case.",
+          "input_data": "{'adminContact': {'fullName': 'Amaka Okoye', 'email': 'ops@acmefinance.ng', 'phone': '+2348012345678'}, 'deliveryChannels': []}",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {
+              "caseId": "CASE-2026000981"
+            },
+            "payload": {
+              "adminContact": {
+                "fullName": "Amaka Okoye",
+                "email": "ops@acmefinance.ng",
+                "phone": "+2348012345678"
+              },
+              "deliveryChannels": []
+            }
+          },
+          "expected_result": "422 or documented default policy; no 500.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-API-ONB-09-09"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-09-029",
+          "scenario": "bank_owned_affiliate_creation_blocked",
+          "test_type": "Security",
+          "test_description": "Block using this endpoint for bank-owned affiliates.",
+          "preconditions": "Approved case.",
+          "input_data": "{'adminContact': {'fullName': 'Amaka Okoye', 'email': 'ops@acmefinance.ng', 'phone': '+2348012345678'}, 'deliveryChannels': ['EMAIL'], 'affiliateType': 'INTERNAL_BANK'}",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {
+              "caseId": "CASE-2026000981"
+            },
+            "payload": {
+              "adminContact": {
+                "fullName": "Amaka Okoye",
+                "email": "ops@acmefinance.ng",
+                "phone": "+2348012345678"
+              },
+              "deliveryChannels": [
+                "EMAIL"
+              ],
+              "affiliateType": "INTERNAL_BANK"
+            }
+          },
+          "expected_result": "409/422 logical error; endpoint only provisions EXTERNAL affiliates.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-API-ONB-09-14"
+          ],
+          "priority": "High"
+        }
+      ]
+    },
+    {
+      "api_id": "API-ONB-10",
+      "name": "Get Onboarding Case Detail",
+      "endpoint": "GET /api/v1/admin/onboarding/cases/{caseId}",
+      "test_case_count": 30,
+      "functional_requirements": [
+        "FR-API-ONB-10-01",
+        "FR-API-ONB-10-02",
+        "FR-API-ONB-10-03",
+        "FR-API-ONB-10-04",
+        "FR-API-ONB-10-05",
+        "FR-API-ONB-10-06",
+        "FR-API-ONB-10-07",
+        "FR-API-ONB-10-08"
+      ],
+      "test_cases": [
+        {
+          "tc_id": "TC-ONB-10-001",
+          "scenario": "get_case_submitted",
+          "test_type": "Functional",
+          "test_description": "Fetch a SUBMITTED case detail.",
+          "preconditions": "Service Provider reviewer token; case exists in target state.",
+          "input_data": "caseId=CASE-2026-A3F72B1C94E847A2BC6D51E87C903F12",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {
+              "caseId": "CASE-2026-A3F72B1C94E847A2BC6D51E87C903F12"
+            },
+            "payload": null
+          },
+          "expected_result": "200 OK; body includes caseId, status=SUBMITTED, affiliateName, submittedAt, history.",
+          "expected_checks": [
+            "status_code",
+            "case_detail_fields"
+          ],
+          "fr_coverage": [
+            "FR-API-ONB-10-01",
+            "FR-API-ONB-10-02",
+            "FR-API-ONB-10-03",
+            "FR-API-ONB-10-04",
+            "FR-API-ONB-10-05"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-10-002",
+          "scenario": "get_case_approved",
+          "test_type": "Functional",
+          "test_description": "Fetch an APPROVED case detail.",
+          "preconditions": "Service Provider reviewer token; case exists in target state.",
+          "input_data": "caseId=CASE-2026-F9168C5E62D549659A1D84B95E402D30",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {
+              "caseId": "CASE-2026-F9168C5E62D549659A1D84B95E402D30"
+            },
+            "payload": null
+          },
+          "expected_result": "200 OK; body includes caseId, status=APPROVED, decision metadata.",
+          "expected_checks": [
+            "status_code",
+            "case_detail_fields"
+          ],
+          "fr_coverage": [
+            "FR-API-ONB-10-01",
+            "FR-API-ONB-10-02",
+            "FR-API-ONB-10-03",
+            "FR-API-ONB-10-04",
+            "FR-API-ONB-10-05"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-10-003",
+          "scenario": "wrong_role_rejected",
+          "test_type": "Functional",
+          "test_description": "Fetch a REJECTED case detail.",
+          "preconditions": "Service Provider reviewer token; case exists in target state.",
+          "input_data": "caseId=CASE-2026-F9168C5E62D549659A1D84B95E402D30",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {
+              "caseId": "CASE-2026-F9168C5E62D549659A1D84B95E402D30"
+            },
+            "payload": null
+          },
+          "expected_result": "200 OK; body includes caseId, status, decision metadata.",
+          "expected_checks": [
+            "status_code",
+            "case_detail_fields"
+          ],
+          "fr_coverage": [
+            "FR-API-ONB-10-01",
+            "FR-API-ONB-10-02",
+            "FR-API-ONB-10-03",
+            "FR-API-ONB-10-04",
+            "FR-API-ONB-10-05"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-10-004",
+          "scenario": "get_case_clarification_required",
+          "test_type": "Functional",
+          "test_description": "Fetch a CLARIFICATION_REQUIRED case.",
+          "preconditions": "Service Provider reviewer token; case exists in target state.",
+          "input_data": "caseId=CASE-2026-A3F72B1C94E847A2BC6D51E87C903F12",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {
+              "caseId": "CASE-2026-A3F72B1C94E847A2BC6D51E87C903F12"
+            },
+            "payload": null
+          },
+          "expected_result": "200 OK; body includes caseId, status, clarification notes.",
+          "expected_checks": [
+            "status_code",
+            "case_detail_fields"
+          ],
+          "fr_coverage": [
+            "FR-API-ONB-10-01",
+            "FR-API-ONB-10-02",
+            "FR-API-ONB-10-03",
+            "FR-API-ONB-10-04",
+            "FR-API-ONB-10-05"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-10-005",
+          "scenario": "get_case_in_review",
+          "test_type": "Functional",
+          "test_description": "Fetch an IN_REVIEW case detail.",
+          "preconditions": "Service Provider reviewer token; case exists in target state.",
+          "input_data": "caseId=CASE-2026-A3F72B1C94E847A2BC6D51E87C903F12",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {
+              "caseId": "CASE-2026-A3F72B1C94E847A2BC6D51E87C903F12"
+            },
+            "payload": null
+          },
+          "expected_result": "200 OK; body includes caseId, status=IN_REVIEW.",
+          "expected_checks": [
+            "status_code",
+            "case_detail_fields"
+          ],
+          "fr_coverage": [
+            "FR-API-ONB-10-01",
+            "FR-API-ONB-10-02",
+            "FR-API-ONB-10-03",
+            "FR-API-ONB-10-04",
+            "FR-API-ONB-10-05"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-10-006",
+          "scenario": "response_includes_caseId",
+          "test_type": "Functional",
+          "test_description": "Response body includes caseId field.",
+          "preconditions": "Service Provider reviewer token; case exists in target state.",
+          "input_data": "caseId=CASE-2026-A3F72B1C94E847A2BC6D51E87C903F12",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {
+              "caseId": "CASE-2026-A3F72B1C94E847A2BC6D51E87C903F12"
+            },
+            "payload": null
+          },
+          "expected_result": "200 OK; body.caseId == request caseId.",
+          "expected_checks": [
+            "status_code",
+            "field_caseId"
+          ],
+          "fr_coverage": [
+            "FR-API-ONB-10-01",
+            "FR-API-ONB-10-02",
+            "FR-API-ONB-10-03",
+            "FR-API-ONB-10-04",
+            "FR-API-ONB-10-05"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-10-007",
+          "scenario": "response_includes_status",
+          "test_type": "Functional",
+          "test_description": "Response body includes status field.",
+          "preconditions": "Service Provider reviewer token; case exists in target state.",
+          "input_data": "caseId=CASE-2026-A3F72B1C94E847A2BC6D51E87C903F12",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {
+              "caseId": "CASE-2026-A3F72B1C94E847A2BC6D51E87C903F12"
+            },
+            "payload": null
+          },
+          "expected_result": "200 OK; body.status is a valid lifecycle state.",
+          "expected_checks": [
+            "status_code",
+            "field_status"
+          ],
+          "fr_coverage": [
+            "FR-API-ONB-10-01",
+            "FR-API-ONB-10-02",
+            "FR-API-ONB-10-03",
+            "FR-API-ONB-10-04",
+            "FR-API-ONB-10-05"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-10-008",
+          "scenario": "response_includes_affiliate_info",
+          "test_type": "Functional",
+          "test_description": "Response body includes affiliate info.",
+          "preconditions": "Service Provider reviewer token; case exists in target state.",
+          "input_data": "caseId=CASE-2026-A3F72B1C94E847A2BC6D51E87C903F12",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {
+              "caseId": "CASE-2026-A3F72B1C94E847A2BC6D51E87C903F12"
+            },
+            "payload": null
+          },
+          "expected_result": "200 OK; body has affiliateName / affiliateRef or equivalent.",
+          "expected_checks": [
+            "status_code",
+            "field_affiliate"
+          ],
+          "fr_coverage": [
+            "FR-API-ONB-10-01",
+            "FR-API-ONB-10-02",
+            "FR-API-ONB-10-03",
+            "FR-API-ONB-10-04",
+            "FR-API-ONB-10-05"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-10-009",
+          "scenario": "response_includes_history",
+          "test_type": "Functional",
+          "test_description": "Response body includes lifecycle history.",
+          "preconditions": "Service Provider reviewer token; case exists in target state.",
+          "input_data": "caseId=CASE-2026-F9168C5E62D549659A1D84B95E402D30",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {
+              "caseId": "CASE-2026-F9168C5E62D549659A1D84B95E402D30"
+            },
+            "payload": null
+          },
+          "expected_result": "200 OK; body.history is a non-empty list of state transitions.",
+          "expected_checks": [
+            "status_code",
+            "field_history"
+          ],
+          "fr_coverage": [
+            "FR-API-ONB-10-01",
+            "FR-API-ONB-10-02",
+            "FR-API-ONB-10-03",
+            "FR-API-ONB-10-04",
+            "FR-API-ONB-10-05"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-10-010",
+          "scenario": "response_schema_matches_swagger",
+          "test_type": "Functional",
+          "test_description": "Response shape matches swagger contract.",
+          "preconditions": "Service Provider reviewer token; case exists in target state.",
+          "input_data": "caseId=CASE-2026-A3F72B1C94E847A2BC6D51E87C903F12",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {
+              "caseId": "CASE-2026-A3F72B1C94E847A2BC6D51E87C903F12"
+            },
+            "payload": null
+          },
+          "expected_result": "200 OK; response validates against AdminCaseDetailResponse schema.",
+          "expected_checks": [
+            "status_code",
+            "schema_match"
+          ],
+          "fr_coverage": [
+            "FR-API-ONB-10-01",
+            "FR-API-ONB-10-02",
+            "FR-API-ONB-10-03",
+            "FR-API-ONB-10-04",
+            "FR-API-ONB-10-05"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-10-012",
+          "scenario": "empty_caseId_rejected",
+          "test_type": "Negative",
+          "test_description": "Invalid-format caseId in path var is rejected by the handler.",
+          "preconditions": "Service Provider reviewer token; case exists in target state.",
+          "input_data": "caseId=INVALID-CASE-001",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {
+              "caseId": "INVALID-CASE-001"
+            },
+            "payload": null
+          },
+          "expected_result": "400 Bad Request or 404 Not Found (invalid caseId format; not a valid CASE-2026-XXX id).",
+          "expected_checks": [
+            "status_code"
+          ],
+          "fr_coverage": [
+            "FR-API-ONB-10-01",
+            "FR-API-ONB-10-02",
+            "FR-API-ONB-10-03",
+            "FR-API-ONB-10-04",
+            "FR-API-ONB-10-05"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-10-014",
+          "scenario": "caseId_with_sql_injection_payload",
+          "test_type": "Security",
+          "test_description": "SQLi payload in caseId path param is rejected.",
+          "preconditions": "Service Provider reviewer token; case exists in target state.",
+          "input_data": "caseId=CASE-2026-' OR 1=1--",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {
+              "caseId": "CASE-2026-' OR 1=1--"
+            },
+            "payload": null
+          },
+          "expected_result": "400 or 404 or 422 - invalid path parameter; no DB-error leakage.",
+          "expected_checks": [
+            "status_code",
+            "no_db_leak"
+          ],
+          "fr_coverage": [
+            "FR-API-ONB-10-01",
+            "FR-API-ONB-10-02",
+            "FR-API-ONB-10-03",
+            "FR-API-ONB-10-04",
+            "FR-API-ONB-10-05"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-10-015",
+          "scenario": "caseId_with_xss_payload",
+          "test_type": "Security",
+          "test_description": "XSS payload in caseId path param is rejected.",
+          "preconditions": "Service Provider reviewer token; case exists in target state.",
+          "input_data": "caseId=<script>alert(1)</script>",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {
+              "caseId": "<script>alert(1)</script>"
+            },
+            "payload": null
+          },
+          "expected_result": "400/422 invalid path parameter.",
+          "expected_checks": [
+            "status_code",
+            "no_html_reflection"
+          ],
+          "fr_coverage": [
+            "FR-API-ONB-10-01",
+            "FR-API-ONB-10-02",
+            "FR-API-ONB-10-03",
+            "FR-API-ONB-10-04",
+            "FR-API-ONB-10-05"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-10-016",
+          "scenario": "caseId_extremely_long_rejected",
+          "test_type": "Negative",
+          "test_description": "5000-char caseId is rejected, not crashed.",
+          "preconditions": "Service Provider reviewer token; case exists in target state.",
+          "input_data": "caseId=CASE-2026-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {
+              "caseId": "CASE-2026-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+            },
+            "payload": null
+          },
+          "expected_result": "400 or 413 or 414 - caseId length exceeds limit.",
+          "expected_checks": [
+            "status_code"
+          ],
+          "fr_coverage": [
+            "FR-API-ONB-10-01",
+            "FR-API-ONB-10-02",
+            "FR-API-ONB-10-03",
+            "FR-API-ONB-10-04",
+            "FR-API-ONB-10-05"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-10-017",
+          "scenario": "unicode_caseId_handled",
+          "test_type": "Negative",
+          "test_description": "Unicode/emoji caseId is handled gracefully.",
+          "preconditions": "Service Provider reviewer token; case exists in target state.",
+          "input_data": "caseId=CASE-2026-中文👍",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {
+              "caseId": "CASE-2026-中文👍"
+            },
+            "payload": null
+          },
+          "expected_result": "400 or 404 - unicode caseId not a valid lookup.",
+          "expected_checks": [
+            "status_code"
+          ],
+          "fr_coverage": [
+            "FR-API-ONB-10-01",
+            "FR-API-ONB-10-02",
+            "FR-API-ONB-10-03",
+            "FR-API-ONB-10-04",
+            "FR-API-ONB-10-05"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-10-018",
+          "scenario": "unauthenticated_access_blocked",
+          "test_type": "Security",
+          "test_description": "Anonymous access to case detail is blocked.",
+          "preconditions": "Service Provider reviewer token; case exists in target state.",
+          "input_data": "caseId=CASE-2026-A3F72B1C94E847A2BC6D51E87C903F12",
+          "request": {
+            "role": "anonymous",
+            "query": {},
+            "path_params": {
+              "caseId": "CASE-2026-A3F72B1C94E847A2BC6D51E87C903F12"
+            },
+            "payload": null
+          },
+          "expected_result": "401 Unauthorized.",
+          "expected_checks": [
+            "status_code"
+          ],
+          "fr_coverage": [
+            "FR-API-ONB-10-01",
+            "FR-API-ONB-10-02",
+            "FR-API-ONB-10-03",
+            "FR-API-ONB-10-04",
+            "FR-API-ONB-10-05"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-10-019",
+          "scenario": "expired_token_blocked",
+          "test_type": "Security",
+          "test_description": "Expired bearer token is rejected.",
+          "preconditions": "Service Provider reviewer token; case exists in target state.",
+          "input_data": "caseId=CASE-2026-A3F72B1C94E847A2BC6D51E87C903F12",
+          "request": {
+            "role": "expired_token",
+            "query": {},
+            "path_params": {
+              "caseId": "CASE-2026-A3F72B1C94E847A2BC6D51E87C903F12"
+            },
+            "payload": null
+          },
+          "expected_result": "401 Unauthorized.",
+          "expected_checks": [
+            "status_code"
+          ],
+          "fr_coverage": [
+            "FR-API-ONB-10-01",
+            "FR-API-ONB-10-02",
+            "FR-API-ONB-10-03",
+            "FR-API-ONB-10-04",
+            "FR-API-ONB-10-05"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-10-020",
+          "scenario": "invalid_token_blocked",
+          "test_type": "Security",
+          "test_description": "Malformed bearer token is rejected.",
+          "preconditions": "Service Provider reviewer token; case exists in target state.",
+          "input_data": "caseId=CASE-2026-A3F72B1C94E847A2BC6D51E87C903F12",
+          "request": {
+            "role": "invalid_token",
+            "query": {},
+            "path_params": {
+              "caseId": "CASE-2026-A3F72B1C94E847A2BC6D51E87C903F12"
+            },
+            "payload": null
+          },
+          "expected_result": "401 Unauthorized.",
+          "expected_checks": [
+            "status_code"
+          ],
+          "fr_coverage": [
+            "FR-API-ONB-10-01",
+            "FR-API-ONB-10-02",
+            "FR-API-ONB-10-03",
+            "FR-API-ONB-10-04",
+            "FR-API-ONB-10-05"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-10-021",
+          "scenario": "affiliate_user_forbidden",
+          "test_type": "Security",
+          "test_description": "Affiliate role cannot read admin case detail.",
+          "preconditions": "Service Provider reviewer token; case exists in target state.",
+          "input_data": "caseId=CASE-2026-A3F72B1C94E847A2BC6D51E87C903F12",
+          "request": {
+            "role": "affiliate_user",
+            "query": {},
+            "path_params": {
+              "caseId": "CASE-2026-A3F72B1C94E847A2BC6D51E87C903F12"
+            },
+            "payload": null
+          },
+          "expected_result": "403 Forbidden.",
+          "expected_checks": [
+            "status_code"
+          ],
+          "fr_coverage": [
+            "FR-API-ONB-10-01",
+            "FR-API-ONB-10-02",
+            "FR-API-ONB-10-03",
+            "FR-API-ONB-10-04",
+            "FR-API-ONB-10-05"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-10-022",
+          "scenario": "bank_user_forbidden",
+          "test_type": "Security",
+          "test_description": "Bank role cannot read admin case detail.",
+          "preconditions": "Service Provider reviewer token; case exists in target state.",
+          "input_data": "caseId=CASE-2026-A3F72B1C94E847A2BC6D51E87C903F12",
+          "request": {
+            "role": "bank_user",
+            "query": {},
+            "path_params": {
+              "caseId": "CASE-2026-A3F72B1C94E847A2BC6D51E87C903F12"
+            },
+            "payload": null
+          },
+          "expected_result": "403 Forbidden.",
+          "expected_checks": [
+            "status_code"
+          ],
+          "fr_coverage": [
+            "FR-API-ONB-10-01",
+            "FR-API-ONB-10-02",
+            "FR-API-ONB-10-03",
+            "FR-API-ONB-10-04",
+            "FR-API-ONB-10-05"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-10-023",
+          "scenario": "foreign_tenant_case_not_visible",
+          "test_type": "Security",
+          "test_description": "Service provider from foreign tenant gets 404/403.",
+          "preconditions": "Service Provider reviewer token; case exists in target state.",
+          "input_data": "caseId=CASE-2026-A3F72B1C94E847A2BC6D51E87C903F12",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {
+              "caseId": "CASE-2026-A3F72B1C94E847A2BC6D51E87C903F12"
+            },
+            "payload": null
+          },
+          "expected_result": "403 or 404 (do not leak existence).",
+          "expected_checks": [
+            "status_code"
+          ],
+          "fr_coverage": [
+            "FR-API-ONB-10-01",
+            "FR-API-ONB-10-02",
+            "FR-API-ONB-10-03",
+            "FR-API-ONB-10-04",
+            "FR-API-ONB-10-05"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-10-024",
+          "scenario": "post_method_not_allowed",
+          "test_type": "Negative",
+          "test_description": "POST on the case-detail path is rejected.",
+          "preconditions": "Service Provider reviewer token; case exists in target state.",
+          "input_data": "caseId=CASE-2026-A3F72B1C94E847A2BC6D51E87C903F12",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {
+              "caseId": "CASE-2026-A3F72B1C94E847A2BC6D51E87C903F12"
+            },
+            "payload": null
+          },
+          "expected_result": "405 Method Not Allowed; Allow header lists GET.",
+          "expected_checks": [
+            "status_code",
+            "allow_header"
+          ],
+          "fr_coverage": [
+            "FR-API-ONB-10-01",
+            "FR-API-ONB-10-02",
+            "FR-API-ONB-10-03",
+            "FR-API-ONB-10-04",
+            "FR-API-ONB-10-05"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-10-025",
+          "scenario": "put_method_not_allowed",
+          "test_type": "Negative",
+          "test_description": "PUT on the case-detail path is rejected.",
+          "preconditions": "Service Provider reviewer token; case exists in target state.",
+          "input_data": "caseId=CASE-2026-A3F72B1C94E847A2BC6D51E87C903F12",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {
+              "caseId": "CASE-2026-A3F72B1C94E847A2BC6D51E87C903F12"
+            },
+            "payload": null
+          },
+          "expected_result": "405 Method Not Allowed; Allow header lists GET.",
+          "expected_checks": [
+            "status_code",
+            "allow_header"
+          ],
+          "fr_coverage": [
+            "FR-API-ONB-10-01",
+            "FR-API-ONB-10-02",
+            "FR-API-ONB-10-03",
+            "FR-API-ONB-10-04",
+            "FR-API-ONB-10-05"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-10-026",
+          "scenario": "delete_method_not_allowed",
+          "test_type": "Negative",
+          "test_description": "DELETE on the case-detail path is rejected.",
+          "preconditions": "Service Provider reviewer token; case exists in target state.",
+          "input_data": "caseId=CASE-2026-A3F72B1C94E847A2BC6D51E87C903F12",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {
+              "caseId": "CASE-2026-A3F72B1C94E847A2BC6D51E87C903F12"
+            },
+            "payload": null
+          },
+          "expected_result": "405 Method Not Allowed; Allow header lists GET.",
+          "expected_checks": [
+            "status_code",
+            "allow_header"
+          ],
+          "fr_coverage": [
+            "FR-API-ONB-10-01",
+            "FR-API-ONB-10-02",
+            "FR-API-ONB-10-03",
+            "FR-API-ONB-10-04",
+            "FR-API-ONB-10-05"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-10-027",
+          "scenario": "read_after_decision_consistent",
+          "test_type": "Functional",
+          "test_description": "Read after POST /decision reflects new status.",
+          "preconditions": "Service Provider reviewer token; case exists in target state.",
+          "input_data": "caseId=CASE-2026-F9168C5E62D549659A1D84B95E402D30",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {
+              "caseId": "CASE-2026-F9168C5E62D549659A1D84B95E402D30"
+            },
+            "payload": null
+          },
+          "expected_result": "200 OK; body.status reflects the most recent decision.",
+          "expected_checks": [
+            "status_code",
+            "consistency"
+          ],
+          "fr_coverage": [
+            "FR-API-ONB-10-01",
+            "FR-API-ONB-10-02",
+            "FR-API-ONB-10-03",
+            "FR-API-ONB-10-04",
+            "FR-API-ONB-10-05"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-10-028",
+          "scenario": "read_after_create_consistent",
+          "test_type": "Functional",
+          "test_description": "Read after case create returns the new case.",
+          "preconditions": "Service Provider reviewer token; case exists in target state.",
+          "input_data": "caseId=CASE-2026-A3F72B1C94E847A2BC6D51E87C903F12",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {
+              "caseId": "CASE-2026-A3F72B1C94E847A2BC6D51E87C903F12"
+            },
+            "payload": null
+          },
+          "expected_result": "200 OK; body.caseId matches just-minted case.",
+          "expected_checks": [
+            "status_code",
+            "consistency"
+          ],
+          "fr_coverage": [
+            "FR-API-ONB-10-01",
+            "FR-API-ONB-10-02",
+            "FR-API-ONB-10-03",
+            "FR-API-ONB-10-04",
+            "FR-API-ONB-10-05"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-10-029",
+          "scenario": "response_time_within_sla",
+          "test_type": "Performance",
+          "test_description": "Case detail returns within 2s SLA under normal load.",
+          "preconditions": "Service Provider reviewer token; case exists in target state.",
+          "input_data": "caseId=CASE-2026-A3F72B1C94E847A2BC6D51E87C903F12",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {
+              "caseId": "CASE-2026-A3F72B1C94E847A2BC6D51E87C903F12"
+            },
+            "payload": null
+          },
+          "expected_result": "200 OK; elapsed_seconds < 2.0.",
+          "expected_checks": [
+            "status_code",
+            "sla"
+          ],
+          "fr_coverage": [
+            "FR-API-ONB-10-01",
+            "FR-API-ONB-10-02",
+            "FR-API-ONB-10-03",
+            "FR-API-ONB-10-04",
+            "FR-API-ONB-10-05"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-10-030",
+          "scenario": "correlation_id_echoed",
+          "test_type": "Functional",
+          "test_description": "Custom X-Correlation-ID header is echoed back.",
+          "preconditions": "Service Provider reviewer token; case exists in target state.",
+          "input_data": "caseId=CASE-2026-A3F72B1C94E847A2BC6D51E87C903F12",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {
+              "caseId": "CASE-2026-A3F72B1C94E847A2BC6D51E87C903F12"
+            },
+            "payload": null
+          },
+          "expected_result": "200 OK; X-Correlation-ID present in response headers.",
+          "expected_checks": [
+            "status_code",
+            "correlation_id"
+          ],
+          "fr_coverage": [
+            "FR-API-ONB-10-01",
+            "FR-API-ONB-10-02",
+            "FR-API-ONB-10-03",
+            "FR-API-ONB-10-04",
+            "FR-API-ONB-10-05"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-10-011",
+          "scenario": "malformed_caseId_rejected",
+          "test_type": "Negative",
+          "test_description": "Malformed caseId (random alphanum) is rejected.",
+          "preconditions": "Service Provider reviewer token; case exists in target state.",
+          "input_data": "caseId=not-a-real-case-id",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {
+              "caseId": "not-a-real-case-id"
+            },
+            "payload": null
+          },
+          "expected_result": "400/422 invalid path parameter.",
+          "expected_checks": [
+            "status_code",
+            "error_envelope"
+          ],
+          "fr_coverage": [
+            "FR-API-ONB-10-01",
+            "FR-API-ONB-10-02",
+            "FR-API-ONB-10-03",
+            "FR-API-ONB-10-04",
+            "FR-API-ONB-10-05"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-ONB-10-013",
+          "scenario": "nonexistent_caseId_404",
+          "test_type": "Negative",
+          "test_description": "Well-formed but unknown caseId returns 404.",
+          "preconditions": "Service Provider reviewer token; case exists in target state.",
+          "input_data": "caseId=CASE-2026-00000000000000000000000000000000",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {
+              "caseId": "CASE-2026-00000000000000000000000000000000"
+            },
+            "payload": null
+          },
+          "expected_result": "404 Not Found; error envelope.",
+          "expected_checks": [
+            "status_code",
+            "error_envelope"
+          ],
+          "fr_coverage": [
+            "FR-API-ONB-10-01",
+            "FR-API-ONB-10-02",
+            "FR-API-ONB-10-03",
+            "FR-API-ONB-10-04",
+            "FR-API-ONB-10-05"
+          ],
+          "priority": "High"
+        }
+      ]
+    },
+    {
+      "api_id": "API-BNK-PRV-01",
+      "name": "Provision Issuing Bank",
+      "endpoint": "POST /api/v1/admin/banks",
+      "test_case_count": 34,
+      "functional_requirements": [
+        "FR-BNK-PRV-01",
+        "FR-BNK-PRV-02",
+        "FR-BNK-PRV-03",
+        "FR-BNK-PRV-04",
+        "FR-BNK-PRV-05",
+        "FR-BNK-PRV-06",
+        "FR-BNK-PRV-07",
+        "FR-BNK-PRV-08",
+        "FR-BNK-DIR-01",
+        "FR-BNK-DIR-02",
+        "FR-BNK-DIR-03",
+        "FR-BNK-DIR-04",
+        "FR-BNK-DIR-05",
+        "FR-BNK-DIR-VIS-01",
+        "FR-BNK-DIR-VIS-02",
+        "FR-BNK-DIR-VIS-03"
+      ],
+      "test_cases": [
+        {
+          "tc_id": "TC-BNK-PRV-01-001",
+          "scenario": "provision_issuing_bank_success",
+          "test_type": "Functional",
+          "test_description": "Provision a new issuing bank.",
+          "preconditions": "Unique bankCode and authorized SP user.",
+          "input_data": "{'legalName': 'Example Bank Plc', 'shortName': 'Example Bank', 'bankCode': 'EXB001', 'country': 'NG', 'primaryContact': {'fullName': 'Bank Admin', 'email': 'admin@examplebank.com', 'phone': '+2348012345678'}, 'status': 'ACTIVE'}",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {},
+            "payload": {
+              "legalName": "Example Bank Plc",
+              "shortName": "Example Bank",
+              "bankCode": "EXB001",
+              "country": "NG",
+              "primaryContact": {
+                "fullName": "Bank Admin",
+                "email": "admin@examplebank.com",
+                "phone": "+2348012345678"
+              },
+              "status": "ACTIVE"
+            }
+          },
+          "expected_result": "200; bankId, internalAffiliate, internalPartnership and provisionedAt returned.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-BNK-PRV-01",
+            "FR-BNK-PRV-03",
+            "FR-BNK-PRV-04"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-BNK-PRV-01-002",
+          "scenario": "authorized_service_provider_only",
+          "test_type": "Security",
+          "test_description": "Authorized SP can provision bank.",
+          "preconditions": "SP Admin token.",
+          "input_data": "{'legalName': 'Example Bank Plc', 'shortName': 'Example Bank', 'bankCode': 'EXB002', 'country': 'NG', 'primaryContact': {'fullName': 'Bank Admin', 'email': 'admin@examplebank.com', 'phone': '+2348012345678'}, 'status': 'ACTIVE'}",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {},
+            "payload": {
+              "legalName": "Example Bank Plc",
+              "shortName": "Example Bank",
+              "bankCode": "EXB002",
+              "country": "NG",
+              "primaryContact": {
+                "fullName": "Bank Admin",
+                "email": "admin@examplebank.com",
+                "phone": "+2348012345678"
+              },
+              "status": "ACTIVE"
+            }
+          },
+          "expected_result": "200; bank created.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-BNK-PRV-01",
+            "FR-BNK-PRV-02"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-BNK-PRV-01-003",
+          "scenario": "unauthenticated_bank_provision_blocked",
+          "test_type": "Security",
+          "test_description": "Block missing token.",
+          "preconditions": "No token.",
+          "input_data": "{'legalName': 'Example Bank Plc', 'shortName': 'Example Bank', 'bankCode': 'EXB001', 'country': 'NG', 'primaryContact': {'fullName': 'Bank Admin', 'email': 'admin@examplebank.com', 'phone': '+2348012345678'}, 'status': 'ACTIVE'}",
+          "request": {
+            "role": "none",
+            "query": {},
+            "path_params": {},
+            "payload": {
+              "legalName": "Example Bank Plc",
+              "shortName": "Example Bank",
+              "bankCode": "EXB001",
+              "country": "NG",
+              "primaryContact": {
+                "fullName": "Bank Admin",
+                "email": "admin@examplebank.com",
+                "phone": "+2348012345678"
+              },
+              "status": "ACTIVE"
+            }
+          },
+          "expected_result": "401 Unauthorized; no bank created.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-BNK-PRV-02"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-BNK-PRV-01-004",
+          "scenario": "expired_token_bank_provision_blocked",
+          "test_type": "Security",
+          "test_description": "Block expired token.",
+          "preconditions": "Expired token.",
+          "input_data": "{'legalName': 'Example Bank Plc', 'shortName': 'Example Bank', 'bankCode': 'EXB001', 'country': 'NG', 'primaryContact': {'fullName': 'Bank Admin', 'email': 'admin@examplebank.com', 'phone': '+2348012345678'}, 'status': 'ACTIVE'}",
+          "request": {
+            "role": "expired",
+            "query": {},
+            "path_params": {},
+            "payload": {
+              "legalName": "Example Bank Plc",
+              "shortName": "Example Bank",
+              "bankCode": "EXB001",
+              "country": "NG",
+              "primaryContact": {
+                "fullName": "Bank Admin",
+                "email": "admin@examplebank.com",
+                "phone": "+2348012345678"
+              },
+              "status": "ACTIVE"
+            }
+          },
+          "expected_result": "401 Unauthorized; no bank created.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-BNK-PRV-02"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-BNK-PRV-01-005",
+          "scenario": "affiliate_user_bank_provision_forbidden",
+          "test_type": "Security",
+          "test_description": "Block affiliate user.",
+          "preconditions": "Affiliate token.",
+          "input_data": "{'legalName': 'Example Bank Plc', 'shortName': 'Example Bank', 'bankCode': 'EXB001', 'country': 'NG', 'primaryContact': {'fullName': 'Bank Admin', 'email': 'admin@examplebank.com', 'phone': '+2348012345678'}, 'status': 'ACTIVE'}",
+          "request": {
+            "role": "affiliate",
+            "query": {},
+            "path_params": {},
+            "payload": {
+              "legalName": "Example Bank Plc",
+              "shortName": "Example Bank",
+              "bankCode": "EXB001",
+              "country": "NG",
+              "primaryContact": {
+                "fullName": "Bank Admin",
+                "email": "admin@examplebank.com",
+                "phone": "+2348012345678"
+              },
+              "status": "ACTIVE"
+            }
+          },
+          "expected_result": "403 Forbidden; no bank created.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-BNK-PRV-02"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-BNK-PRV-01-006",
+          "scenario": "bank_user_bank_provision_forbidden",
+          "test_type": "Security",
+          "test_description": "Block bank user.",
+          "preconditions": "Bank token.",
+          "input_data": "{'legalName': 'Example Bank Plc', 'shortName': 'Example Bank', 'bankCode': 'EXB001', 'country': 'NG', 'primaryContact': {'fullName': 'Bank Admin', 'email': 'admin@examplebank.com', 'phone': '+2348012345678'}, 'status': 'ACTIVE'}",
+          "request": {
+            "role": "bank",
+            "query": {},
+            "path_params": {},
+            "payload": {
+              "legalName": "Example Bank Plc",
+              "shortName": "Example Bank",
+              "bankCode": "EXB001",
+              "country": "NG",
+              "primaryContact": {
+                "fullName": "Bank Admin",
+                "email": "admin@examplebank.com",
+                "phone": "+2348012345678"
+              },
+              "status": "ACTIVE"
+            }
+          },
+          "expected_result": "403 Forbidden; no bank created.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-BNK-PRV-02"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-BNK-PRV-01-007",
+          "scenario": "wrong_role_rejected",
+          "test_type": "Security",
+          "test_description": "Block SP viewer without permission.",
+          "preconditions": "SP viewer token.",
+          "input_data": "{'legalName': 'Example Bank Plc', 'shortName': 'Example Bank', 'bankCode': 'EXB001', 'country': 'NG', 'primaryContact': {'fullName': 'Bank Admin', 'email': 'admin@examplebank.com', 'phone': '+2348012345678'}, 'status': 'ACTIVE'}",
+          "request": {
+            "role": "sp_viewer",
+            "query": {},
+            "path_params": {},
+            "payload": {
+              "legalName": "Example Bank Plc",
+              "shortName": "Example Bank",
+              "bankCode": "EXB001",
+              "country": "NG",
+              "primaryContact": {
+                "fullName": "Bank Admin",
+                "email": "admin@examplebank.com",
+                "phone": "+2348012345678"
+              },
+              "status": "ACTIVE"
+            }
+          },
+          "expected_result": "403 Forbidden; no bank created.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-BNK-PRV-02"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-BNK-PRV-01-013",
+          "scenario": "duplicate_bank_code_rejected",
+          "test_type": "Negative",
+          "test_description": "Reject duplicate bankCode.",
+          "preconditions": "Bank with bankCode exists.",
+          "input_data": "{'legalName': 'Example Bank Plc', 'shortName': 'Example Bank', 'bankCode': 'EXB001', 'country': 'NG', 'primaryContact': {'fullName': 'Bank Admin', 'email': 'admin@examplebank.com', 'phone': '+2348012345678'}, 'status': 'ACTIVE'}",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {},
+            "payload": {
+              "legalName": "Example Bank Plc",
+              "shortName": "Example Bank",
+              "bankCode": "EXB001",
+              "country": "NG",
+              "primaryContact": {
+                "fullName": "Bank Admin",
+                "email": "admin@examplebank.com",
+                "phone": "+2348012345678"
+              },
+              "status": "ACTIVE"
+            }
+          },
+          "expected_result": "409 Conflict; no duplicate bank/internal affiliate/partnership.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-BNK-PRV-05"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-BNK-PRV-01-023",
+          "scenario": "active_status_accepted",
+          "test_type": "Functional",
+          "test_description": "ACTIVE status accepted.",
+          "preconditions": "SP Admin token.",
+          "input_data": "{'legalName': 'Example Bank Plc', 'shortName': 'Example Bank', 'bankCode': 'EXB003', 'country': 'NG', 'primaryContact': {'fullName': 'Bank Admin', 'email': 'admin@examplebank.com', 'phone': '+2348012345678'}, 'status': 'ACTIVE'}",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {},
+            "payload": {
+              "legalName": "Example Bank Plc",
+              "shortName": "Example Bank",
+              "bankCode": "EXB003",
+              "country": "NG",
+              "primaryContact": {
+                "fullName": "Bank Admin",
+                "email": "admin@examplebank.com",
+                "phone": "+2348012345678"
+              },
+              "status": "ACTIVE"
+            }
+          },
+          "expected_result": "200; bank status ACTIVE.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-BNK-PRV-03"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-BNK-PRV-01-024",
+          "scenario": "bank_provisioning_independent_of_iam_user_creation",
+          "test_type": "Functional",
+          "test_description": "Bank can be provisioned independently of bank IAM user creation.",
+          "preconditions": "SP Admin token.",
+          "input_data": "{'legalName': 'Example Bank Plc', 'shortName': 'Example Bank', 'bankCode': 'EXB004', 'country': 'NG', 'primaryContact': {'fullName': 'Bank Admin', 'email': 'admin@examplebank.com', 'phone': '+2348012345678'}, 'status': 'ACTIVE'}",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {},
+            "payload": {
+              "legalName": "Example Bank Plc",
+              "shortName": "Example Bank",
+              "bankCode": "EXB004",
+              "country": "NG",
+              "primaryContact": {
+                "fullName": "Bank Admin",
+                "email": "admin@examplebank.com",
+                "phone": "+2348012345678"
+              },
+              "status": "ACTIVE"
+            }
+          },
+          "expected_result": "200; bank exists even if no separate bank IAM user is created in same transaction.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-BNK-PRV-06"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-BNK-PRV-01-025",
+          "scenario": "internal_affiliate_created",
+          "test_type": "Functional",
+          "test_description": "System-managed internal affiliate is created.",
+          "preconditions": "Successful bank provisioning.",
+          "input_data": "{'legalName': 'Example Bank Plc', 'shortName': 'Example Bank', 'bankCode': 'EXB005', 'country': 'NG', 'primaryContact': {'fullName': 'Bank Admin', 'email': 'admin@examplebank.com', 'phone': '+2348012345678'}, 'status': 'ACTIVE'}",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {},
+            "payload": {
+              "legalName": "Example Bank Plc",
+              "shortName": "Example Bank",
+              "bankCode": "EXB005",
+              "country": "NG",
+              "primaryContact": {
+                "fullName": "Bank Admin",
+                "email": "admin@examplebank.com",
+                "phone": "+2348012345678"
+              },
+              "status": "ACTIVE"
+            }
+          },
+          "expected_result": "200; internalAffiliate exists with affiliateType INTERNAL_BANK.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-BNK-DIR-02"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-BNK-PRV-01-026",
+          "scenario": "internal_affiliate_owner_bank_linked",
+          "test_type": "Contract",
+          "test_description": "Internal affiliate ownerBankId equals bankId.",
+          "preconditions": "Successful bank provisioning.",
+          "input_data": "{'legalName': 'Example Bank Plc', 'shortName': 'Example Bank', 'bankCode': 'EXB006', 'country': 'NG', 'primaryContact': {'fullName': 'Bank Admin', 'email': 'admin@examplebank.com', 'phone': '+2348012345678'}, 'status': 'ACTIVE'}",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {},
+            "payload": {
+              "legalName": "Example Bank Plc",
+              "shortName": "Example Bank",
+              "bankCode": "EXB006",
+              "country": "NG",
+              "primaryContact": {
+                "fullName": "Bank Admin",
+                "email": "admin@examplebank.com",
+                "phone": "+2348012345678"
+              },
+              "status": "ACTIVE"
+            }
+          },
+          "expected_result": "200; internalAffiliate.ownerBankId equals created bankId.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-BNK-DIR-02"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-BNK-PRV-01-027",
+          "scenario": "internal_affiliate_system_managed_true",
+          "test_type": "Contract",
+          "test_description": "Internal affiliate is system managed.",
+          "preconditions": "Successful bank provisioning.",
+          "input_data": "{'legalName': 'Example Bank Plc', 'shortName': 'Example Bank', 'bankCode': 'EXB007', 'country': 'NG', 'primaryContact': {'fullName': 'Bank Admin', 'email': 'admin@examplebank.com', 'phone': '+2348012345678'}, 'status': 'ACTIVE'}",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {},
+            "payload": {
+              "legalName": "Example Bank Plc",
+              "shortName": "Example Bank",
+              "bankCode": "EXB007",
+              "country": "NG",
+              "primaryContact": {
+                "fullName": "Bank Admin",
+                "email": "admin@examplebank.com",
+                "phone": "+2348012345678"
+              },
+              "status": "ACTIVE"
+            }
+          },
+          "expected_result": "200; internalAffiliate.isSystemManaged=true.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-BNK-DIR-02"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-BNK-PRV-01-028",
+          "scenario": "internal_active_partnership_created",
+          "test_type": "Functional",
+          "test_description": "Internal ACTIVE partnership is created.",
+          "preconditions": "Successful bank provisioning.",
+          "input_data": "{'legalName': 'Example Bank Plc', 'shortName': 'Example Bank', 'bankCode': 'EXB008', 'country': 'NG', 'primaryContact': {'fullName': 'Bank Admin', 'email': 'admin@examplebank.com', 'phone': '+2348012345678'}, 'status': 'ACTIVE'}",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {},
+            "payload": {
+              "legalName": "Example Bank Plc",
+              "shortName": "Example Bank",
+              "bankCode": "EXB008",
+              "country": "NG",
+              "primaryContact": {
+                "fullName": "Bank Admin",
+                "email": "admin@examplebank.com",
+                "phone": "+2348012345678"
+              },
+              "status": "ACTIVE"
+            }
+          },
+          "expected_result": "200; internalPartnership.status=ACTIVE.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-BNK-DIR-03"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-BNK-PRV-01-029",
+          "scenario": "provisioning_timestamp_and_actor_recorded",
+          "test_type": "Audit",
+          "test_description": "Provisioning timestamp and actor recorded.",
+          "preconditions": "Audit/persistence check available.",
+          "input_data": "{'legalName': 'Example Bank Plc', 'shortName': 'Example Bank', 'bankCode': 'EXB009', 'country': 'NG', 'primaryContact': {'fullName': 'Bank Admin', 'email': 'admin@examplebank.com', 'phone': '+2348012345678'}, 'status': 'ACTIVE'}",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {},
+            "payload": {
+              "legalName": "Example Bank Plc",
+              "shortName": "Example Bank",
+              "bankCode": "EXB009",
+              "country": "NG",
+              "primaryContact": {
+                "fullName": "Bank Admin",
+                "email": "admin@examplebank.com",
+                "phone": "+2348012345678"
+              },
+              "status": "ACTIVE"
+            }
+          },
+          "expected_result": "200; provisionedAt returned and provisioning actor stored.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-BNK-PRV-07"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-BNK-PRV-01-030",
+          "scenario": "bank_provisioning_audit_log_recorded",
+          "test_type": "Audit",
+          "test_description": "Audit log recorded for bank provisioning.",
+          "preconditions": "Audit log verification available.",
+          "input_data": "{'legalName': 'Example Bank Plc', 'shortName': 'Example Bank', 'bankCode': 'EXB010', 'country': 'NG', 'primaryContact': {'fullName': 'Bank Admin', 'email': 'admin@examplebank.com', 'phone': '+2348012345678'}, 'status': 'ACTIVE'}",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {},
+            "payload": {
+              "legalName": "Example Bank Plc",
+              "shortName": "Example Bank",
+              "bankCode": "EXB010",
+              "country": "NG",
+              "primaryContact": {
+                "fullName": "Bank Admin",
+                "email": "admin@examplebank.com",
+                "phone": "+2348012345678"
+              },
+              "status": "ACTIVE"
+            }
+          },
+          "expected_result": "200 and audit log records actor, bankId, bankCode, action, timestamp.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-BNK-PRV-08"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-BNK-PRV-01-031",
+          "scenario": "duplicate_retry_safe",
+          "test_type": "Resilience",
+          "test_description": "Retry duplicate request safely.",
+          "preconditions": "First request already succeeded.",
+          "input_data": "{'legalName': 'Example Bank Plc', 'shortName': 'Example Bank', 'bankCode': 'EXB011', 'country': 'NG', 'primaryContact': {'fullName': 'Bank Admin', 'email': 'admin@examplebank.com', 'phone': '+2348012345678'}, 'status': 'ACTIVE'}",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {},
+            "payload": {
+              "legalName": "Example Bank Plc",
+              "shortName": "Example Bank",
+              "bankCode": "EXB011",
+              "country": "NG",
+              "primaryContact": {
+                "fullName": "Bank Admin",
+                "email": "admin@examplebank.com",
+                "phone": "+2348012345678"
+              },
+              "status": "ACTIVE"
+            }
+          },
+          "expected_result": "First succeeds; second returns 409 with no duplicate bank/internal affiliate/internal partnership.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-BNK-PRV-05"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-BNK-PRV-01-032",
+          "scenario": "bank_backend_failure_safe",
+          "test_type": "Resilience",
+          "test_description": "Controlled error on persistence failure.",
+          "preconditions": "Simulate persistence failure.",
+          "input_data": "{'legalName': 'Example Bank Plc', 'shortName': 'Example Bank', 'bankCode': 'EXB012', 'country': 'NG', 'primaryContact': {'fullName': 'Bank Admin', 'email': 'admin@examplebank.com', 'phone': '+2348012345678'}, 'status': 'ACTIVE'}",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {},
+            "payload": {
+              "legalName": "Example Bank Plc",
+              "shortName": "Example Bank",
+              "bankCode": "EXB012",
+              "country": "NG",
+              "primaryContact": {
+                "fullName": "Bank Admin",
+                "email": "admin@examplebank.com",
+                "phone": "+2348012345678"
+              },
+              "status": "ACTIVE"
+            }
+          },
+          "expected_result": "500 Internal Server Error with safe body; no partial bank state remains unless recoverable.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "ERR-BNK-PRV-500"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-BNK-PRV-01-033",
+          "scenario": "status_lowercase_policy",
+          "test_type": "Functional",
+          "test_description": "Probe whether business-logic accepts lowercase \"active\" (case-insensitive compare or normalisation).",
+          "preconditions": "SP Admin token.",
+          "input_data": "{'legalName': 'Example Bank Plc', 'shortName': 'Example Bank', 'bankCode': 'EXB033', 'country': 'NG', 'primaryContact': {'fullName': 'Bank Admin', 'email': 'admin@examplebank.com', 'phone': '+2348012345678'}, 'status': 'active'}",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {},
+            "payload": {
+              "legalName": "Example Bank Plc",
+              "shortName": "Example Bank",
+              "bankCode": "EXB033",
+              "country": "NG",
+              "primaryContact": {
+                "fullName": "Bank Admin",
+                "email": "admin@examplebank.com",
+                "phone": "+2348012345678"
+              },
+              "status": "active"
+            }
+          },
+          "expected_result": "200/201 if BL is case-insensitive or normalises (Active/active accepted); 400 if BL requires exact UPPERCASE.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-BNK-PRV-08"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-BNK-PRV-01-034",
+          "scenario": "invalid_status_enum_rejected",
+          "test_type": "Functional",
+          "test_description": "Reject malformed status value (typo) that is not in the BL allowed set ACTIVE/INACTIVE.",
+          "preconditions": "SP Admin token.",
+          "input_data": "{'legalName': 'Example Bank Plc', 'shortName': 'Example Bank', 'bankCode': 'EXB034', 'country': 'NG', 'primaryContact': {'fullName': 'Bank Admin', 'email': 'admin@examplebank.com', 'phone': '+2348012345678'}, 'status': 'ACTVE'}",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {},
+            "payload": {
+              "legalName": "Example Bank Plc",
+              "shortName": "Example Bank",
+              "bankCode": "EXB034",
+              "country": "NG",
+              "primaryContact": {
+                "fullName": "Bank Admin",
+                "email": "admin@examplebank.com",
+                "phone": "+2348012345678"
+              },
+              "status": "ACTVE"
+            }
+          },
+          "expected_result": "400 Bad Request; status not in allowed set [ACTIVE, INACTIVE].",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-BNK-PRV-08"
+          ],
+          "priority": "Medium"
+        },
+        {
+          "tc_id": "TC-BNK-PRV-01-008",
+          "scenario": "missing_legal_name_rejected",
+          "test_type": "Negative",
+          "test_description": "Reject missing legalName.",
+          "preconditions": "SP Admin token.",
+          "input_data": "{'shortName': 'Example Bank', 'bankCode': 'EXB001', 'country': 'NG', 'primaryContact': {'fullName': 'Bank Admin', 'email': 'admin@examplebank.com', 'phone': '+2348012345678'}, 'status': 'ACTIVE'}",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {},
+            "payload": {
+              "shortName": "Example Bank",
+              "bankCode": "EXB001",
+              "country": "NG",
+              "primaryContact": {
+                "fullName": "Bank Admin",
+                "email": "admin@examplebank.com",
+                "phone": "+2348012345678"
+              },
+              "status": "ACTIVE"
+            }
+          },
+          "expected_result": "400 Bad Request; no bank created.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-BNK-PRV-03"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-BNK-PRV-01-009",
+          "scenario": "empty_legal_name_rejected",
+          "test_type": "Negative",
+          "test_description": "Reject empty legalName.",
+          "preconditions": "SP Admin token.",
+          "input_data": "{'legalName': '', 'shortName': 'Example Bank', 'bankCode': 'EXB001', 'country': 'NG', 'primaryContact': {'fullName': 'Bank Admin', 'email': 'admin@examplebank.com', 'phone': '+2348012345678'}, 'status': 'ACTIVE'}",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {},
+            "payload": {
+              "legalName": "",
+              "shortName": "Example Bank",
+              "bankCode": "EXB001",
+              "country": "NG",
+              "primaryContact": {
+                "fullName": "Bank Admin",
+                "email": "admin@examplebank.com",
+                "phone": "+2348012345678"
+              },
+              "status": "ACTIVE"
+            }
+          },
+          "expected_result": "400 Bad Request; no bank created.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-BNK-PRV-03"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-BNK-PRV-01-010",
+          "scenario": "missing_short_name_rejected",
+          "test_type": "Negative",
+          "test_description": "Reject missing shortName.",
+          "preconditions": "SP Admin token.",
+          "input_data": "{'legalName': 'Example Bank Plc', 'bankCode': 'EXB001', 'country': 'NG', 'primaryContact': {'fullName': 'Bank Admin', 'email': 'admin@examplebank.com', 'phone': '+2348012345678'}, 'status': 'ACTIVE'}",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {},
+            "payload": {
+              "legalName": "Example Bank Plc",
+              "bankCode": "EXB001",
+              "country": "NG",
+              "primaryContact": {
+                "fullName": "Bank Admin",
+                "email": "admin@examplebank.com",
+                "phone": "+2348012345678"
+              },
+              "status": "ACTIVE"
+            }
+          },
+          "expected_result": "400 Bad Request; no bank created.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-BNK-PRV-03"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-BNK-PRV-01-011",
+          "scenario": "missing_bank_code_rejected",
+          "test_type": "Negative",
+          "test_description": "Reject missing bankCode.",
+          "preconditions": "SP Admin token.",
+          "input_data": "{'legalName': 'Example Bank Plc', 'shortName': 'Example Bank', 'country': 'NG', 'primaryContact': {'fullName': 'Bank Admin', 'email': 'admin@examplebank.com', 'phone': '+2348012345678'}, 'status': 'ACTIVE'}",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {},
+            "payload": {
+              "legalName": "Example Bank Plc",
+              "shortName": "Example Bank",
+              "country": "NG",
+              "primaryContact": {
+                "fullName": "Bank Admin",
+                "email": "admin@examplebank.com",
+                "phone": "+2348012345678"
+              },
+              "status": "ACTIVE"
+            }
+          },
+          "expected_result": "400 Bad Request; no bank created.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-BNK-PRV-05"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-BNK-PRV-01-012",
+          "scenario": "empty_bank_code_rejected",
+          "test_type": "Negative",
+          "test_description": "Reject empty bankCode.",
+          "preconditions": "SP Admin token.",
+          "input_data": "{'legalName': 'Example Bank Plc', 'shortName': 'Example Bank', 'bankCode': '', 'country': 'NG', 'primaryContact': {'fullName': 'Bank Admin', 'email': 'admin@examplebank.com', 'phone': '+2348012345678'}, 'status': 'ACTIVE'}",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {},
+            "payload": {
+              "legalName": "Example Bank Plc",
+              "shortName": "Example Bank",
+              "bankCode": "",
+              "country": "NG",
+              "primaryContact": {
+                "fullName": "Bank Admin",
+                "email": "admin@examplebank.com",
+                "phone": "+2348012345678"
+              },
+              "status": "ACTIVE"
+            }
+          },
+          "expected_result": "400 Bad Request; no bank created.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-BNK-PRV-05"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-BNK-PRV-01-014",
+          "scenario": "invalid_bank_code_format_rejected",
+          "test_type": "Negative",
+          "test_description": "Reject invalid bankCode characters.",
+          "preconditions": "SP Admin token.",
+          "input_data": "{'legalName': 'Example Bank Plc', 'shortName': 'Example Bank', 'bankCode': '!!! invalid !!!', 'country': 'NG', 'primaryContact': {'fullName': 'Bank Admin', 'email': 'admin@examplebank.com', 'phone': '+2348012345678'}, 'status': 'ACTIVE'}",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {},
+            "payload": {
+              "legalName": "Example Bank Plc",
+              "shortName": "Example Bank",
+              "bankCode": "!!! invalid !!!",
+              "country": "NG",
+              "primaryContact": {
+                "fullName": "Bank Admin",
+                "email": "admin@examplebank.com",
+                "phone": "+2348012345678"
+              },
+              "status": "ACTIVE"
+            }
+          },
+          "expected_result": "400 Bad Request.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-BNK-PRV-05"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-BNK-PRV-01-015",
+          "scenario": "missing_country_rejected",
+          "test_type": "Negative",
+          "test_description": "Reject missing country.",
+          "preconditions": "SP Admin token.",
+          "input_data": "{'legalName': 'Example Bank Plc', 'shortName': 'Example Bank', 'bankCode': 'EXB001', 'primaryContact': {'fullName': 'Bank Admin', 'email': 'admin@examplebank.com', 'phone': '+2348012345678'}, 'status': 'ACTIVE'}",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {},
+            "payload": {
+              "legalName": "Example Bank Plc",
+              "shortName": "Example Bank",
+              "bankCode": "EXB001",
+              "primaryContact": {
+                "fullName": "Bank Admin",
+                "email": "admin@examplebank.com",
+                "phone": "+2348012345678"
+              },
+              "status": "ACTIVE"
+            }
+          },
+          "expected_result": "400 Bad Request.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-BNK-PRV-03"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-BNK-PRV-01-016",
+          "scenario": "invalid_country_code_rejected",
+          "test_type": "Negative",
+          "test_description": "Reject invalid country code.",
+          "preconditions": "SP Admin token.",
+          "input_data": "{'legalName': 'Example Bank Plc', 'shortName': 'Example Bank', 'bankCode': 'EXB001', 'country': 'NIGERIA', 'primaryContact': {'fullName': 'Bank Admin', 'email': 'admin@examplebank.com', 'phone': '+2348012345678'}, 'status': 'ACTIVE'}",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {},
+            "payload": {
+              "legalName": "Example Bank Plc",
+              "shortName": "Example Bank",
+              "bankCode": "EXB001",
+              "country": "NIGERIA",
+              "primaryContact": {
+                "fullName": "Bank Admin",
+                "email": "admin@examplebank.com",
+                "phone": "+2348012345678"
+              },
+              "status": "ACTIVE"
+            }
+          },
+          "expected_result": "400 Bad Request.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-BNK-PRV-03"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-BNK-PRV-01-017",
+          "scenario": "missing_primary_contact_rejected",
+          "test_type": "Negative",
+          "test_description": "Reject missing primaryContact.",
+          "preconditions": "SP Admin token.",
+          "input_data": "{'legalName': 'Example Bank Plc', 'shortName': 'Example Bank', 'bankCode': 'EXB001', 'country': 'NG', 'status': 'ACTIVE'}",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {},
+            "payload": {
+              "legalName": "Example Bank Plc",
+              "shortName": "Example Bank",
+              "bankCode": "EXB001",
+              "country": "NG",
+              "status": "ACTIVE"
+            }
+          },
+          "expected_result": "400 Bad Request.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-BNK-PRV-03"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-BNK-PRV-01-018",
+          "scenario": "missing_contact_full_name_rejected",
+          "test_type": "Negative",
+          "test_description": "Reject missing contact fullName.",
+          "preconditions": "SP Admin token.",
+          "input_data": "{'legalName': 'Example Bank Plc', 'shortName': 'Example Bank', 'bankCode': 'EXB001', 'country': 'NG', 'primaryContact': {'email': 'admin@examplebank.com', 'phone': '+2348012345678'}, 'status': 'ACTIVE'}",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {},
+            "payload": {
+              "legalName": "Example Bank Plc",
+              "shortName": "Example Bank",
+              "bankCode": "EXB001",
+              "country": "NG",
+              "primaryContact": {
+                "email": "admin@examplebank.com",
+                "phone": "+2348012345678"
+              },
+              "status": "ACTIVE"
+            }
+          },
+          "expected_result": "400 Bad Request.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-BNK-PRV-03"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-BNK-PRV-01-019",
+          "scenario": "missing_contact_email_rejected",
+          "test_type": "Negative",
+          "test_description": "Reject missing contact email.",
+          "preconditions": "SP Admin token.",
+          "input_data": "{'legalName': 'Example Bank Plc', 'shortName': 'Example Bank', 'bankCode': 'EXB001', 'country': 'NG', 'primaryContact': {'fullName': 'Bank Admin', 'phone': '+2348012345678'}, 'status': 'ACTIVE'}",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {},
+            "payload": {
+              "legalName": "Example Bank Plc",
+              "shortName": "Example Bank",
+              "bankCode": "EXB001",
+              "country": "NG",
+              "primaryContact": {
+                "fullName": "Bank Admin",
+                "phone": "+2348012345678"
+              },
+              "status": "ACTIVE"
+            }
+          },
+          "expected_result": "400 Bad Request.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-BNK-PRV-03"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-BNK-PRV-01-020",
+          "scenario": "invalid_contact_email_format_rejected",
+          "test_type": "Negative",
+          "test_description": "Reject invalid contact email.",
+          "preconditions": "SP Admin token.",
+          "input_data": "{'legalName': 'Example Bank Plc', 'shortName': 'Example Bank', 'bankCode': 'EXB001', 'country': 'NG', 'primaryContact': {'fullName': 'Bank Admin', 'email': 'bad-email', 'phone': '+2348012345678'}, 'status': 'ACTIVE'}",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {},
+            "payload": {
+              "legalName": "Example Bank Plc",
+              "shortName": "Example Bank",
+              "bankCode": "EXB001",
+              "country": "NG",
+              "primaryContact": {
+                "fullName": "Bank Admin",
+                "email": "bad-email",
+                "phone": "+2348012345678"
+              },
+              "status": "ACTIVE"
+            }
+          },
+          "expected_result": "400 Bad Request.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-BNK-PRV-03"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-BNK-PRV-01-021",
+          "scenario": "missing_contact_phone_policy",
+          "test_type": "Boundary",
+          "test_description": "Handle missing contact phone consistently.",
+          "preconditions": "SP Admin token.",
+          "input_data": "{'legalName': 'Example Bank Plc', 'shortName': 'Example Bank', 'bankCode': 'EXB001', 'country': 'NG', 'primaryContact': {'fullName': 'Bank Admin', 'email': 'admin@examplebank.com'}, 'status': 'ACTIVE'}",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {},
+            "payload": {
+              "legalName": "Example Bank Plc",
+              "shortName": "Example Bank",
+              "bankCode": "EXB001",
+              "country": "NG",
+              "primaryContact": {
+                "fullName": "Bank Admin",
+                "email": "admin@examplebank.com"
+              },
+              "status": "ACTIVE"
+            }
+          },
+          "expected_result": "400 if phone required; otherwise 200/201.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-BNK-PRV-03"
+          ],
+          "priority": "High"
+        },
+        {
+          "tc_id": "TC-BNK-PRV-01-022",
+          "scenario": "invalid_status_rejected",
+          "test_type": "Negative",
+          "test_description": "Reject invalid status.",
+          "preconditions": "SP Admin token.",
+          "input_data": "{'legalName': 'Example Bank Plc', 'shortName': 'Example Bank', 'bankCode': 'EXB001', 'country': 'NG', 'primaryContact': {'fullName': 'Bank Admin', 'email': 'admin@examplebank.com', 'phone': '+2348012345678'}, 'status': 'UNKNOWN'}",
+          "request": {
+            "role": "service_provider",
+            "query": {},
+            "path_params": {},
+            "payload": {
+              "legalName": "Example Bank Plc",
+              "shortName": "Example Bank",
+              "bankCode": "EXB001",
+              "country": "NG",
+              "primaryContact": {
+                "fullName": "Bank Admin",
+                "email": "admin@examplebank.com",
+                "phone": "+2348012345678"
+              },
+              "status": "UNKNOWN"
+            }
+          },
+          "expected_result": "400 Bad Request.",
+          "expected_checks": [],
+          "fr_coverage": [
+            "FR-BNK-PRV-03"
+          ],
+          "priority": "High"
+        }
+      ]
+    }
+  ],
+  "total_test_cases": 153
+}

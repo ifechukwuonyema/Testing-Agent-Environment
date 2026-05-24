@@ -1,0 +1,984 @@
+{
+  "suspend_pool": [
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "affiliateId": "AFF-FRESH-800"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "affiliateId": "AFF-FRESH-801"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "affiliateId": "AFF-FRESH-802"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "affiliateId": "AFF-FRESH-803"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "affiliateId": "AFF-FRESH-804"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "affiliateId": "AFF-FRESH-805"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "affiliateId": "AFF-FRESH-806"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "affiliateId": "AFF-FRESH-807"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "affiliateId": "AFF-FRESH-808"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "affiliateId": "AFF-FRESH-809"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "affiliateId": "AFF-FRESH-810"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "affiliateId": "AFF-FRESH-811"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "affiliateId": "AFF-FRESH-812"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "affiliateId": "AFF-FRESH-813"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "affiliateId": "AFF-FRESH-814"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "affiliateId": "AFF-FRESH-815"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "affiliateId": "AFF-FRESH-816"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "affiliateId": "AFF-FRESH-817"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "affiliateId": "AFF-FRESH-818"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "affiliateId": "AFF-FRESH-819"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "affiliateId": "AFF-FRESH-820"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "affiliateId": "AFF-FRESH-821"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "affiliateId": "AFF-FRESH-822"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "affiliateId": "AFF-FRESH-823"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "affiliateId": "AFF-FRESH-824"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "affiliateId": "AFF-FRESH-825"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "affiliateId": "AFF-FRESH-826"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "affiliateId": "AFF-FRESH-827"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "affiliateId": "AFF-FRESH-828"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "affiliateId": "AFF-FRESH-829"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "affiliateId": "AFF-FRESH-830"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "affiliateId": "AFF-FRESH-831"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "affiliateId": "AFF-FRESH-832"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "affiliateId": "AFF-FRESH-833"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "affiliateId": "AFF-FRESH-834"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "affiliateId": "AFF-FRESH-835"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "affiliateId": "AFF-FRESH-836"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "affiliateId": "AFF-FRESH-837"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "affiliateId": "AFF-FRESH-838"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "affiliateId": "AFF-FRESH-839"
+    }
+  ],
+  "block_pool": [
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "affiliateId": "AFF-FRESH-840"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "affiliateId": "AFF-FRESH-841"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "affiliateId": "AFF-FRESH-842"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "affiliateId": "AFF-FRESH-843"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "affiliateId": "AFF-FRESH-844"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "affiliateId": "AFF-FRESH-845"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "affiliateId": "AFF-FRESH-846"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "affiliateId": "AFF-FRESH-847"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "affiliateId": "AFF-FRESH-848"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "affiliateId": "AFF-FRESH-849"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "affiliateId": "AFF-FRESH-850"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "affiliateId": "AFF-FRESH-851"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "affiliateId": "AFF-FRESH-852"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "affiliateId": "AFF-FRESH-853"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "affiliateId": "AFF-FRESH-854"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "affiliateId": "AFF-FRESH-855"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "affiliateId": "AFF-FRESH-856"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "affiliateId": "AFF-FRESH-857"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "affiliateId": "AFF-FRESH-858"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "affiliateId": "AFF-FRESH-859"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "affiliateId": "AFF-FRESH-860"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "affiliateId": "AFF-FRESH-861"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "affiliateId": "AFF-FRESH-862"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "affiliateId": "AFF-FRESH-863"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "affiliateId": "AFF-FRESH-864"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "affiliateId": "AFF-FRESH-865"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "affiliateId": "AFF-FRESH-866"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "affiliateId": "AFF-FRESH-867"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "affiliateId": "AFF-FRESH-868"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "affiliateId": "AFF-FRESH-869"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "affiliateId": "AFF-FRESH-870"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "affiliateId": "AFF-FRESH-871"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "affiliateId": "AFF-FRESH-872"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "affiliateId": "AFF-FRESH-873"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "affiliateId": "AFF-FRESH-874"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "affiliateId": "AFF-FRESH-875"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "affiliateId": "AFF-FRESH-876"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "affiliateId": "AFF-FRESH-877"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "affiliateId": "AFF-FRESH-878"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "affiliateId": "AFF-FRESH-879"
+    }
+  ],
+  "approve_pool": [
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-001"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-900"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-901"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-902"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-903"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-904"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-905"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-906"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-907"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-908"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-909"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-910"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-911"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-912"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-913"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-914"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-915"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-916"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-917"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-918"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-919"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-920"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-921"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-922"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-923"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-924"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-925"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-926"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-927"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-928"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-929"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-930"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-931"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-932"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-933"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-934"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-935"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-936"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-937"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-938"
+    }
+  ],
+  "reject_pool": [
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-939"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-940"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-941"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-942"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-943"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-944"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-945"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-946"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-947"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-948"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-949"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-950"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-951"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-952"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-953"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-954"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-955"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-956"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-957"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-958"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-959"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-960"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-961"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-962"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-963"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-964"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-965"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-966"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-967"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-968"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-969"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-970"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-971"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-972"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-973"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-974"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-975"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-976"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-977"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-978"
+    }
+  ],
+  "part01_pool": [
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-001"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-900"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-901"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-902"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-903"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-904"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-905"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-906"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-907"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-908"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-909"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-910"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-911"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-912"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-913"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-914"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-915"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-916"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-917"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-918"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-919"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-920"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-921"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-922"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-923"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-924"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-925"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-926"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-927"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-928"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-929"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-930"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-931"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-932"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-933"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-934"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-935"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-936"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-937"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-938"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-939"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-940"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-941"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-942"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-943"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-944"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-945"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-946"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-947"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-948"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-949"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-950"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-951"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-952"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-953"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-954"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-955"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-956"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-957"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-958"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-959"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-960"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-961"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-962"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-963"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-964"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-965"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-966"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-967"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-968"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-969"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-970"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-971"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-972"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-973"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-974"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-975"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-976"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-977"
+    },
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-PENDING-978"
+    }
+  ],
+  "already_approved_pool": [
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-SUS-400"
+    }
+  ],
+  "already_rejected_pool": [
+    {
+      "bankId": "000045f9-d01b-479c-a84d-0fe82454d55a",
+      "partnershipRequestId": "REQ-UBA-082"
+    }
+  ]
+}
