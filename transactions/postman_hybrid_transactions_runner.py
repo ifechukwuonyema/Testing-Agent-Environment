@@ -73,10 +73,7 @@ EVIDENCE_DIR     = _SVC_DIR / "evidence" / f"run_{RUN_TS}"
 REPORT_PATH      = _SVC_DIR / "reports" / f"transactions_run_{RUN_TS}.yaml"
 
 # Whitelist of tc_ids to run; empty set = run all.
-# Only remaining FAIL after 2026-05-18 run; pack updated Accept header fix.
-SCOPE_TC_IDS: set[str] = {
-    "TC-API-TRX-09-026",
-}
+SCOPE_TC_IDS: set[str] = set()
 
 # --- import kit's SchemaValidator + SessionStore --------------------------
 sys.path.insert(0, str(RUNNER_KIT))

@@ -262,7 +262,7 @@ run.close()
 ## Prerequisites
 
 - Python 3.9+
-- `pip install requests pyyaml`
+- `pip install requests pyyaml jsonschema cryptography`
 - Access to a running Kardit backend
 - Postman collection (test pack) per service — set `POSTMAN_PATH` in each runner
 - `MainSwagger.txt` — canonical OpenAPI 3.0.1 contract
@@ -281,7 +281,7 @@ cd Testing-Agent-Environment
 ### 2. Install dependencies
 
 ```bash
-pip install requests pyyaml jsonschema
+pip install requests pyyaml jsonschema cryptography
 ```
 
 ### 3. Verify canonical test entities exist

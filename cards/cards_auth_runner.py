@@ -28,6 +28,7 @@ import argparse
 import traceback
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timezone
+from pathlib import Path
 from typing import Optional
 
 # Force UTF-8 on Windows terminals that default to cp1252
@@ -38,6 +39,16 @@ import requests
 from cryptography.hazmat.primitives.asymmetric import ec
 from cryptography.hazmat.primitives import hashes, serialization
 from cryptography.hazmat.backends import default_backend
+
+# ─────────────────────────────────────────────────────────────────────────────
+# REPO PATH BOOTSTRAP — must come before any os.getenv / require calls
+# ─────────────────────────────────────────────────────────────────────────────
+_SVC_DIR   = Path(__file__).resolve().parent
+_REPO_ROOT = _SVC_DIR.parent
+_SHARED    = _REPO_ROOT / "shared"
+sys.path.insert(0, str(_SHARED))
+from load_env import load_env, require  # noqa: E402
+load_env()
 
 # ─────────────────────────────────────────────────────────────────────────────
 # CONFIG — override via environment variables if needed
@@ -54,19 +65,8 @@ CARDS_CLIENT_SECRET = os.environ["CARDS_CLIENT_SECRET"]
 BANK_CLIENT_SECRET  = os.environ["BANK_CLIENT_SECRET"]
 SIGNING_KEY_PEM     = os.environ["CARDS_SIGNING_KEY_PEM"]
 
-EXPIRED_TOKEN = os.getenv("CARDS_EXPIRED_TOKEN", "expired.token.sentinel")
-
-_SVC_DIR   = Path(__file__).resolve().parent
-_REPO_ROOT = _SVC_DIR.parent
-_SHARED    = _REPO_ROOT / "shared"
-import sys as _sys
-_sys.path.insert(0, str(_SHARED))
-from load_env import load_env, require  # noqa: E402
-load_env()  # load .env before any os.getenv calls
-SESSION_IDS_PATH = os.getenv(
-    "KARDIT_SESSION_IDS",
-    str(_SHARED / "session_ids.json"),
-)
+EXPIRED_TOKEN    = os.getenv("CARDS_EXPIRED_TOKEN", "expired.token.sentinel")
+SESSION_IDS_PATH = os.getenv("KARDIT_SESSION_IDS", str(_SHARED / "session_ids.json"))
 
 TENANT_ID     = "00000000-0000-0000-0000-000000000001"
 CUSTOMER_ID   = os.getenv("CARDS_CUSTOMER_ID", "62a855d9-cc62-4233-88fe-856d901b0a04")

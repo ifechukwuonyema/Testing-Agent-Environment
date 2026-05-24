@@ -39,6 +39,9 @@ github_push.py
 copy_memory.py
 copy_memory_to_repo.bat
 
+# Runtime-generated state — not committed
+shared/session_ids.json
+
 # Harnesses folder — stale working copies; canonical runners are in service folders
 harnesses/*.py
 harnesses/*.py.bak*
