@@ -64,24 +64,46 @@ auth_url = clone_url.replace("https://", f"https://{username}:{os.environ['GITHU
 print("3. Initialising git...")
 if not os.path.exists(os.path.join(REPO_DIR, ".git")):
     run(["git", "init"])
-    run(["git", "checkout", "-b", "main"])
 else:
     print("   .git already exists, skipping init")
+
+# Ensure we're on main branch
+current_branch = subprocess.run(
+    ["git", "rev-parse", "--abbrev-ref", "HEAD"],
+    cwd=REPO_DIR, capture_output=True, text=True
+).stdout.strip()
+if current_branch != "main":
+    has_commits = subprocess.run(
+        ["git", "log", "--oneline", "-1"],
+        cwd=REPO_DIR, capture_output=True, text=True
+    ).returncode == 0
+    if has_commits:
+        run(["git", "branch", "-M", "main"])
+    else:
+        run(["git", "checkout", "-b", "main"])
+print(f"   Branch: main")
 
 print("4. Writing .gitignore...")
 gitignore = os.path.join(REPO_DIR, ".gitignore")
 if not os.path.exists(gitignore):
     with open(gitignore, "w") as f:
-        f.write("__pycache__/\n*.pyc\n*.pyo\n.env\n*.log\ncopy_output.txt\n")
+        f.write("__pycache__/\n*.pyc\n*.pyo\n.env\n*.log\ncopy_output.txt\ngithub_push.py\ncopy_memory.py\ncopy_memory_to_repo.bat\n")
 
 print("5. Staging files...")
 run(["git", "add", "."])
 
 print("6. Committing...")
-try:
-    run(["git", "commit", "-m", "Initial commit: Kardit API test harness + full project context"])
-except SystemExit:
-    print("   Nothing to commit or commit failed — trying to push existing commits")
+result = subprocess.run(
+    ["git", "commit", "-m", "Initial commit: Kardit API test harness + full project context"],
+    cwd=REPO_DIR, capture_output=True, text=True
+)
+if result.returncode != 0 and "nothing to commit" in result.stdout + result.stderr:
+    print("   Nothing new to commit — will push existing HEAD")
+elif result.returncode != 0:
+    print(f"   Commit error: {result.stderr.strip()}")
+    sys.exit(1)
+else:
+    print("   Committed.")
 
 print("7. Setting remote...")
 remotes = subprocess.run(["git", "remote"], cwd=REPO_DIR, capture_output=True, text=True).stdout.strip()
