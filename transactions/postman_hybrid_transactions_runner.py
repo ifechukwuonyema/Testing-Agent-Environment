@@ -66,14 +66,17 @@ BASE_URL = os.getenv("KARDIT_BASE_URL", "http://167.172.49.177:8080")
 RUN_TS = dt.datetime.now().strftime("%Y%m%d-%H%M%S")
 
 SCOPE_ENDPOINT = os.environ.get("SCOPE_ENDPOINT")
+SCOPE_API_IDS = [x.strip() for x in os.environ.get("SCOPE_API_IDS", "").split(",") if x.strip()]
+SCOPE_TC_IDS: set[str] = {t.strip() for t in os.environ.get("SCOPE_TC_IDS", "").split(",") if t.strip()}
 _scope_tag = ""
 if SCOPE_ENDPOINT:
     _scope_tag = "_" + re.sub(r"[^a-zA-Z0-9]+", "_", SCOPE_ENDPOINT).strip("_")
+elif SCOPE_API_IDS:
+    _scope_tag = "_" + "_".join(SCOPE_API_IDS)
+elif SCOPE_TC_IDS:
+    _scope_tag = "_tc"
 EVIDENCE_DIR     = _SVC_DIR / "evidence" / f"run_{RUN_TS}"
 REPORT_PATH      = _SVC_DIR / "reports" / f"transactions_run_{RUN_TS}.yaml"
-
-# Whitelist of tc_ids to run; empty set = run all.
-SCOPE_TC_IDS: set[str] = set()
 
 # --- import kit's SchemaValidator + SessionStore --------------------------
 sys.path.insert(0, str(RUNNER_KIT))
@@ -1548,6 +1551,13 @@ def main():
         if not pack_endpoints_iter:
             print(f"ERROR: SCOPE_ENDPOINT '{SCOPE_ENDPOINT}' not found in test pack")
             sys.exit(2)
+    elif SCOPE_API_IDS:
+        pack_endpoints_iter = [e for e in pack["endpoints"] if e.get("api_id") in SCOPE_API_IDS]
+        if not pack_endpoints_iter:
+            print(f"ERROR: SCOPE_API_IDS {SCOPE_API_IDS} matched no endpoints in test pack")
+            print("Available api_ids:", [e.get("api_id") for e in pack["endpoints"]])
+            sys.exit(2)
+        print(f"  SCOPE_API_IDS filter: {len(pack_endpoints_iter)} endpoint(s): {[e.get('api_id') for e in pack_endpoints_iter]}")
 
     for ep in pack_endpoints_iter:
         pack_ep = ep["endpoint"]
