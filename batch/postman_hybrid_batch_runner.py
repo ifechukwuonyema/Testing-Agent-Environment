@@ -129,9 +129,15 @@ ROWS_READY_ENDPOINTS: set[str] = {
 }
 
 SCOPE_ENDPOINT = os.environ.get("SCOPE_ENDPOINT")
+SCOPE_API_IDS = [x.strip() for x in os.environ.get("SCOPE_API_IDS", "").split(",") if x.strip()]
+SCOPE_TC_IDS: set[str] = {t.strip() for t in os.environ.get("SCOPE_TC_IDS", "").split(",") if t.strip()}
 _scope_tag = ""
 if SCOPE_ENDPOINT:
     _scope_tag = "_" + re.sub(r"[^a-zA-Z0-9]+", "_", SCOPE_ENDPOINT).strip("_")
+elif SCOPE_API_IDS:
+    _scope_tag = "_" + "_".join(SCOPE_API_IDS)
+elif SCOPE_TC_IDS:
+    _scope_tag = "_tc"
 EVIDENCE_DIR     = _SVC_DIR / "evidence" / f"run_{RUN_TS}"
 REPORT_PATH      = _SVC_DIR / "reports" / f"batch_run_{RUN_TS}.yaml"
 
@@ -2048,6 +2054,23 @@ def main():
         if not pack_endpoints_iter:
             print(f"ERROR: SCOPE_ENDPOINT '{SCOPE_ENDPOINT}' not found in test pack")
             sys.exit(2)
+
+    if SCOPE_API_IDS:
+        pack_endpoints_iter = [e for e in pack_endpoints_iter if e.get("api_id") in SCOPE_API_IDS]
+        if not pack_endpoints_iter:
+            print(f"ERROR: SCOPE_API_IDS {SCOPE_API_IDS} matched no endpoints in test pack")
+            sys.exit(2)
+        print(f"  SCOPE_API_IDS filter: {len(pack_endpoints_iter)} endpoint(s): {[e.get('api_id') for e in pack_endpoints_iter]}")
+
+    if SCOPE_TC_IDS:
+        filtered_eps = []
+        for e in pack_endpoints_iter:
+            tcs = [t for t in e["test_cases"] if t.get("tc_id") in SCOPE_TC_IDS]
+            if tcs:
+                filtered_eps.append({**e, "test_cases": tcs})
+        pack_endpoints_iter = filtered_eps
+        total_tc = sum(len(e["test_cases"]) for e in pack_endpoints_iter)
+        print(f"[SCOPE_TC_IDS] Scoped to {len(pack_endpoints_iter)} endpoint(s), {total_tc} TC(s): {sorted(SCOPE_TC_IDS)}")
 
     # Preserve the minted UPLOADED batchId for restoration after state-specific overrides.
     uploaded_batch_id = session_ids.get("batchId")

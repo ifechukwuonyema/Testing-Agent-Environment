@@ -199,12 +199,15 @@ POSTMAN_BODY_DEFAULT = {
 }
 
 SCOPE_ENDPOINT = os.environ.get("SCOPE_ENDPOINT")
+_env_api_ids = [x.strip() for x in os.environ.get("SCOPE_API_IDS", "").split(",") if x.strip()]
+# Restrict run to specific api_ids. Env var overrides; empty = run all.
+SCOPE_API_IDS: set[str] = set(_env_api_ids)
+SCOPE_TC_IDS: set[str] = {t.strip() for t in os.environ.get("SCOPE_TC_IDS", "").split(",") if t.strip()}
 _scope_tag = ""
 if SCOPE_ENDPOINT:
     _scope_tag = "_" + re.sub(r"[^a-zA-Z0-9]+", "_", SCOPE_ENDPOINT).strip("_")
-
-# Restrict run to specific api_ids. Empty set = run all.
-SCOPE_API_IDS: set[str] = set()
+elif SCOPE_TC_IDS:
+    _scope_tag = "_tc"
 
 # REPLAY_FAILED_REPORT: path to a previous bank report YAML.
 # When set, only (api_id, scenario) pairs that FAILed in that report are run.
@@ -2165,6 +2168,16 @@ def main():
         pack_endpoints_iter = filtered_eps
         total_replay = sum(len(e["test_cases"]) for e in pack_endpoints_iter)
         print(f"[REPLAY] Scoped to {len(pack_endpoints_iter)} endpoints, {total_replay} TCs")
+
+    if SCOPE_TC_IDS:
+        filtered_eps = []
+        for e in pack_endpoints_iter:
+            tcs = [t for t in e["test_cases"] if t.get("tc_id") in SCOPE_TC_IDS]
+            if tcs:
+                filtered_eps.append({**e, "test_cases": tcs})
+        pack_endpoints_iter = filtered_eps
+        total_tc = sum(len(e["test_cases"]) for e in pack_endpoints_iter)
+        print(f"[SCOPE_TC_IDS] Scoped to {len(pack_endpoints_iter)} endpoint(s), {total_tc} TC(s): {sorted(SCOPE_TC_IDS)}")
 
     for ep in pack_endpoints_iter:
         pack_ep = ep["endpoint"]

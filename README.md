@@ -66,6 +66,8 @@ Testing-Agent-Environment/
 │   ├── run_sequential_chain.py          ← orchestrator: Bank→Affiliate→…→Admin
 │   └── reports/                         ← chain-level summary reports
 │
+├── run_target.py                        ← targeted runner: by service / endpoint / TC-ID
+│
 ├── .claude/
 │   └── memory/                          ← 150+ Claude Code memory topic files
 │       ├── MEMORY.md
@@ -300,7 +302,33 @@ Connects to the shared backend, confirms the canonical bankId and affiliateId us
 
 > **Other LLMs:** paste `CLAUDE.md` as your system prompt.
 
-### 5. Run a single service
+### 5. Run a specific test case, endpoint, or service
+
+Use `run_target.py` for targeted execution. It auto-detects which service owns a TC-ID and scopes the runner to only that test.
+
+```bash
+# Run a single TC (service auto-detected from TC-ID)
+python run_target.py --tc TC-API-ISS-02-001
+
+# Run all TCs for one endpoint
+python run_target.py --service cards --api-id API-ISS-02
+
+# Run a full service
+python run_target.py --service cards
+
+# Explore before running
+python run_target.py --service cards --list                         # all endpoints + TC counts
+python run_target.py --service cards --api-id API-ISS-02 --list    # all TC-IDs for that endpoint
+
+# Preview the command without executing
+python run_target.py --tc TC-API-ISS-02-001 --dry-run
+```
+
+After the run completes, `run_target.py` prints the TC verdict (PASS / FAIL / BLOCKED), HTTP code, and failure cause directly in the terminal, then points to the full YAML report.
+
+**Supported services:** `bank`, `affiliate`, `customer`, `cards`, `transactions`, `batch`, `notifications`, `admin`
+
+### 6. Run a single service directly
 
 ```bash
 python bank/postman_hybrid_bank_runner.py
@@ -308,7 +336,7 @@ python bank/postman_hybrid_bank_runner.py
 
 Evidence logs appear in `bank/evidence/run_<timestamp>/` automatically.
 
-### 6. Run the full chain
+### 7. Run the full chain
 
 ```bash
 python chain/run_sequential_chain.py

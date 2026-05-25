@@ -62,11 +62,14 @@ RUN_TS = dt.datetime.now().strftime("%Y%m%d-%H%M%S")
 
 SCOPE_ENDPOINT = os.environ.get("SCOPE_ENDPOINT")
 SCOPE_API_IDS = [x.strip() for x in os.environ.get("SCOPE_API_IDS", "").split(",") if x.strip()]
+SCOPE_TC_IDS: set[str] = {t.strip() for t in os.environ.get("SCOPE_TC_IDS", "").split(",") if t.strip()}
 _scope_tag = ""
 if SCOPE_ENDPOINT:
     _scope_tag = "_" + re.sub(r"[^a-zA-Z0-9]+", "_", SCOPE_ENDPOINT).strip("_")
 elif SCOPE_API_IDS:
     _scope_tag = "_" + "_".join(SCOPE_API_IDS)
+elif SCOPE_TC_IDS:
+    _scope_tag = "_tc"
 
 # REPLAY_FAILED_REPORT: path to a previous cards report YAML.
 # When set, replays (api_id, scenario) pairs that FAILed in that report.
@@ -4275,6 +4278,16 @@ def main():
     pack_endpoints_iter = [e for e in pack_endpoints_iter if e["endpoint"] not in EXCLUDED_FUNCTIONAL_ENDPOINTS]
     if len(pack_endpoints_iter) < _before_excl:
         print(f"[E2E] Excluded {_before_excl - len(pack_endpoints_iter)} load-requests endpoints (D-CARDS-LOADREQ)")
+
+    if SCOPE_TC_IDS:
+        filtered_eps = []
+        for e in pack_endpoints_iter:
+            tcs = [t for t in e["test_cases"] if t.get("tc_id") in SCOPE_TC_IDS]
+            if tcs:
+                filtered_eps.append({**e, "test_cases": tcs})
+        pack_endpoints_iter = filtered_eps
+        total_tc = sum(len(e["test_cases"]) for e in pack_endpoints_iter)
+        print(f"[SCOPE_TC_IDS] Scoped to {len(pack_endpoints_iter)} endpoint(s), {total_tc} TC(s): {sorted(SCOPE_TC_IDS)}")
 
     for ep in pack_endpoints_iter:
         pack_ep = ep["endpoint"]
