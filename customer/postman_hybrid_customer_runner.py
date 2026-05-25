@@ -84,7 +84,7 @@ if SCOPE_ENDPOINT:
 elif SCOPE_API_IDS:
     _scope_tag = "_" + "_".join(SCOPE_API_IDS)
 elif SCOPE_TC_IDS:
-    _scope_tag = "_replay"
+    _scope_tag = "_tc"
 EVIDENCE_DIR     = _SVC_DIR / "evidence" / f"run_{RUN_TS}"
 REPORT_PATH      = _SVC_DIR / "reports" / f"customer_run_{RUN_TS}.yaml"
 
