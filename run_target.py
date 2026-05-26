@@ -68,14 +68,14 @@ SERVICE_MAP: dict[str, tuple[Path, Path]] = {
 
 # report file prefix per service (used to find the latest report after a run)
 REPORT_PREFIX: dict[str, str] = {
-    "bank":          "bank_postman_hybrid_report",
-    "affiliate":     "affiliate_postman_standalone_v2_report",
-    "customer":      "customer_postman_hybrid_report",
-    "cards":         "cards_postman_hybrid_report",
-    "transactions":  "transactions_postman_hybrid_report",
-    "batch":         "batch_postman_hybrid_report",
-    "notifications": "notifications_postman_hybrid_report",
-    "admin":         "admin_postman_hybrid_report",
+    "bank":          "bank_run_",
+    "affiliate":     "affiliate_run_",
+    "customer":      "customer_run_",
+    "cards":         "cards_run_",
+    "transactions":  "transactions_run_",
+    "batch":         "batch_run_",
+    "notifications": "notifications_run_",
+    "admin":         "admin_run_",
 }
 
 
@@ -173,7 +173,7 @@ def run_service(service: str, api_id: str = "", tc_id: str = "", dry_run: bool =
         return 0
 
     env = _build_env(api_id, tc_id)
-    proc = subprocess.run([sys.executable, str(runner)], cwd=str(DOWNLOADS), env=env)
+    proc = subprocess.run([sys.executable, str(runner)], cwd=str(runner.parent), env=env)
     return proc.returncode
 
 
@@ -182,13 +182,14 @@ def run_service(service: str, api_id: str = "", tc_id: str = "", dry_run: bool =
 # ---------------------------------------------------------------------------
 
 def print_report_summary(service: str, tc_id: str = "") -> None:
-    prefix = REPORT_PREFIX.get(service, f"{service}_postman_hybrid_report")
+    prefix = REPORT_PREFIX.get(service, f"{service}_run_")
+    report_dir = KARDIT / service / "reports"
     candidates = [
-        p for p in DOWNLOADS.iterdir()
+        p for p in report_dir.iterdir()
         if p.name.startswith(prefix) and p.suffix == ".yaml"
-    ]
+    ] if report_dir.exists() else []
     if not candidates:
-        print("[run_target] No report found in Downloads/.")
+        print(f"[run_target] No report found in {report_dir}.")
         return
 
     report = max(candidates, key=lambda p: p.stat().st_mtime)
