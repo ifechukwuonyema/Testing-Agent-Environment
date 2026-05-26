@@ -2618,7 +2618,6 @@ def main():
                 "expected_result": tc.get("expected_result"),
                 "response_code": response.get("status_code"),
                 "execution_status": status,
-                "status": status,  # backward grep
                 "evaluation_reason": verdict.get("reason"),
                 "schema_finding": verdict.get("schema"),
                 "finding_type": ("Schema Mismatch" if verdict.get("schema") and not verdict["schema"].get("valid")
