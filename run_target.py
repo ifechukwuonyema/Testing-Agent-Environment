@@ -28,59 +28,41 @@ from pathlib import Path
 from typing import Optional
 
 DOWNLOADS = Path(r"C:\Users\Onyema Ifechukwu\Downloads")
-HARNESSES = Path(r"C:\Users\Onyema Ifechukwu\Kardit\harnesses")
+KARDIT    = Path(r"C:\Users\Onyema Ifechukwu\Kardit")
 
 # service name -> (runner script, test pack path)
 SERVICE_MAP: dict[str, tuple[Path, Path]] = {
     "bank": (
-        HARNESSES / "postman_hybrid_bank_runner.py",
-        DOWNLOADS / "bank_microservice_functional_test_pack_v1_40_each.json",
+        KARDIT / "bank"          / "postman_hybrid_bank_runner.py",
+        KARDIT / "bank"          / "data" / "test_pack.json",
     ),
     "affiliate": (
-        HARNESSES / "postman_standalone_affiliate_v2.py",
-        DOWNLOADS / "kardit_affiliate_api_test_agent_v3_1"
-                   / "kardit_affiliate_api_test_agent_v3_1"
-                   / "data"
-                   / "affiliate_microservice_functional_test_pack_v1_40_each_exact.json",
+        KARDIT / "affiliate"     / "postman_standalone_affiliate_v2.py",
+        KARDIT / "affiliate"     / "data" / "test_pack.json",
     ),
     "customer": (
-        HARNESSES / "postman_hybrid_customer_runner.py",
-        DOWNLOADS / "kardit_customer_api_test_agent_v3_1"
-                   / "kardit_customer_api_test_agent_v3_1"
-                   / "data"
-                   / "customer_microservice_functional_test_pack_v1_40_each.json",
+        KARDIT / "customer"      / "postman_hybrid_customer_runner.py",
+        KARDIT / "customer"      / "data" / "test_pack.json",
     ),
     "cards": (
-        HARNESSES / "postman_hybrid_cards_runner.py",
-        DOWNLOADS / "cards_microservice_functional_test_pack_v1_40_each.json",
+        KARDIT / "cards"         / "cards_e2e_runner.py",
+        KARDIT / "cards"         / "data" / "test_pack.json",
     ),
     "transactions": (
-        HARNESSES / "postman_hybrid_transactions_runner.py",
-        DOWNLOADS / "kardit_transactions_api_test_agent_v3_1"
-                   / "kardit_transactions_api_test_agent_v3_1"
-                   / "data"
-                   / "transactions_microservice_functional_test_pack_v1_40_each.json",
+        KARDIT / "transactions"  / "postman_hybrid_transactions_runner.py",
+        KARDIT / "transactions"  / "data" / "test_pack.json",
     ),
     "batch": (
-        HARNESSES / "postman_hybrid_batch_runner.py",
-        DOWNLOADS / "kardit_batch_api_test_agent_v3_1"
-                   / "kardit_batch_api_test_agent_v3_1"
-                   / "data"
-                   / "batch_microservice_functional_test_pack_v3_30_each.json",
+        KARDIT / "batch"         / "postman_hybrid_batch_runner.py",
+        KARDIT / "batch"         / "data" / "test_pack.json",
     ),
     "notifications": (
-        HARNESSES / "postman_hybrid_notifications_runner.py",
-        DOWNLOADS / "kardit_notifications_api_test_agent_v1"
-                   / "kardit_notifications_api_test_agent_v1"
-                   / "data"
-                   / "notifications_TC.json",
+        KARDIT / "notifications" / "postman_hybrid_notifications_runner.py",
+        KARDIT / "notifications" / "data" / "test_pack.json",
     ),
     "admin": (
-        HARNESSES / "postman_hybrid_admin_runner.py",
-        DOWNLOADS / "admin_services_api_test_agent_v1"
-                   / "admin_services_api_test_agent"
-                   / "data"
-                   / "admin_services_functional_test_pack_v1_30_plus.json",
+        KARDIT / "admin"         / "postman_hybrid_admin_runner.py",
+        KARDIT / "admin"         / "data" / "test_pack.json",
     ),
 }
 

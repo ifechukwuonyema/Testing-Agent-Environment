@@ -2093,7 +2093,7 @@ def main():
                     "scenario": tc.get("scenario"),
                     "priority": tc.get("priority"),
                     "fr_coverage": tc.get("fr_coverage", []),
-                    "status": "BLOCKED",
+                    "execution_status": "BLOCKED",
                     "blocked_reason": "Skipped — the Postman file you provided doesn't include any request for this endpoint, so we have no real input data to send",
                     "expected_result": tc.get("expected_result"),
                 })
@@ -2125,7 +2125,7 @@ def main():
                     "tc_id": tc["tc_id"], "endpoint": pack_ep, "api_id": api_id,
                     "scenario": scenario, "priority": tc.get("priority"),
                     "fr_coverage": tc.get("fr_coverage", []),
-                    "status": "BLOCKED", "blocked_reason": plan["reason"],
+                    "execution_status": "BLOCKED", "blocked_reason": plan["reason"],
                     "expected_result": tc.get("expected_result"),
                     "drift_flag": drift,
                 })
@@ -2332,7 +2332,7 @@ def main():
                         "tc_id": tc["tc_id"], "endpoint": pack_ep, "api_id": api_id,
                         "scenario": scenario, "priority": tc.get("priority"),
                         "fr_coverage": tc.get("fr_coverage", []),
-                        "status": "BLOCKED",
+                        "execution_status": "BLOCKED",
                         "blocked_reason": f"Skipped — this test wants us to put an invalid/malformed value into a URL field called '{plan['field']}', but the URL doesn't have any pieces we can change",
                         "expected_result": tc.get("expected_result"), "drift_flag": drift,
                     })
@@ -2381,7 +2381,7 @@ def main():
                         "tc_id": tc["tc_id"], "endpoint": pack_ep, "api_id": api_id,
                         "scenario": scenario, "priority": tc.get("priority"),
                         "fr_coverage": tc.get("fr_coverage", []),
-                        "status": "BLOCKED",
+                        "execution_status": "BLOCKED",
                         "blocked_reason": f"Skipped — this performance test wanted us to balloon the '{f}' list, but Postman provides no body to add it to",
                         "expected_result": tc.get("expected_result"), "drift_flag": drift,
                     })
@@ -2429,7 +2429,7 @@ def main():
                         "tc_id": tc["tc_id"], "endpoint": pack_ep, "api_id": api_id,
                         "scenario": scenario, "priority": tc.get("priority"),
                         "fr_coverage": tc.get("fr_coverage", []),
-                        "status": "BLOCKED",
+                        "execution_status": "BLOCKED",
                         "blocked_reason": "Skipped — this test wants us to swap an ID for an unknown/non-existent one, but we couldn't find any matching ID field in either the URL or the request body to swap",
                         "expected_result": tc.get("expected_result"),
                         "drift_flag": drift,
@@ -2651,8 +2651,8 @@ def main():
     total_tcs = sum(counts.values())
 
     # discrepancies
-    failed = [d for d in detailed if d["status"] == "FAIL"]
-    blocked = [d for d in detailed if d["status"] == "BLOCKED"]
+    failed = [d for d in detailed if d["execution_status"] == "FAIL"]
+    blocked = [d for d in detailed if d["execution_status"] == "BLOCKED"]
     critical_failures = [f for f in failed if (f.get("priority") or "").lower() == "critical"]
 
     overall = "PASS" if counts["FAIL"] == 0 and counts["ERROR"] == 0 else "FAIL"

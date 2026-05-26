@@ -289,8 +289,8 @@ PACK_TO_POSTMAN = {
     "POST /api/v1/banks/{bankId}/affiliates/{affiliateId}/suspend": "POST /api/v1/banks/{bankId}/affiliates/{affiliateId}/suspend",
     "POST /api/v1/banks/{bankId}/affiliates/{affiliateId}/block": "POST /api/v1/banks/{bankId}/affiliates/{affiliateId}/block",
     "GET /api/v1/banks/{bankId}/affiliate-partnership-requests/{requestId}": "GET /api/v1/banks/{bankId}/affiliate-partnership-requests/{requestId}",
-    "POST /api/v1/banks/partnerships/{requestId}/approve": "POST /api/v1/banks/partnerships/{requestId}/approve",
-    "POST /api/v1/banks/partnerships/{requestId}/reject": "POST /api/v1/banks/partnerships/{requestId}/reject",
+    "POST /api/v1/banks/partnerships/{requestId}/approve": "POST /api/v1/partnerships/{requestId}/approve",
+    "POST /api/v1/banks/partnerships/{requestId}/reject": "POST /api/v1/partnerships/{requestId}/reject",
     "POST /api/v1/banks/{bankId}/cards": "POST /api/v1/banks/{bankId}/cards",
 }
 # Pack endpoints whose actual path differs from the Postman entry's path. Reserved for future
@@ -300,6 +300,12 @@ PATH_TEMPLATE_OVERRIDE = {
     # the parameterised template so rebuild_url can substitute bankId + requestId from the pool.
     "GET /api/v1/banks/{bankId}/affiliate-partnership-requests/{requestId}":
         "/api/v1/banks/{bankId}/affiliate-partnership-requests/{requestId}",
+    # PART-02/03 Postman entries use /partnerships/... (no /banks/ prefix).
+    # Override to use the swagger-correct /banks/partnerships/... path at runtime.
+    "POST /api/v1/banks/partnerships/{requestId}/approve":
+        "/api/v1/banks/partnerships/{requestId}/approve",
+    "POST /api/v1/banks/partnerships/{requestId}/reject":
+        "/api/v1/banks/partnerships/{requestId}/reject",
 }
 DRIFT_FLAGS = {
     "GET /api/v1/banks/{bankId}/affiliate-partnership-requests/{requestId}": "pack_path_remapped_2026-05-01_was_partnership_requests_list",
@@ -2130,6 +2136,15 @@ def main():
     print(f"Phase 0e: building approve/reject partnership-request pool (minting up to 20)...")
     ar_pool_record = pre_flight_build_approve_reject_pool(pm_idx, session_ids)
     print(f"  -> status={ar_pool_record.get('status')} pool_size={ar_pool_record.get('pool_size')}")
+
+    # Phase 0c fallback: if acquire_seed_partnership_request failed but Phase 0e
+    # filled APPROVE_POOL with fresh PENDING IDs, seed session_ids["requestId"]
+    # from that pool so PART-01 fallback substitution has a valid ID.
+    if request_setup.get("status") not in ("OK", "OK_VIA_QUERY") and APPROVE_POOL:
+        session_ids["requestId"] = APPROVE_POOL[0]
+        request_setup["status"] = "OK_VIA_APPROVE_POOL"
+        request_setup["fallback_from"] = "phase_0e_approve_pool"
+        print(f"  -> Phase 0c backfilled from APPROVE_POOL: requestId={session_ids['requestId']!r}")
 
     # --- HYBRID phase 1: order pack by lifecycle ---
     lifecycle = load_lifecycle_order()

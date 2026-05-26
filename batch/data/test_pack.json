@@ -9,7 +9,7 @@
     {
       "api_id": "API-BATCH-01",
       "name": "Upload Batch Card Creation File",
-      "endpoint": "POST /api/v1/batches/card-creation/upload",
+      "endpoint": "POST /api/v1/Batches/card-creation/upload",
       "test_case_count": 30,
       "functional_requirements": [
         "FR-BATCH-API-01-01",
@@ -537,7 +537,7 @@
     {
       "api_id": "API-BATCH-02",
       "name": "Validate Batch Card Creation File",
-      "endpoint": "POST /api/v1/batches/{batchId}/validate",
+      "endpoint": "POST /api/v1/Batches/{batchId}/validate",
       "test_case_count": 30,
       "functional_requirements": [
         "FR-BATCH-API-02-01",
@@ -1075,7 +1075,7 @@
     {
       "api_id": "API-BATCH-03",
       "name": "Submit Batch Card Creation for Processing",
-      "endpoint": "POST /api/v1/batches/{batchId}/submit",
+      "endpoint": "POST /api/v1/Batches/{batchId}/submit",
       "test_case_count": 29,
       "functional_requirements": [
         "FR-BATCH-API-03-01",
@@ -1582,7 +1582,7 @@
     {
       "api_id": "API-BATCH-04",
       "name": "Get Batch Card Creation Status",
-      "endpoint": "GET /api/v1/batches/{batchId}",
+      "endpoint": "GET /api/v1/Batches/{batchId}",
       "test_case_count": 28,
       "functional_requirements": [
         "FR-BATCH-API-04-01",
@@ -2055,7 +2055,7 @@
     {
       "api_id": "API-BATCH-05",
       "name": "Get Batch Card Creation Row Results",
-      "endpoint": "GET /api/v1/batches/{batchId}/rows",
+      "endpoint": "GET /api/v1/Batches/{batchId}/rows",
       "test_case_count": 30,
       "functional_requirements": [
         "FR-BATCH-API-05-01",
@@ -2559,7 +2559,7 @@
     {
       "api_id": "API-BATCH-06",
       "name": "Download Batch Card Creation Result File",
-      "endpoint": "GET /api/v1/batches/{batchId}/results/download",
+      "endpoint": "GET /api/v1/Batches/{batchId}/results/download",
       "test_case_count": 30,
       "functional_requirements": [
         "FR-BATCH-API-06-01",

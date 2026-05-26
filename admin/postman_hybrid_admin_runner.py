@@ -429,20 +429,20 @@ def extract_first_case_id_from_list(resp_body: Any) -> str | None:
     Tries common shapes: {data: [{caseId|id, ...}, ...]}, {items: [...]}, {results: [...]}."""
     if not isinstance(resp_body, dict):
         return None
-    for container_key in ("data", "items", "results", "cases"):
+    for container_key in ("data", "items", "results", "cases", "Cases"):
         items = resp_body.get(container_key)
         if isinstance(items, list) and items:
             first = items[0]
             if isinstance(first, dict):
-                for k in ("caseId", "id", "case_id"):
+                for k in ("caseId", "CaseId", "id", "case_id"):
                     v = first.get(k)
                     if isinstance(v, str) and v:
                         return v
         if isinstance(items, dict):  # {data: {items: [...]}} or {data: {result: [...]}} or {data: {data: [...]}}
-            for sub_key in ("items", "result", "results", "data", "cases"):
+            for sub_key in ("items", "result", "results", "data", "cases", "Cases"):
                 sub = items.get(sub_key)
                 if isinstance(sub, list) and sub and isinstance(sub[0], dict):
-                    for k in ("caseId", "id", "case_id"):
+                    for k in ("caseId", "CaseId", "id", "case_id"):
                         v = sub[0].get(k)
                         if isinstance(v, str) and v:
                             return v

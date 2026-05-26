@@ -313,6 +313,9 @@ def pre_flight_discover_notification(pm_idx: dict, session_ids: dict) -> dict:
         return setup
     base = build_base_request(pm_entry)
     path_template = get_postman_path_template(pm_entry)
+    # PMC bakes in status=string&type=string (literal Postman placeholders) — strip them
+    # so the pre-flight GET doesn't 400 before we even start.
+    base["query"] = {k: v for k, v in base["query"].items() if v != "string"}
     url = rebuild_url(base["method"], path_template, base["path_vars"], base["query"])
     setup["url"] = url
 

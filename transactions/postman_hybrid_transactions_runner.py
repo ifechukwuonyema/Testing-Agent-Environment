@@ -153,7 +153,7 @@ PACK_TO_POSTMAN = {
     # in the URL path with no Postman variables, so the index keys retain those literals. Map pack
     # placeholders to the literal-URL keys here, then PATH_TEMPLATE_OVERRIDE re-introduces the
     # placeholder template for runtime substitution.
-    "GET /api/v1/transactions/cards/{cardId}": "GET /api/v1/transactions/cards/{id}",
+    "GET /api/v1/transactions/cards/{cardId}": "GET /api/v1/transactions/cards/{id}/transactions",
     "GET /api/v1/transactions/cards/{cardId}/loads": "GET /api/v1/transactions/cards/{id}/loads",
     "GET /api/v1/transactions/cards/{cardId}/unloads": "GET /api/v1/transactions/cards/{id}/unloads",
     "GET /api/v1/transactions/{transactionId}": "GET /api/v1/transactions/TXN-2026-00014",

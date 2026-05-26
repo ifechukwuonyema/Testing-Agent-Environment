@@ -1610,7 +1610,11 @@ _BATCH_CSV_HEADERS = [
 
 def _decode_csv(b64: str) -> list[list[str]]:
     raw = _base64.b64decode(b64 + "=" * (-len(b64) % 4))
-    return list(_csv.reader(_io.StringIO(raw.decode("utf-8"))))
+    try:
+        text = raw.decode("utf-8")
+    except UnicodeDecodeError:
+        text = raw.decode("latin-1")
+    return list(_csv.reader(_io.StringIO(text)))
 
 def _encode_csv(rows: list[list[str]]) -> str:
     buf = _io.StringIO()
